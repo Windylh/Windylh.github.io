@@ -1,0 +1,894 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="WriteUp,CTF," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://github.com/Windylh/image/raw/master/icon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在表哥的推荐下接触了PicoCTF，记录一下自己的解题思路
+TutorialTutorial 1给了一个list，找出Robin Morris的中间名，直接搜索，找到Robin Almay Morris
+Tutorial 2打开链接1234Hey, checkout this super secret message I made, using this cool ROT13cipher I fo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PicoCTF Level1 WriteUp">
+<meta property="og:url" content="http://yoursite.com/2017/09/18/PicoCTF-level1-WriteUp/index.html">
+<meta property="og:site_name" content="Windylh's blog">
+<meta property="og:description" content="在表哥的推荐下接触了PicoCTF，记录一下自己的解题思路
+TutorialTutorial 1给了一个list，找出Robin Morris的中间名，直接搜索，找到Robin Almay Morris
+Tutorial 2打开链接1234Hey, checkout this super secret message I made, using this cool ROT13cipher I fo">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.20/picol1mc.png">
+<meta property="og:updated_time" content="2017-09-18T14:51:05.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PicoCTF Level1 WriteUp">
+<meta name="twitter:description" content="在表哥的推荐下接触了PicoCTF，记录一下自己的解题思路
+TutorialTutorial 1给了一个list，找出Robin Morris的中间名，直接搜索，找到Robin Almay Morris
+Tutorial 2打开链接1234Hey, checkout this super secret message I made, using this cool ROT13cipher I fo">
+<meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2017.8.20/picol1mc.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/18/PicoCTF-level1-WriteUp/"/>
+
+
+
+
+
+  <title> PicoCTF Level1 WriteUp | Windylh's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Windylh's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/PicoCTF-level1-WriteUp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                PicoCTF Level1 WriteUp
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T22:42:16+08:00">
+                2017-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/09/18/PicoCTF-level1-WriteUp/" class="leancloud_visitors" data-flag-title="PicoCTF Level1 WriteUp">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在表哥的推荐下接触了PicoCTF，记录一下自己的解题思路</p>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><h3 id="Tutorial-1"><a href="#Tutorial-1" class="headerlink" title="Tutorial 1"></a>Tutorial 1</h3><p>给了一个list，找出<code>Robin Morris</code>的中间名，直接搜索，找到<code>Robin Almay Morris</code></p>
+<h3 id="Tutorial-2"><a href="#Tutorial-2" class="headerlink" title="Tutorial 2"></a>Tutorial 2</h3><p>打开链接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Hey, checkout this super secret message I made, using this cool ROT13</div><div class="line">cipher I found online!</div><div class="line"></div><div class="line">Lb, fb unir lbh orra cynlvat gung arj Zrfbcrgf tnzr? Gubfr arj Zrtnybalpuvqnr naq Oenqlcbqvqnr gurl nqqrq ner cerggl pbby. Npghnyyl, V jbhyq tb nf sne nf fnlvat gung vg vf abj zl yvsr&apos;f qrnerfg nzovgvba gb bognva n &quot;Vasyngnoyr Fybgu Zbafgre&quot;!</div></pre></td></tr></table></figure></p>
+<p>直接给出了rot13的提示，解密<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Yo, so have you been playing that new Mesopets game? Those new Megalonychidae and Bradypodidae they added are pretty cool. Actually, I would go as far as saying that it is now my life&apos;s dearest ambition to obtain a &quot;Inflatable Sloth Monster&quot;!</div></pre></td></tr></table></figure></p>
+<p>flag就是<code>Inflatable Sloth Monster</code></p>
+<h3 id="Tutorial-3"><a href="#Tutorial-3" class="headerlink" title="Tutorial 3"></a>Tutorial 3</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">These are a few of my favorite things!</div><div class="line"></div><div class="line">7A3B00</div><div class="line">6000C7</div><div class="line">67C700</div><div class="line">42FFFC</div><div class="line">C70002</div><div class="line">0003C7</div><div class="line">007A78</div></pre></td></tr></table></figure>
+<p>找出红色的值即可，工具：<a href="http://www.atool.org/colorpicker.php" target="_blank" rel="external">http://www.atool.org/colorpicker.php</a><br>flag:<code>C70002</code></p>
+<h1 id="Level1"><a href="#Level1" class="headerlink" title="Level1"></a>Level1</h1><h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="What-Is-Web"><a href="#What-Is-Web" class="headerlink" title="What Is Web"></a>What Is Web</h3><p>类似于入门的查看源代码的题目，flag分为3部分。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">html中：&lt;!-- The first part of the flag (there are 3 parts) is fab79c49d9e --&gt;</div><div class="line">css中：The second part of the flag is 5ba511a0f24 </div><div class="line">js中： * The final part of the flag is 36308e33e85</div></pre></td></tr></table></figure></p>
+<p>拼起来就是flag：<code>fab79c49d9e5ba511a0f2436308e33e85</code></p>
+<h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="Hex2Raw"><a href="#Hex2Raw" class="headerlink" title="Hex2Raw"></a>Hex2Raw</h3><p>在旁边的CLI窗口中cd对应的文件夹，ls，发现了hex2raw。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ ./hex2raw</div><div class="line"></div><div class="line">Give me this in raw form (0x41 -&gt; &apos;A&apos;):                               </div><div class="line">416f1c7918f83a4f1922d86df5e78348                                      </div><div class="line">                                                                      </div><div class="line">You gave me:</div></pre></td></tr></table></figure></p>
+<p>题目叫hex to raw，那么传递的字符串应该是hex解码的，运动python的decode()函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ python -</div><div class="line">c &quot;print(&apos;416f1c7918f83a4f1922d86df5e78348&apos;.decode(&apos;hex&apos;))&quot;| ./hex2raw</div><div class="line">Give me this in raw form (0x41 -&gt; &apos;A&apos;):</div><div class="line">416f1c7918f83a4f1922d86df5e78348                                      </div><div class="line">                                                                      </div><div class="line">You gave me:                                                          </div><div class="line">416f1c7918f83a4f1922d86df5e78348                                      </div><div class="line">Yay! That&apos;s what I wanted! Here be the flag:                          </div><div class="line">1d2411efe307f5ac07bd28bbabb5769e</div></pre></td></tr></table></figure></p>
+<p>flag：<code>1d2411efe307f5ac07bd28bbabb5769e</code></p>
+<h3 id="Raw2Hex"><a href="#Raw2Hex" class="headerlink" title="Raw2Hex"></a>Raw2Hex</h3><p>一开始跟上一题相同，但是出现的是一堆乱码，题目是raw to hex，运用linux自带的xxd命令就可以输出hex编码后的字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ./raw2hex | xxd-p                                                            </div><div class="line">54686520666c61672069733aff9a4fdb6995b557590a742b0e685bd3</div></pre></td></tr></table></figure></p>
+<p>flag：<code>54686520666c61672069733aff9a4fdb6995b557590a742b0e685bd3</code><br>xxd命令：<a href="http://www.360doc.com/content/12/1228/14/3038654_256776082.shtml" target="_blank" rel="external">http://www.360doc.com/content/12/1228/14/3038654_256776082.shtml</a></p>
+<h2 id="Forensics"><a href="#Forensics" class="headerlink" title="Forensics"></a>Forensics</h2><p>###Digital Camouflage<br>题目给了一个pcap文件，直接用wireshark打开，提取所有的html文件<br>找到了main.html<code>userid=spiveyp&amp;pswrd=S04xWjZQWFZ5OQ%3D%3D</code><br>对pswrd urldecode 得到<code>S04xWjZQWFZ5OQ==</code> 双等号，大小写，base64解密，得到flag。<br>flag：<code>KN1Z6PXVy9</code></p>
+<h3 id="Special-Agent-User"><a href="#Special-Agent-User" class="headerlink" title="Special Agent User"></a>Special Agent User</h3><p>同上题一样给了一个pcap文件，这题提示找http头的User-agent中的浏览器名字和版本，直接筛选http协议部分查看，得到flag。<br>flag：<code>Special Agent User</code></p>
+<h2 id="Cryptography"><a href="#Cryptography" class="headerlink" title="Cryptography"></a>Cryptography</h2><h3 id="Substitute"><a href="#Substitute" class="headerlink" title="Substitute"></a>Substitute</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">A wizard (he seemed kinda odd...) handed me this. Can you figure out what it says?</div><div class="line"></div><div class="line"> HINTS</div><div class="line">    There are tools that make this easy this.</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MIT YSAU OL OYGFSBDGRTKFEKBHMGCALSOQTMIOL. UTFTKAMTR ZB DAKQGX EIAOF GY MIT COQOHTROA HAUT GF EASXOF AFR IGZZTL. ZT CTKT SGFU, MIT YSACL GF A 2005 HKTLTFM MODTL MIAF LMADOFA GK A CTTQSB LWFRAB, RTETDZTK 21, 1989 1990, MIT RKTC TROMGKL CAL WHKGGMTR TXTKB CGKSR EAF ZT YGWFR MIT EGFMOFWTR MG CGKQ AM A YAOMIYWS KTHSOTL CITKT IGZZTL, LMBST AOD EASXOF, AMMAEQ ZGMI LORTL MG DAKQL, &quot;CIAM RG EGFMKGSSOFU AF AEMWAS ZGAKR ZGVTL OF MIT HKTHAKTFML FADT, OL ODHWSLOXT KADHAUTL OF CIOEI ASCABL KTYTKTFETL MIT HALLCGKR, CIOEI DGFTB, AFR MITB IAR SOMMST YKGFM BAKR IOL YKWLMKAMTR EGSGK WFOJWT AZOSOMB COMI AFR OFROLHTFLAMT YGK MTAEI GMITK LMWROTL, AKT ACAKRL ZARUTL, HWZSOLITR ZTYGKT CTSS AL A YOKT UKGLL HSAFL CTKT GKOUOFASSB EIAKAEMTKL OF MIT LMKOH MG CIOEI LTTD MG OM CITF MTDHTKTR OF AFR IASSGCOFU MITB&apos;KT LODHSB RKACOFU OF UOXTL GF&quot; HKOFEOHAS LHOMMST ROLMGKM, KTARTKL EGDOEL AKT WLT, CAMMTKLGF MGGQ MCG 16-DGFMIL AYMTK KTLOLMAQTL A DGKT EKTAM RTAS MG EASXOF GYMTF IGZZTL MG ARDOML &quot;LSODB, &quot;ZWM OM&apos;L FADTR A FOUIM GWM LIT OL HGOFM GY FGM LTTF IGZZTL MIT ZGGQL AM MIAM O KTDAOFOFU ZGGQ IADLMTK IWTB AKT AHHTAKAFET: RTETDZTK 6, 1995 DGD&apos;L YKADTL GY EASXOF UOXTF A CAUGF, LGDTMODTL MIAM LG OM&apos;L YAMITKT&apos;L YADOSB FG EAFETSSAMOGFLIOH CAL HKTLTFML YKGD FGXTDZTK 21, 1985 SALM AHHTAK AZLTFET OF AFGMITKCOLT OM IAHHB MG KWF OM YGK MIOL RAR AL &quot;A SOMMST MG MGSTKAMT EASXOF&apos;L YADOSB RKACF ASDGLM EGDDTFRTR WH ZTOFU HTGHST OFLMAFET, UTM DAKKOTR ZB A RAFET EASXOF&apos;L GWMSAFROLOFU MIT FTCLHAHTK GK MAZSGOR FTCLHAHTK ZWLOFTLL LIGC OL GF!&quot; AFR LHKOFML GY EIOSRKTF&apos;L RAR&apos;L YKWLMKAMTR ZB MWKF IWDGK, CAL HWZSOE ROASGU MITKT&apos;L FGM DWEI AL &quot;&apos;94 DGRTKFOLD&quot; CAMMTKLGF IAL RTSOUIML GY YAFMALB SOYT CAMMTKLGF LABL LTKXTL AL AF AKMOLML OL RTLMKWEMOGF ZWLOFTLL, LHAETYAKTK GY MIT GHHGKMWFOMOTL BGW ZGMI A MGHOE YGK IOL IGDT MGFUWT-OF-EITTQ HGHWSAK MIAM OM CAL &quot;IGF&quot; AFR JWAKMTK HAUT DGKT LHAEOGWL EAFETSSAMOGF MIT HAOK AKT ESTAKSB OF HLBEIOE MKAFLDGUKOYOTK&apos;L &quot;NAH&quot; LGWFR TYYTEM BGW MIOFQTK CAMMTKLGF ASLG UKTC OFEKTROZST LHAET ZWBL OF EGDDGFSB CIOST GMITKCOLT OM&apos;L FADT OL FGMAZST LMGKBSOFT UAXT MIT GHHGKMWFOMOTL BGW EAFETSSAMOGF MIT &quot;EASXOF GYYTK MG DAQT IOD OFEGKKTEM AFLCTKL CAMMTK AKMCGKQ GMITK GYMTF CIOEI OL TXORTFM MG GMITK LMKOH OL MG MITOK WLT GY KWSTL MIAM LIGCF GF LAFROYTK, CIG WLTL A EKGCJWOSS ZT LTTF &quot;USWTR&quot; MG MIT GFSB HTKL AFR IOL YAMITK LWHHGKM OL SWFEISOFT UAXT MITLT MIOF A BTAK OF DWSMODAMTKOAS AFR GZMAOF GF LAFMALB, IOL WLT, CAMMTKL ROASGUWT OL AF &quot;AKMOLM&apos;L LMAMWL AL &quot;A ROD XOTC OF MIT TLLTFMOASSB MG DAQT IOD LTTD MG OFESWRTR MIAM EASXOF OL AF GRR ROASGUWT DGLM GY MIT ESWZ IAL TVHKTLLOGF GWMLORT AXAOSAZST MG</div></pre></td></tr></table></figure>
+<p>substitution意思是代换，替代，猜测是简单的替代密码，可以直接用工具破解。</p>
+<p>在线工具：<a href="http://quipqiup.com/" target="_blank" rel="external">http://quipqiup.com/</a></p>
+<p>flag：<code>IFONLYMODERNCRYPTOWASLIKETHIS</code></p>
+<h3 id="Hash101"><a href="#Hash101" class="headerlink" title="Hash101"></a>Hash101</h3><p>题目：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Prove your knowledge of hashes and claim a flag as your prize! Connect to the service at shell2017.picoctf.com:9661</div><div class="line">UPDATED 16:12 EST 1 Apr.</div><div class="line"></div><div class="line"> HINTS</div><div class="line">    All concepts required to complete this challenge, including simple modular math, are quickly found by googling :)</div></pre></td></tr></table></figure></p>
+<p>直接nc提供的地址和端口。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">windylh@shell-web:~$ nc shell2017.picoctf.com 9661                    </div><div class="line">                                                                      </div><div class="line">Welcome to Hashes 101!                                                </div><div class="line">                                                                      </div><div class="line">There are 4 Levels. Complete all and receive a prize!                 </div><div class="line">                                                                      </div><div class="line">                                                                      </div><div class="line">-------- LEVEL 1: Text = just 1&apos;s and 0&apos;s --------                    </div><div class="line">All text can be represented by numbers. To see how different letters t</div><div class="line">ranslate to numbers, go to http://www.asciitable.com/                 </div><div class="line">                                                                      </div><div class="line">TO UNLOCK NEXT LEVEL, give me the ASCII representation of 011011000110</div><div class="line">111101110110011001010110110001111001                                  </div><div class="line">                                              </div><div class="line">&gt;lovely                                                               </div><div class="line">Correct! Completed level 1</div></pre></td></tr></table></figure></p>
+<p>level1就是简单的二进制转ascii码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">------ LEVEL 2: Numbers can be base ANYTHING -----                    </div><div class="line">Numbers can be represented many ways. A popular way to represent compu</div><div class="line">ter data is in base 16 or &apos;hex&apos; since it lines up with bytes very well</div><div class="line"> (2 hex characters = 8 binary bits). Other formats include base64, bin</div><div class="line">ary, and just regular base10 (decimal)! In a way, that ascii chart rep</div><div class="line">resents a system where all text can be seen as &quot;base128&quot; (not includin</div><div class="line">g the Extended ASCII codes)                                           </div><div class="line">                                                                      </div><div class="line">TO UNLOCK NEXT LEVEL, give me the text you just decoded, lovely, as it</div><div class="line">s hex equivalent, and then the decimal equivalent of that hex number (</div><div class="line">&quot;foo&quot; -&gt; 666f6f -&gt; 6713199)                                           </div><div class="line">                                                                      </div><div class="line">hex&gt;6c6f76656c79                                                      </div><div class="line">Good job! 6c6f76656c79 to ASCII -&gt; lovely is lovely                   </div><div class="line">Now decimal                                                           </div><div class="line">dec&gt;119225983528057                                                   </div><div class="line">Good job! 119225983528057 to Hex -&gt; 6c6f76656c79 to ASCII -&gt; lovely is</div><div class="line"> lovely                                                               </div><div class="line">Correct! Completed level 2</div></pre></td></tr></table></figure></p>
+<p>level2就是将lovely的转成16进制和10进制，分别输入。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">----------- LEVEL 3: Hashing Function ------------                    </div><div class="line">A Hashing Function intakes any data of any size and irreversibly trans</div><div class="line">forms it to a fixed length number. For example, a simple Hashing Funct</div><div class="line">ion could be to add up the sum of all the values of all the bytes in t</div><div class="line">he data and get the remainder after dividing by 16 (modulus 16)       </div><div class="line">                                                                      </div><div class="line">TO UNLOCK NEXT LEVEL, give me a string that will result in a 13 after </div><div class="line">being transformed with the mentioned example hashing function         </div><div class="line">                                                                </div><div class="line">&gt;g                                                                    </div><div class="line">incorrect. sum of all characters = 103 mod 16 = 7 does not equal 13   </div><div class="line">&gt;h                                                                    </div><div class="line">incorrect. sum of all characters = 104 mod 16 = 8 does not equal 13   </div><div class="line">&gt;x                                                                    </div><div class="line">incorrect. sum of all characters = 120 mod 16 = 8 does not equal 13   </div><div class="line">&gt;m                                                                    </div><div class="line">Correct! Completed level 3</div></pre></td></tr></table></figure></p>
+<p>将输入的字符串的ascii码加和，和16取模，等于对应的数字即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">Correct! Completed level 3                                            </div><div class="line">                                                                      </div><div class="line">--------------- LEVEL 4: Real Hash ---------------                    </div><div class="line">A real Hashing Function is used for many things. This can include chec</div><div class="line">king to ensure a file has not been changed (its hash value would chang</div><div class="line">e if any part of it is changed). An important use of hashes is for sto</div><div class="line">ring passwords because a Hashing Function cannot be reversed to find t</div><div class="line">he initial data. Therefore if someone steals the hashes, they must try</div><div class="line"> many different inputs to see if they can &quot;crack&quot; it to find what pass</div><div class="line">word yields the same hash. Normally, this is too much work (if the pas</div><div class="line">sword is long enough). But many times, people&apos;s passwords are easy to </div><div class="line">guess... Brute forcing this hash yourself is not a good idea, but ther</div><div class="line">e is a strong possibility that, if the password is weak, this hash has</div><div class="line"> been cracked by someone before. Try looking for websites that have st</div><div class="line">ored already cracked hashes.                                          </div><div class="line">                                                                      </div><div class="line">TO CLAIM YOUR PRIZE, give me the string password that will result in t</div><div class="line">his MD5 hash (MD5, like most hashes, are represented as hex digits):  </div><div class="line">ac2f556a0eb415745b31e14a91d55d75                                      </div><div class="line">                                                                      </div><div class="line">&gt;muc1d                                                                </div><div class="line">Correct! Completed level 4                                            </div><div class="line">You completed all 4 levels! Here is your prize: c3ee093f26ba147ccc451f</div><div class="line">d13c91ffce</div></pre></td></tr></table></figure></p>
+<p>给出一个md5，直接解出来就行。</p>
+<p>flag:<code>c3ee093f26ba147ccc451fd13c91ffce</code></p>
+<h3 id="computeAES"><a href="#computeAES" class="headerlink" title="computeAES"></a>computeAES</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Encrypted with AES in ECB mode. All values base64 encoded</div><div class="line">ciphertext = R9TacKHy6cf1AZho/nwWWYaNzP5GfltKE5yW+kwRYe0LY+PdGk1hfoanS/iVZ7z1</div><div class="line">key = azdvtH4bvfdS/mryKLTNqQ==</div></pre></td></tr></table></figure>
+<p>题目说加密用了AES的ECB模式，并且用了base64编码。</p>
+<p>直接用python脚本解码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> base64</div><div class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</div><div class="line"></div><div class="line">key=base64.b64decode(<span class="string">"azdvtH4bvfdS/mryKLTNqQ=="</span>) </div><div class="line">Ciphertext=base64.b64decode(<span class="string">"R9TacKHy6cf1AZho/nwWWYaNzP5GfltKE5yW+kwRYe0LY+PdGk1hfoanS/iVZ7z1"</span>)</div><div class="line"></div><div class="line">st=AES.new(key,AES.MODE_ECB)</div><div class="line"></div><div class="line">flag=st.decrypt(Ciphertext)</div><div class="line"></div><div class="line"><span class="keyword">print</span> flag</div></pre></td></tr></table></figure>
+<h2 id="MASTER-CHALLENGE"><a href="#MASTER-CHALLENGE" class="headerlink" title="MASTER CHALLENGE"></a>MASTER CHALLENGE</h2><h3 id="Lazy-Dev"><a href="#Lazy-Dev" class="headerlink" title="Lazy Dev"></a>Lazy Dev</h3><p>题目提示，输入password，先随便输入，返回<code>Nah, that&#39;s not it</code>，查看源代码，发现了一个js脚本。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Validate the password. TBD!</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">validate</span>(<span class="params">pword</span>)</span>&#123;</div><div class="line">  <span class="comment">//<span class="doctag">TODO:</span> Implement me</span></div><div class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//Make an ajax request to the server</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">make_ajax_req</span>(<span class="params">input</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> text_response;</div><div class="line">  <span class="keyword">var</span> http_req = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">  <span class="keyword">var</span> params = <span class="string">"pword_valid="</span> + input.toString();</div><div class="line">  http_req.open(<span class="string">"POST"</span>, <span class="string">"login"</span>, <span class="literal">true</span>);</div><div class="line">  http_req.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>);</div><div class="line">  http_req.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="comment">//Call a function when the state changes.</span></div><div class="line">    <span class="keyword">if</span>(http_req.readyState == <span class="number">4</span> &amp;&amp; http_req.status == <span class="number">200</span>) &#123;</div><div class="line">      <span class="built_in">document</span>.getElementById(<span class="string">"res"</span>).innerHTML = http_req.responseText;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  http_req.send(params);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//Called when the user submits the password</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">process_password</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> pword = <span class="built_in">document</span>.getElementById(<span class="string">"password"</span>).value;</div><div class="line">  <span class="keyword">var</span> res = validate(pword);</div><div class="line">  <span class="keyword">var</span> server_res = make_ajax_req(res);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们输入的password放在validate()函数中验证正确与否，但是validate函数只返回false，chrome的控制台可以调用js中的函数，我们直接赋值，让res=true，来绕过validate函数。</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.8.20/picol1mc.png" alt="1mc"></p>
+<p>flag：<code>client_side_is_the_dark_side0c97381c155aae62b9ce3c59845d6941</code></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WriteUp/" rel="tag"># WriteUp</a>
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/18/PicoCTF-level2-WriteUp/" rel="next" title="PicoCTF Level2 WriteUp">
+                <i class="fa fa-chevron-left"></i> PicoCTF Level2 WriteUp
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/18/Ourphp后台getshell漏洞/" rel="prev" title="Ourphp后台getshell漏洞">
+                Ourphp后台getshell漏洞 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"
+               alt="Windylh" />
+          <p class="site-author-name" itemprop="name">Windylh</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Windylh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/WindylhPeng" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1553700980" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.izilong.net/" title="Zilong" target="_blank">Zilong</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iwenhu.cn/" title="Mengchen" target="_blank">Mengchen</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://keysking.github.io/" title="Keysking" target="_blank">Keysking</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanvnal.com/" title="LANVNAL" target="_blank">LANVNAL</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wsimp1er.com/" title="Simp1er" target="_blank">Simp1er</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tutorial"><span class="nav-number">1.</span> <span class="nav-text">Tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tutorial-1"><span class="nav-number">1.1.</span> <span class="nav-text">Tutorial 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tutorial-2"><span class="nav-number">1.2.</span> <span class="nav-text">Tutorial 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tutorial-3"><span class="nav-number">1.3.</span> <span class="nav-text">Tutorial 3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Level1"><span class="nav-number"></span> <span class="nav-text">Level1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web"><span class="nav-number">1.</span> <span class="nav-text">Web</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-Is-Web"><span class="nav-number">1.1.</span> <span class="nav-text">What Is Web</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reverse"><span class="nav-number">2.</span> <span class="nav-text">Reverse</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hex2Raw"><span class="nav-number">2.1.</span> <span class="nav-text">Hex2Raw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Raw2Hex"><span class="nav-number">2.2.</span> <span class="nav-text">Raw2Hex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Forensics"><span class="nav-number">3.</span> <span class="nav-text">Forensics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Special-Agent-User"><span class="nav-number">3.1.</span> <span class="nav-text">Special Agent User</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cryptography"><span class="nav-number">4.</span> <span class="nav-text">Cryptography</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Substitute"><span class="nav-number">4.1.</span> <span class="nav-text">Substitute</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash101"><span class="nav-number">4.2.</span> <span class="nav-text">Hash101</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#computeAES"><span class="nav-number">4.3.</span> <span class="nav-text">computeAES</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MASTER-CHALLENGE"><span class="nav-number">5.</span> <span class="nav-text">MASTER CHALLENGE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lazy-Dev"><span class="nav-number">5.1.</span> <span class="nav-text">Lazy Dev</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017.3 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Windylh</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("G38Wjo4XURoegldByMbpMI2C-gzGzoHsz", "PAvMrVY87vPwX9PBcMLfYmw4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

