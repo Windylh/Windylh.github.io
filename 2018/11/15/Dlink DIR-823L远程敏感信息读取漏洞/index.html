@@ -89,27 +89,21 @@
 
 <meta name="description" content="有幸加入了360的IOT计划，接触一下IOT安全。
 前期准备下载固件Dlink DIR-850L A1 FW v1.14固件下载
-环境准备安装binwalk和qemu123brew install biwalkbrew install qemubrew install squashfs
-固件提取1binwalk -Me DIR850LA1_FW114WWb07.bin
-固件分析因为不是很懂Bin的">
+环境准备安装binwalk和qemu123brew install biwalkbrew install qemubrew install squashfs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dlink DIR-823L远程敏感信息读取漏洞">
 <meta property="og:url" content="http://yoursite.com/2018/11/15/Dlink DIR-823L远程敏感信息读取漏洞/index.html">
 <meta property="og:site_name" content="Windylh's blog">
 <meta property="og:description" content="有幸加入了360的IOT计划，接触一下IOT安全。
 前期准备下载固件Dlink DIR-850L A1 FW v1.14固件下载
-环境准备安装binwalk和qemu123brew install biwalkbrew install qemubrew install squashfs
-固件提取1binwalk -Me DIR850LA1_FW114WWb07.bin
-固件分析因为不是很懂Bin的">
+环境准备安装binwalk和qemu123brew install biwalkbrew install qemubrew install squashfs">
 <meta property="og:image" content="https://github.com/Windylh/image/raw/master/2018.11.15/mips1.png">
-<meta property="og:updated_time" content="2018-11-15T09:15:22.110Z">
+<meta property="og:updated_time" content="2018-12-02T16:50:36.225Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dlink DIR-823L远程敏感信息读取漏洞">
 <meta name="twitter:description" content="有幸加入了360的IOT计划，接触一下IOT安全。
 前期准备下载固件Dlink DIR-850L A1 FW v1.14固件下载
-环境准备安装binwalk和qemu123brew install biwalkbrew install qemubrew install squashfs
-固件提取1binwalk -Me DIR850LA1_FW114WWb07.bin
-固件分析因为不是很懂Bin的">
+环境准备安装binwalk和qemu123brew install biwalkbrew install qemubrew install squashfs">
 <meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2018.11.15/mips1.png">
 
 
@@ -349,6 +343,7 @@
         <p>有幸加入了360的IOT计划，接触一下IOT安全。</p>
 <h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="下载固件"><a href="#下载固件" class="headerlink" title="下载固件"></a>下载固件</h3><p><a href="https://tsd.dlink.com.tw/downloads2008detailgo.asp" target="_blank" rel="external">Dlink DIR-850L A1 FW v1.14固件下载</a></p>
 <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>安装binwalk和qemu<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">brew install biwalk</div><div class="line">brew install qemu</div><div class="line">brew install squashfs</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h3 id="固件提取"><a href="#固件提取" class="headerlink" title="固件提取"></a>固件提取</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">binwalk -Me DIR850LA1_FW114WWb07.bin</div></pre></td></tr></table></figure>
 <h2 id="固件分析"><a href="#固件分析" class="headerlink" title="固件分析"></a>固件分析</h2><p>因为不是很懂Bin的知识，所以到<code>squashfs-root/htdocs/web</code>分析php页面。</p>
 <p>找到<code>htdocs/web/getcfg.php</code>文件</p>
