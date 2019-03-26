@@ -334,10 +334,9 @@
 
       
         
-          
-          0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。
-0x01 Wallbreak
-          ...
+          <h2 id="0x00-0ctf2019-Wallbreaker-Easy"><a href="#0x00-0ctf2019-Wallbreaker-Easy" class="headerlink" title="0x00 0ctf2019-Wallbreaker Easy"></a>0x00 0ctf2019-Wallbreaker Easy</h2><p>在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过<code>LD_PRELOAD</code>绕过<code>disbale_functions</code>的方法。学到的东西在这里记录一下。</p>
+<h2 id="0x01-Wallbreaker-Easy-Writeup"><a href="#0x01-Wallbreaker-Easy-Writeup" class="headerlink" title="0x01 Wallbreaker Easy Writeup"></a>0x01 Wallbreaker Easy Writeup</h2><p>首先记录一下这道题的解题过程。</p>
+<p>index.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Imagick is a awesome library for hackers to break `disable_functions`.</div><div class="line">So I installed php-imagick in the server, opened a `backdoor` for you.</div><div class="line">Let&apos;s try to execute `/readflag` to get the flag.</div><div class="line">Open basedir: /var/www/html:/tmp/415c92e8be7c68409ca6bd369d87482f</div><div class="line">Hint: eval($_POST[&quot;backdoor&quot;]);</div></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/03/26/利用LD_PRELOAD绕过disbale_functions/#more" rel="contents">

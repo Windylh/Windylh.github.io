@@ -99,7 +99,7 @@ index.php123456Imag">
 index.php123456Imag">
 <meta property="og:image" content="https://github.com/Windylh/image/raw/master/2019.3.25/web1.png">
 <meta property="og:image" content="https://github.com/Windylh/image/raw/master/2019.3.25/web2.png">
-<meta property="og:updated_time" content="2019-03-26T11:25:04.258Z">
+<meta property="og:updated_time" content="2019-03-26T11:27:08.301Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用LD_PRELOAD绕过disbale_functions">
 <meta name="twitter:description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。
@@ -344,6 +344,7 @@ index.php123456Imag">
         <h2 id="0x00-0ctf2019-Wallbreaker-Easy"><a href="#0x00-0ctf2019-Wallbreaker-Easy" class="headerlink" title="0x00 0ctf2019-Wallbreaker Easy"></a>0x00 0ctf2019-Wallbreaker Easy</h2><p>在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过<code>LD_PRELOAD</code>绕过<code>disbale_functions</code>的方法。学到的东西在这里记录一下。</p>
 <h2 id="0x01-Wallbreaker-Easy-Writeup"><a href="#0x01-Wallbreaker-Easy-Writeup" class="headerlink" title="0x01 Wallbreaker Easy Writeup"></a>0x01 Wallbreaker Easy Writeup</h2><p>首先记录一下这道题的解题过程。</p>
 <p>index.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Imagick is a awesome library for hackers to break `disable_functions`.</div><div class="line">So I installed php-imagick in the server, opened a `backdoor` for you.</div><div class="line">Let&apos;s try to execute `/readflag` to get the flag.</div><div class="line">Open basedir: /var/www/html:/tmp/415c92e8be7c68409ca6bd369d87482f</div><div class="line">Hint: eval($_POST[&quot;backdoor&quot;]);</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>index.php就是一句话木马，密码是<code>backdoor</code>。提示我们用<code>Imagick</code>插件绕过<code>disable_functions</code>，执行<code>/readflag</code>来获得flag。并给出了<code>open basedir</code>。</p>
 <p>首先查看一下<code>disable_functions</code>。payload:<code>backdoor=echo ini_get(&#39;disable_functions&#39;);</code></p>
 <p>除了默认设置禁用的pcntl的一系列函数还禁用了<code>system,exec,shell_exec,popen,proc_open,passthru,symlink,link,syslog,imap_open,ld,mail</code>。</p>
