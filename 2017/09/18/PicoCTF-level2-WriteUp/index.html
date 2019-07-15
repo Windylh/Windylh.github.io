@@ -15,11 +15,11 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
-<meta name="theme-color" content="#222"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
 
 
 
@@ -44,9 +44,9 @@
 
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
 
-<link rel="stylesheet" href="/css/main.css?v=7.1.0"/>
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/Windylh/image/raw/master/icon.ico?v=7.1.0">
@@ -96,22 +96,18 @@
 
 
 
-  <meta name="description" content="WebMy First SQL网页是一个登录界面，尝试万能密码。12admin&amp;apos;or&amp;apos;1&amp;apos;=&amp;apos;1
-成功登陆。
-分析sql查询语句如下select * from users where user = &amp;#39;admin&amp;#39; and pass = &amp;#39;&amp;#39;or&amp;#39;1&amp;#39;=&amp;#39;1&amp;#39;;">
+  <meta name="description" content="WebMy First SQL网页是一个登录界面，尝试万能密码。12admin&amp;apos;or&amp;apos;1&amp;apos;=&amp;apos;1 成功登陆。 分析sql查询语句如下select * from users where user = &amp;#39;admin&amp;#39; and pass = &amp;#39;&amp;#39;or&amp;#39;1&amp;#39;=&amp;#39;1&amp;#39;;">
+<meta name="keywords" content="WriteUp,CTF">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PicoCTF Level2 WriteUp">
 <meta property="og:url" content="http://yoursite.com/2017/09/18/PicoCTF-level2-WriteUp/index.html">
-<meta property="og:site_name" content="Windylh's blog">
-<meta property="og:description" content="WebMy First SQL网页是一个登录界面，尝试万能密码。12admin&amp;apos;or&amp;apos;1&amp;apos;=&amp;apos;1
-成功登陆。
-分析sql查询语句如下select * from users where user = &amp;#39;admin&amp;#39; and pass = &amp;#39;&amp;#39;or&amp;#39;1&amp;#39;=&amp;#39;1&amp;#39;;">
+<meta property="og:site_name" content="Windylh&#39;s blog">
+<meta property="og:description" content="WebMy First SQL网页是一个登录界面，尝试万能密码。12admin&amp;apos;or&amp;apos;1&amp;apos;=&amp;apos;1 成功登陆。 分析sql查询语句如下select * from users where user = &amp;#39;admin&amp;#39; and pass = &amp;#39;&amp;#39;or&amp;#39;1&amp;#39;=&amp;#39;1&amp;#39;;">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-11-01T10:53:20.411Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PicoCTF Level2 WriteUp">
-<meta name="twitter:description" content="WebMy First SQL网页是一个登录界面，尝试万能密码。12admin&amp;apos;or&amp;apos;1&amp;apos;=&amp;apos;1
-成功登陆。
-分析sql查询语句如下select * from users where user = &amp;#39;admin&amp;#39; and pass = &amp;#39;&amp;#39;or&amp;#39;1&amp;#39;=&amp;#39;1&amp;#39;;">
+<meta name="twitter:description" content="WebMy First SQL网页是一个登录界面，尝试万能密码。12admin&amp;apos;or&amp;apos;1&amp;apos;=&amp;apos;1 成功登陆。 分析sql查询语句如下select * from users where user = &amp;#39;admin&amp;#39; and pass = &amp;#39;&amp;#39;or&amp;#39;1&amp;#39;=&amp;#39;1&amp;#39;;">
 
 
 
@@ -119,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2017/09/18/PicoCTF-level2-WriteUp/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/18/PicoCTF-level2-WriteUp/">
 
 
 
@@ -197,7 +193,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Navigationsleiste an/ausschalten">
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -225,7 +221,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Startseite</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
         
@@ -242,7 +238,7 @@
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>Schlagwörter</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
 
   </li>
         
@@ -259,7 +255,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archiv</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
 
   </li>
 
@@ -311,16 +307,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/PicoCTF-level2-WriteUp/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/PicoCTF-level2-WriteUp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Windylh"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"/>
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Windylh's blog"/>
+      <meta itemprop="name" content="Windylh's blog">
     </span>
 
     
@@ -347,14 +343,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Erstellt: 2017-09-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">2017-09-18</time>
+              <time title="Created: 2017-09-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">2017-09-18</time>
             
 
             
@@ -369,9 +365,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Bearbeitet am</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Geändert am: 2018-11-01 18:53:20" itemprop="dateModified" datetime="2018-11-01T18:53:20+08:00">2018-11-01</time>
+                <time title="Modified: 2018-11-01 18:53:20" itemprop="dateModified" datetime="2018-11-01T18:53:20+08:00">2018-11-01</time>
               
             
           </span>
@@ -391,7 +387,7 @@
                 <i class="fa fa-eye"></i>
               </span>
               
-                <span class="post-meta-item-text">Aufrufe: </span>
+                <span class="post-meta-item-text">Views: </span>
               
                 <span class="leancloud-visitors-count"></span>
             </span>
@@ -416,17 +412,17 @@
       
 
       
-        <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="My-First-SQL"><a href="#My-First-SQL" class="headerlink" title="My First SQL"></a>My First SQL</h3><p>网页是一个登录界面，尝试万能密码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">admin</div><div class="line">&apos;or&apos;1&apos;=&apos;1</div></pre></td></tr></table></figure></p>
+        <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="My-First-SQL"><a href="#My-First-SQL" class="headerlink" title="My First SQL"></a>My First SQL</h3><p>网页是一个登录界面，尝试万能密码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">admin</span><br><span class="line">&apos;or&apos;1&apos;=&apos;1</span><br></pre></td></tr></table></figure></p>
 <p>成功登陆。</p>
 <p>分析sql查询语句如下<br><code>select * from users where user = &#39;admin&#39; and pass = &#39;&#39;or&#39;1&#39;=&#39;1&#39;;</code><br><a id="more"></a><br>flag:<code>be_careful_what_you_let_people_ask_1b3db77df6b116a38db8ceb7c81cb14c</code></p>
-<h3 id="TW-GR-E1-ART"><a href="#TW-GR-E1-ART" class="headerlink" title="TW_GR_E1_ART"></a>TW_GR_E1_ART</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">TW_GR_E1_ART</div><div class="line">Oh, sweet, they made a spinoff game to Toaster Wars! That last room has a lot of flags in it though. I wonder which is the right one...? Check it out here.</div><div class="line"></div><div class="line"> HINTS</div><div class="line">  I think this game is running on a Node.js server. If it&apos;s configured poorly, you may be able to access the server&apos;s source. If my memory serves me correctly, Node servers have a special file that lists dependencies and a start command; maybe you can use that file to figure out where the other files are?</div></pre></td></tr></table></figure>
+<h3 id="TW-GR-E1-ART"><a href="#TW-GR-E1-ART" class="headerlink" title="TW_GR_E1_ART"></a>TW_GR_E1_ART</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TW_GR_E1_ART</span><br><span class="line">Oh, sweet, they made a spinoff game to Toaster Wars! That last room has a lot of flags in it though. I wonder which is the right one...? Check it out here.</span><br><span class="line"></span><br><span class="line"> HINTS</span><br><span class="line">  I think this game is running on a Node.js server. If it&apos;s configured poorly, you may be able to access the server&apos;s source. If my memory serves me correctly, Node servers have a special file that lists dependencies and a start command; maybe you can use that file to figure out where the other files are?</span><br></pre></td></tr></table></figure>
 <p>题目是一个运行在node.js的js游戏，玩了一会，在第4层发现了好多flag，随便挑一个使用，发现所有的道具都被销毁了，可能这是一个假的flag。。。</p>
-<p>看了一下writeup，所有node.js server都会有一个package.json储存配置信息，先访问看看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;name&quot;: &quot;rogue-1&quot;,</div><div class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</div><div class="line">  &quot;main&quot;: &quot;server/serv.js&quot;,</div><div class="line">  &quot;dependencies&quot;: &#123;</div><div class="line">    &quot;beautiful-log&quot;: &quot;^1.3.0&quot;,</div><div class="line">    &quot;body-parser&quot;: &quot;^1.16.0&quot;,</div><div class="line">    &quot;callsite&quot;: &quot;^1.0.0&quot;,</div><div class="line">    &quot;clone&quot;: &quot;^2.1.0&quot;,</div><div class="line">    &quot;colors&quot;: &quot;^1.1.2&quot;,</div><div class="line">    &quot;cookie-parser&quot;: &quot;^1.4.3&quot;,</div><div class="line">    &quot;deep-diff&quot;: &quot;^0.3.4&quot;,</div><div class="line">    &quot;dequeue&quot;: &quot;^1.0.5&quot;,</div><div class="line">    &quot;express&quot;: &quot;^4.14.1&quot;,</div><div class="line">    &quot;mongodb&quot;: &quot;^2.2.25&quot;,</div><div class="line">    &quot;morgan&quot;: &quot;^1.7.0&quot;,</div><div class="line">    &quot;nconf&quot;: &quot;^0.8.4&quot;,</div><div class="line">    &quot;promise&quot;: &quot;^7.1.1&quot;,</div><div class="line">    &quot;socket.io&quot;: &quot;^1.7.2&quot;,</div><div class="line">    &quot;sprintf&quot;: &quot;^0.1.5&quot;</div><div class="line">  &#125;,</div><div class="line">  &quot;devDependencies&quot;: &#123;&#125;,</div><div class="line">  &quot;scripts&quot;: &#123;</div><div class="line">    &quot;prestart&quot;: &quot;node server/init.js&quot;,</div><div class="line">    &quot;start&quot;: &quot;node server/serv.js&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="CRYPTOGRAPHY"><a href="#CRYPTOGRAPHY" class="headerlink" title="CRYPTOGRAPHY"></a>CRYPTOGRAPHY</h2><h3 id="SoRandom"><a href="#SoRandom" class="headerlink" title="SoRandom"></a>SoRandom</h3><p>题目：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">We found sorandom.py running at shell2017.picoctf.com:37968. It seems to be outputting the flag but randomizing all the characters first. Is there anyway to get back the original flag?</div><div class="line">Update (text only) 16:16 EST 1 Apr Running python 2 (same version as on the server)</div><div class="line"></div><div class="line">  HINTS</div><div class="line">    How random can computers be?</div></pre></td></tr></table></figure></p>
-<p>加密脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python -u</span></div><div class="line"><span class="keyword">import</span> random,string</div><div class="line"></div><div class="line">flag = <span class="string">"FLAG:"</span>+open(<span class="string">"flag"</span>, <span class="string">"r"</span>).read()[:<span class="number">-1</span>]</div><div class="line">encflag = <span class="string">""</span></div><div class="line">random.seed(<span class="string">"random"</span>)</div><div class="line"><span class="keyword">for</span> c <span class="keyword">in</span> flag:</div><div class="line">  <span class="keyword">if</span> c.islower():</div><div class="line">    <span class="comment">#rotate number around alphabet a random amount</span></div><div class="line">    encflag += chr((ord(c)-ord(<span class="string">'a'</span>)+random.randrange(<span class="number">0</span>,<span class="number">26</span>))%<span class="number">26</span> + ord(<span class="string">'a'</span>))</div><div class="line">  <span class="keyword">elif</span> c.isupper():</div><div class="line">    encflag += chr((ord(c)-ord(<span class="string">'A'</span>)+random.randrange(<span class="number">0</span>,<span class="number">26</span>))%<span class="number">26</span> + ord(<span class="string">'A'</span>))</div><div class="line">  <span class="keyword">elif</span> c.isdigit():</div><div class="line">    encflag += chr((ord(c)-ord(<span class="string">'0'</span>)+random.randrange(<span class="number">0</span>,<span class="number">10</span>))%<span class="number">10</span> + ord(<span class="string">'0'</span>))</div><div class="line">  <span class="keyword">else</span>:</div><div class="line">    encflag += c</div><div class="line"><span class="keyword">print</span> <span class="string">"Unguessably Randomized Flag: "</span>+encflag</div></pre></td></tr></table></figure></p>
+<p>看了一下writeup，所有node.js server都会有一个package.json储存配置信息，先访问看看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;rogue-1&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;server/serv.js&quot;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;beautiful-log&quot;: &quot;^1.3.0&quot;,</span><br><span class="line">    &quot;body-parser&quot;: &quot;^1.16.0&quot;,</span><br><span class="line">    &quot;callsite&quot;: &quot;^1.0.0&quot;,</span><br><span class="line">    &quot;clone&quot;: &quot;^2.1.0&quot;,</span><br><span class="line">    &quot;colors&quot;: &quot;^1.1.2&quot;,</span><br><span class="line">    &quot;cookie-parser&quot;: &quot;^1.4.3&quot;,</span><br><span class="line">    &quot;deep-diff&quot;: &quot;^0.3.4&quot;,</span><br><span class="line">    &quot;dequeue&quot;: &quot;^1.0.5&quot;,</span><br><span class="line">    &quot;express&quot;: &quot;^4.14.1&quot;,</span><br><span class="line">    &quot;mongodb&quot;: &quot;^2.2.25&quot;,</span><br><span class="line">    &quot;morgan&quot;: &quot;^1.7.0&quot;,</span><br><span class="line">    &quot;nconf&quot;: &quot;^0.8.4&quot;,</span><br><span class="line">    &quot;promise&quot;: &quot;^7.1.1&quot;,</span><br><span class="line">    &quot;socket.io&quot;: &quot;^1.7.2&quot;,</span><br><span class="line">    &quot;sprintf&quot;: &quot;^0.1.5&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;devDependencies&quot;: &#123;&#125;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;prestart&quot;: &quot;node server/init.js&quot;,</span><br><span class="line">    &quot;start&quot;: &quot;node server/serv.js&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="CRYPTOGRAPHY"><a href="#CRYPTOGRAPHY" class="headerlink" title="CRYPTOGRAPHY"></a>CRYPTOGRAPHY</h2><h3 id="SoRandom"><a href="#SoRandom" class="headerlink" title="SoRandom"></a>SoRandom</h3><p>题目：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">We found sorandom.py running at shell2017.picoctf.com:37968. It seems to be outputting the flag but randomizing all the characters first. Is there anyway to get back the original flag?</span><br><span class="line">Update (text only) 16:16 EST 1 Apr Running python 2 (same version as on the server)</span><br><span class="line"></span><br><span class="line">  HINTS</span><br><span class="line">    How random can computers be?</span><br></pre></td></tr></table></figure></p>
+<p>加密脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python -u</span></span><br><span class="line"><span class="keyword">import</span> random,string</span><br><span class="line"></span><br><span class="line">flag = <span class="string">"FLAG:"</span>+open(<span class="string">"flag"</span>, <span class="string">"r"</span>).read()[:<span class="number">-1</span>]</span><br><span class="line">encflag = <span class="string">""</span></span><br><span class="line">random.seed(<span class="string">"random"</span>)</span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> flag:</span><br><span class="line">  <span class="keyword">if</span> c.islower():</span><br><span class="line">    <span class="comment">#rotate number around alphabet a random amount</span></span><br><span class="line">    encflag += chr((ord(c)-ord(<span class="string">'a'</span>)+random.randrange(<span class="number">0</span>,<span class="number">26</span>))%<span class="number">26</span> + ord(<span class="string">'a'</span>))</span><br><span class="line">  <span class="keyword">elif</span> c.isupper():</span><br><span class="line">    encflag += chr((ord(c)-ord(<span class="string">'A'</span>)+random.randrange(<span class="number">0</span>,<span class="number">26</span>))%<span class="number">26</span> + ord(<span class="string">'A'</span>))</span><br><span class="line">  <span class="keyword">elif</span> c.isdigit():</span><br><span class="line">    encflag += chr((ord(c)-ord(<span class="string">'0'</span>)+random.randrange(<span class="number">0</span>,<span class="number">10</span>))%<span class="number">10</span> + ord(<span class="string">'0'</span>))</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    encflag += c</span><br><span class="line"><span class="keyword">print</span> <span class="string">"Unguessably Randomized Flag: "</span>+encflag</span><br></pre></td></tr></table></figure></p>
 <p>在终端nc题目给出的端口，返回了<code>BNZQ:jn0y1313td7975784y0361tp3xou1g44</code></p>
 <p>加密脚本看似是生成的随机数，但是用了seed()函数，那么生成的随机数序列一定是固定的，那么只需要逆序就好了，这里注意python随机数在windows和linux下是不同的，这个脚本要放在linux下跑。</p>
-<p>解密脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python -u</span></div><div class="line"><span class="keyword">import</span> random,string</div><div class="line"></div><div class="line">flag = <span class="string">""</span></div><div class="line">encflag = <span class="string">"BNZQ:jn0y1313td7975784y0361tp3xou1g44"</span></div><div class="line">random.seed(<span class="string">"random"</span>)</div><div class="line"><span class="keyword">for</span> c <span class="keyword">in</span> encflag:</div><div class="line">  <span class="keyword">if</span> c.islower():</div><div class="line">    <span class="comment">#rotate number around alphabet a random amount</span></div><div class="line">    flag += chr((ord(c)-ord(<span class="string">'a'</span>)+<span class="number">26</span>-random.randrange(<span class="number">0</span>,<span class="number">26</span>))%<span class="number">26</span> + ord(<span class="string">'a'</span>))</div><div class="line">  <span class="keyword">elif</span> c.isupper():</div><div class="line">    flag += chr((ord(c)-ord(<span class="string">'A'</span>)+<span class="number">26</span>-random.randrange(<span class="number">0</span>,<span class="number">26</span>))%<span class="number">26</span> + ord(<span class="string">'A'</span>))</div><div class="line">  <span class="keyword">elif</span> c.isdigit():</div><div class="line">    flag += chr((ord(c)-ord(<span class="string">'0'</span>)+<span class="number">10</span>-random.randrange(<span class="number">0</span>,<span class="number">10</span>))%<span class="number">10</span> + ord(<span class="string">'0'</span>))</div><div class="line">  <span class="keyword">else</span>:</div><div class="line">    flag += c</div><div class="line"><span class="keyword">print</span> flag</div></pre></td></tr></table></figure></p>
+<p>解密脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python -u</span></span><br><span class="line"><span class="keyword">import</span> random,string</span><br><span class="line"></span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line">encflag = <span class="string">"BNZQ:jn0y1313td7975784y0361tp3xou1g44"</span></span><br><span class="line">random.seed(<span class="string">"random"</span>)</span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> encflag:</span><br><span class="line">  <span class="keyword">if</span> c.islower():</span><br><span class="line">    <span class="comment">#rotate number around alphabet a random amount</span></span><br><span class="line">    flag += chr((ord(c)-ord(<span class="string">'a'</span>)+<span class="number">26</span>-random.randrange(<span class="number">0</span>,<span class="number">26</span>))%<span class="number">26</span> + ord(<span class="string">'a'</span>))</span><br><span class="line">  <span class="keyword">elif</span> c.isupper():</span><br><span class="line">    flag += chr((ord(c)-ord(<span class="string">'A'</span>)+<span class="number">26</span>-random.randrange(<span class="number">0</span>,<span class="number">26</span>))%<span class="number">26</span> + ord(<span class="string">'A'</span>))</span><br><span class="line">  <span class="keyword">elif</span> c.isdigit():</span><br><span class="line">    flag += chr((ord(c)-ord(<span class="string">'0'</span>)+<span class="number">10</span>-random.randrange(<span class="number">0</span>,<span class="number">10</span>))%<span class="number">10</span> + ord(<span class="string">'0'</span>))</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    flag += c</span><br><span class="line"><span class="keyword">print</span> flag</span><br></pre></td></tr></table></figure></p>
 <p>flag：<code>FLAG:ac8c0490fb0508767f1625cb8cea8c34</code></p>
 
       
@@ -466,8 +462,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/18/PicoCTF-level3-WriteUp/" rel="next" title="PicoCTF Level3 WriteUp">
-                <i class="fa fa-chevron-left"></i> PicoCTF Level3 WriteUp
+              <a href="/2017/09/18/PicoCTF-level1-WriteUp/" rel="next" title="PicoCTF Level1 WriteUp">
+                <i class="fa fa-chevron-left"></i> PicoCTF Level1 WriteUp
               </a>
             
           </div>
@@ -476,8 +472,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/18/PicoCTF-level1-WriteUp/" rel="prev" title="PicoCTF Level1 WriteUp">
-                PicoCTF Level1 WriteUp <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/27/miac第二轮/" rel="prev" title="Miac2017第二轮Writeup">
+                Miac2017第二轮Writeup <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -524,10 +520,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -536,9 +532,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"
-                alt="Windylh"/>
+              <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg" alt="Windylh">
             
               <p class="site-author-name" itemprop="name">Windylh</p>
               <div class="site-description motion-element" itemprop="description"></div>
@@ -552,7 +546,7 @@
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">32</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -597,7 +591,7 @@
                       
                     
                     <span class="site-state-item-count">13</span>
-                    <span class="site-state-item-name">schlagwörter</span>
+                    <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
               
@@ -742,7 +736,7 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.2.2</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
 
 
 
@@ -750,7 +744,7 @@
 
 
 
-  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
 
 
 

