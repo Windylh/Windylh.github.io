@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/Windylh/image/raw/master/icon.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/Windylh/image/raw/master/icon.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://github.com/Windylh/image/raw/master/icon.ico?v=7.1.0">
+
+
+  <link rel="mask-icon" href="https://github.com/Windylh/image/raw/master/icon.ico?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这里没有key题目：http://www.shiyanbar.com/ctf/7 打开题目，js弹窗，这里没有key，查看源代码，在注释发现 &amp;lt;!-- #@~^TgAAAA==&amp;#39;[6*liLa6++p&amp;#39;aXvfiLaa6i[[avWi[[a*p[[6*!I&amp;#39;[6cp&amp;#39;aXvXILa6fp[:6+Wp[:XvWi[[6+XivRIAAA==^#~@ --">
+<meta name="keywords" content="WriteUp,CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实验吧(密码学、杂项、隐写部分)Writeup">
+<meta property="og:url" content="http://yoursite.com/2017/09/18/实验吧(密码学、杂项、隐写部分)Writeup/index.html">
+<meta property="og:site_name" content="Windylh&#39;s blog">
+<meta property="og:description" content="这里没有key题目：http://www.shiyanbar.com/ctf/7 打开题目，js弹窗，这里没有key，查看源代码，在注释发现 &amp;lt;!-- #@~^TgAAAA==&amp;#39;[6*liLa6++p&amp;#39;aXvfiLaa6i[[avWi[[a*p[[6*!I&amp;#39;[6cp&amp;#39;aXvXILa6fp[:6+Wp[:XvWi[[6+XivRIAAA==^#~@ --">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.7.25/White1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.7.25/White2.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.7.25/windows1.png">
+<meta property="og:image" content="http://ctf5.shiyanbar.com/DUTCTF/1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.17/smg1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.17/smg2.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.17/smg3.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.17/debef1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.17/debef2.png">
+<meta property="og:updated_time" content="2018-11-01T10:52:52.996Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实验吧(密码学、杂项、隐写部分)Writeup">
+<meta name="twitter:description" content="这里没有key题目：http://www.shiyanbar.com/ctf/7 打开题目，js弹窗，这里没有key，查看源代码，在注释发现 &amp;lt;!-- #@~^TgAAAA==&amp;#39;[6*liLa6++p&amp;#39;aXvfiLaa6i[[avWi[[a*p[[6*!I&amp;#39;[6cp&amp;#39;aXvXILa6fp[:6+Wp[:XvWi[[6+XivRIAAA==^#~@ --">
+<meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2017.7.25/White1.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2017/09/18/实验吧(密码学、杂项、隐写部分)Writeup/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>实验吧(密码学、杂项、隐写部分)Writeup | Windylh's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Windylh's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/实验吧(密码学、杂项、隐写部分)Writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">实验吧(密码学、杂项、隐写部分)Writeup
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-09-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">2017-09-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-11-01 18:52:52" itemprop="dateModified" datetime="2018-11-01T18:52:52+08:00">2018-11-01</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2017/09/18/实验吧(密码学、杂项、隐写部分)Writeup/" class="leancloud_visitors" data-flag-title="实验吧(密码学、杂项、隐写部分)Writeup">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Views: </span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="这里没有key"><a href="#这里没有key" class="headerlink" title="这里没有key"></a>这里没有key</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/7" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/7</a></p>
+<p>打开题目，js弹窗，这里没有key，查看源代码，在注释发现</p>
+<p><code>&lt;!-- #@~^TgAAAA==&#39;[6*liLa6++p&#39;aXvfiLaa6i[[avWi[[a*p[[6*!I&#39;[6cp&#39;aXvXILa6fp[:6+Wp[:XvWi[[6+XivRIAAA==^#~@ --&gt;</code><br><a id="more"></a><br>JScript/VBscript脚本加密，<code>#@~^</code>特征。</p>
+<p>解密网址：<a href="http://www.dheart.net/decode/index.php" target="_blank" rel="noopener">http://www.dheart.net/decode/index.php</a></p>
+<p>flag：<code>Encode@decode</code></p>
+<h3 id="压缩的问题"><a href="#压缩的问题" class="headerlink" title="压缩的问题"></a>压缩的问题</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/26" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/26</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Tips winrar, password crack, 65h -- 71h</span><br><span class="line">以下是一段16进制字符串</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">526172211A0700CF907300000D0000000000000056947424965E</span><br><span class="line">00600000004900000002E3B1696DEE413D3B1D33310020000000</span><br><span class="line">C3EBC6C6B2E2CAD44279CCECD2D76C6F76652E74787400796AD2</span><br><span class="line">34784B6DD58B0A427929591366006C6F7665002E7478742E2E5B</span><br><span class="line">7A2D7B7D2E2E39423843569449C8691BEC768E16663C5F9ED737</span><br><span class="line">AE6CDDC6178C0837F6BB88DAA8356B02A700C776FC0F1091C1D1</span><br><span class="line">6712FC075A011D5B5DEF7E46966E8B878B80DABCDF9683C49165</span><br><span class="line">FFB993A77CDE8600A1262200F3D3D5315DF0FC4E2B3ACAA3943F</span><br><span class="line">142EC43D7B00400700</span><br><span class="line"></span><br><span class="line">key是解压后的txt文件的sha1值(取前8位)</span><br></pre></td></tr></table></figure>
+<p>用winhex将16进制的字符串存储为rar格式，用winrar打开，发现有密码，猜测<code>65h -- 71h</code>部分是解压密码，将对应部分复制出来<code>..[z-{}..9B8C</code>，解压，得到txt，放入hash验证工具得到<code>SHA1: 58A09AE43E5A9DF9AD5E89F90C1BB7430DC5BD02</code></p>
+<p>flag：<code>58a09ae4</code></p>
+<h3 id="so-beautiful-so-white"><a href="#so-beautiful-so-white" class="headerlink" title="so beautiful so white"></a>so beautiful so white</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1904" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1904</a></p>
+<p>解压得到一个图片和加密压缩包，图片表面看是纯白的，放入stegsolve，换了几个通道发现了<code>key{forensics_is_fun}</code>。</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.7.25/White1.png" alt="white1.png"></p>
+<p>猜测是解压密码。解压得到一个gif图片，但是发现打不开。</p>
+<p>查看16进制，发现文件头缺少了一部分。</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.7.25/White2.png" alt="white2.png"></p>
+<p>将文件头补全<code>GIF90a</code>得到flag。</p>
+<p>flag:<code>CTF{AS3X}</code></p>
+<h3 id="小case"><a href="#小case" class="headerlink" title="小case"></a>小case</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/16" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/16</a></p>
+<p>给出的字符串<code>nick:1003:8EA9109FDA91D6BFC6EBE8776A153FEB:C6002D00F57F9F399B6263D714AF8C3A:::</code></p>
+<p>可以看出是<code>User Name:User ID:LM Hash:NT Hash:::</code>这种形式，在<a href="http://www.objectif-securite.ch/en/ophcrack.php" target="_blank" rel="noopener">http://www.objectif-securite.ch/en/ophcrack.php</a>，解密LM Hash，即可得到密码，用nick用户登录就是flag</p>
+<p>flag：<code>#AttackIsNotEnough#</code></p>
+<h3 id="复杂的QR-code"><a href="#复杂的QR-code" class="headerlink" title="复杂的QR_code"></a>复杂的QR_code</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1856" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1856</a></p>
+<p>扫描二维码，提示<code>secret is here</code>。binwalk分析发现有一个zip文件，<code>binwalk -e</code>直接提取。</p>
+<p>打开zip，里面有加密的<code>4number.txt</code>，估计是提示4位密码，用爆破工具爆破，密码是<code>7639</code>，解压得到flag。</p>
+<p>flag：<code>CTF{vjpw_wnoei}</code></p>
+<h3 id="刷新-刷新-快刷新"><a href="#刷新-刷新-快刷新" class="headerlink" title="刷新 刷新 快刷新"></a>刷新 刷新 快刷新</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1938" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1938</a></p>
+<p>下载图片123456.jpg，binwalk等分析，并没有发现隐藏文件，题目提示刷新，猜测是F5隐写。</p>
+<p><a href="https://github.com/matthewgao/F5-steganography" target="_blank" rel="noopener">F5隐写工具</a></p>
+<p><code>java Extract 12346.jpg -p 123456</code></p>
+<p>查看工具目录下生成的output.txt，就是flag。</p>
+<p>flag：<code>flag{F5_f5_F5_Ez!!!}</code></p>
+<h3 id="雌黄出其唇吻"><a href="#雌黄出其唇吻" class="headerlink" title="雌黄出其唇吻"></a>雌黄出其唇吻</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1838" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1838</a></p>
+<p>标准的套路题。。。。</p>
+<p>打开题目，发现一个base64编码的字符串，多次刷新发现都不一样，是随机生成的。</p>
+<p>访问robots.txt，看到一些禁止的目录和php页面，都无法访问，看到旁边的页面滚动条，发现最下端还有一行。。。</p>
+<p><code>Sitemap: ./sitemap87591u096080.xml</code></p>
+<p>访问。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">urlset</span> <span class="attr">xmlns</span>=<span class="string">"http://www.sitemaps.org/schemas/sitemap/0.9"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">loc</span>&gt;</span>./index.php<span class="tag">&lt;/<span class="name">loc</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">lastmod</span>&gt;</span>2015-12-25<span class="tag">&lt;/<span class="name">lastmod</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">changefreq</span>&gt;</span>monthly<span class="tag">&lt;/<span class="name">changefreq</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">priority</span>&gt;</span>0.8<span class="tag">&lt;/<span class="name">priority</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">loc</span>&gt;</span>./flag1241098092ewiuqu9t53.php<span class="tag">&lt;/<span class="name">loc</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">lastmod</span>&gt;</span>2015-12-25<span class="tag">&lt;/<span class="name">lastmod</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">changefreq</span>&gt;</span>monthly<span class="tag">&lt;/<span class="name">changefreq</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">priority</span>&gt;</span>0.8<span class="tag">&lt;/<span class="name">priority</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">urlset</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>访问<code>/flag1241098092ewiuqu9t53.php</code>，得到base64编码的字符串，解密就是flag。</p>
+<p>flag：<code>CTF{robots_could_leak_information}</code></p>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1784" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1784</a></p>
+<p>一道视频隐写题，提示<code>不再闪烁的窗户，不再模糊的声音</code>。</p>
+<p>视频的音频很诡异，感觉像是倒放的。用Vegas软件将音频部分反转，得到了一段英文数字<code>51324984652187698521487459648201</code>,(听了好久。。。)</p>
+<p>视频不再闪烁，也就是将闪烁的东西放在一起，得到一张二维码。</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.7.25/windows1.png" alt="windows1"></p>
+<p>扫描<code>xorwith313</code></p>
+<p>最后应该是音频的数字和313异或。</p>
+<p>flag：<code>51324984652187698521487459648496</code></p>
+<h3 id="base"><a href="#base" class="headerlink" title="base??"></a>base??</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1782" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1782</a></p>
+<p>下载文件得到一个rar压缩包，解压得到加密代码。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">change</span><span class="params">(ch)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> ord(ch)&lt;<span class="number">92</span>:</span><br><span class="line">        <span class="keyword">return</span> chr(ord(ch)+<span class="number">32</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> chr(ord(ch)<span class="number">-32</span>)</span><br><span class="line">        </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    flag=<span class="string">'?????'</span></span><br><span class="line">    rawstr=base64.b64encode(flag)</span><br><span class="line">    finalstr=<span class="string">''</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(rawstr)):</span><br><span class="line">        <span class="keyword">if</span> ord(rawstr[i])&gt;<span class="number">96</span> <span class="keyword">and</span> ord(rawstr[i])&lt;<span class="number">123</span>:</span><br><span class="line">            finalstr+=change(rawstr[i])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            finalstr+=rawstr[i]</span><br><span class="line">    <span class="keyword">print</span> rawstr</span><br><span class="line">    <span class="keyword">print</span> finalstr</span><br></pre></td></tr></table></figure></p>
+<p>明文base64加密之后将小写字母全部变为大写，题目只给出了密文和明文的MD5值，只能用脚本暴力破解。(运用python的itertools进行生成)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*-coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(str)</span>:</span></span><br><span class="line">    m1 = hashlib.md5(str).hexdigest()</span><br><span class="line">    <span class="keyword">if</span> m1 == <span class="string">'16478a151bdd41335dcd69b270f6b985'</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">list1=itertools.product([<span class="string">'Y'</span>,<span class="string">'y'</span>],[<span class="string">'M'</span>,<span class="string">'m'</span>],[<span class="string">'F'</span>,<span class="string">'f'</span>],[<span class="string">'Z'</span>,<span class="string">'z'</span>],[<span class="string">'Z'</span>,<span class="string">'z'</span>],[<span class="string">'T'</span>,<span class="string">'t'</span>],[<span class="string">'Y'</span>,<span class="string">'y'</span>],[<span class="string">'0'</span>],[<span class="string">'D'</span>,<span class="string">'d'</span>],[<span class="string">'3'</span>],[<span class="string">'R'</span>,<span class="string">'r'</span>],[<span class="string">'M'</span>,<span class="string">'m'</span>],[<span class="string">'D'</span>,<span class="string">'d'</span>],[<span class="string">'3'</span>],[<span class="string">'R'</span>,<span class="string">'r'</span>],[<span class="string">'M'</span>,<span class="string">'m'</span>],[<span class="string">'M'</span>,<span class="string">'m'</span>],[<span class="string">'T'</span>,<span class="string">'t'</span>],[<span class="string">'I'</span>,<span class="string">'i'</span>],[<span class="string">'Z'</span>,<span class="string">'z'</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> list1:</span><br><span class="line">    str1=<span class="string">''</span>.join(i)</span><br><span class="line">    <span class="keyword">if</span> check(base64.b64decode(str1)):</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"The Flag is "</span>+base64.b64decode(str1)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"not "</span>+str1</span><br></pre></td></tr></table></figure>
+<p>flag:<code>base64wtfwtf123</code></p>
+<h3 id="黑客叔叔（雨袭团）内部交流题（第一季1-0-1）"><a href="#黑客叔叔（雨袭团）内部交流题（第一季1-0-1）" class="headerlink" title="黑客叔叔（雨袭团）内部交流题（第一季1.0.1）"></a>黑客叔叔（雨袭团）内部交流题（第一季1.0.1）</h3><p>题目:<a href="http://www.shiyanbar.com/ctf/741" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/741</a></p>
+<p>打开题目给出base64编码的<code>dW1mcGJsamhhd3Jmcm14aHoxOXptZjltZWducm13NDV4M2RvbmhxfDAxfDAzfDA3fCt8KzF8KzN8Kzd8MisxfDIrMnwyKzZ8Mis3fDIrOXwzKzB8MyszfDMrN3wzKzh8Mys5fD98</code></p>
+<p>解码得<code>umfpbljhawrfrmxhz19zmf9megnrmw45x3donhq|01|03|07|+|+1|+3|+7|2+1|2+2|2+6|2+7|2+9|3+0|3+3|3+7|3+8|3+9|?|</code></p>
+<p>估计是base64对应位数变成大写。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*- coding:utf-8 -*- </span></span><br><span class="line">string=<span class="string">' umfpbljhawrfrmxhz19zmf9megnrmw45x3donhq'</span> </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> (<span class="number">1</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">13</span>,<span class="number">17</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">26</span>,<span class="number">27</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">33</span>,<span class="number">37</span>,<span class="number">38</span>,<span class="number">39</span>): </span><br><span class="line">    str=string[i].upper() </span><br><span class="line">    string=string[<span class="number">0</span>:i]+str+string[i+<span class="number">1</span>:] </span><br><span class="line"><span class="keyword">print</span> string</span><br></pre></td></tr></table></figure>
+<p>得到字符串<code>UmFpblJhaWRfRmxhZ19zMF9meGNrMW45X3doNH</code>，base64解码得到flag。</p>
+<p>flag:<code>RainRaid_Flag_s0_fxck1n9_wh4</code></p>
+<h3 id="疑惑的汉字"><a href="#疑惑的汉字" class="headerlink" title="疑惑的汉字"></a>疑惑的汉字</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1876" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1876</a></p>
+<p><a href="https://baike.baidu.com/item/%E5%BD%93%E9%93%BA%E5%AF%86%E7%A0%81/19848621?fr=aladdin" target="_blank" rel="noopener">当铺密码</a></p>
+<p>这题是当铺密码的例子，密文<code>王夫 井工 夫口 由中人 井中 夫夫 由中大</code>，文字出头几画就代表数字几。</p>
+<p><code>67 84 70 123 82 77 125</code>转为ascii<code>CTF{RM}</code></p>
+<p>flag：<code>CTF{RM}</code></p>
+<h3 id="Fair-Play"><a href="#Fair-Play" class="headerlink" title="Fair-Play"></a>Fair-Play</h3><p>题目:<a href="http://www.shiyanbar.com/ctf/1852" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1852</a></p>
+<p><a href="https://baike.baidu.com/item/playfair%E5%AF%86%E7%A0%81/8999814?fr=aladdin" target="_blank" rel="noopener">Fairplay加密</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">The quick brown fox jumps over the lazy dog!</span><br><span class="line">       ihxo&#123;smzdodcikmodcismzd&#125;</span><br></pre></td></tr></table></figure>
+<p><code>The quick brown fox jumps over the lazy dog!</code>就是生成密码表的密钥，<code>ihxo{smzdodcikmodcismzd}</code>是密文。</p>
+<p><a href="http://rumkin.com/tools/cipher/playfair.php" target="_blank" rel="noopener">Fairplay在线解密</a></p>
+<p>flag：<code>ctfx{playfairisfairplay}</code></p>
+<h3 id="js"><a href="#js" class="headerlink" title="js"></a>js</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1779" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1779</a></p>
+<p>打开题目是js的代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>(<span class="function"><span class="keyword">function</span>(<span class="params">p,a,c,k,e,d</span>)</span>&#123;e=<span class="function"><span class="keyword">function</span>(<span class="params">c</span>)</span>&#123;<span class="keyword">return</span>(c&lt;a?<span class="string">""</span>:e(<span class="built_in">parseInt</span>(c/a)))+((c=c%a)&gt;<span class="number">35</span>?<span class="built_in">String</span>.fromCharCode(c+<span class="number">29</span>):c.toString(<span class="number">36</span>))&#125;;<span class="keyword">if</span>(!<span class="string">''</span>.replace(<span class="regexp">/^/</span>,<span class="built_in">String</span>))&#123;<span class="keyword">while</span>(c--)d[e(c)]=k[c]||e(c);k=[<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">return</span> d[e]&#125;];e=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span><span class="string">'\\w+'</span>&#125;;c=<span class="number">1</span>;&#125;;<span class="keyword">while</span>(c--)<span class="keyword">if</span>(k[c])p=p.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'\\b'</span>+e(c)+<span class="string">'\\b'</span>,<span class="string">'g'</span>),k[c]);<span class="keyword">return</span> p;&#125;(<span class="string">'&lt;1 8="7/a"&gt;9(\'\\6\\3\\2\\5\\4\\b\\i\\h\\k\\j\\0\\g\\d\\c\\f\\0\\e\')&lt;/1&gt;'</span>,<span class="number">21</span>,<span class="number">21</span>,<span class="string">'u0065|script|u006d|u0069|u0054|u0043|u0053|text|type|alert|javascript|u0046|u006f|u0063|u007d|u0064|u006e|u006a|u007b|u005f|u0073'</span>.split(<span class="string">'|'</span>),<span class="number">0</span>,&#123;&#125;))</span><br></pre></td></tr></table></figure></p>
+<p>最后的text，type，alert很可疑。</p>
+<p>不是很懂js，直接丢控制台，把eval改成<code>console.log()</code>，用来在控制台输出，然后得到unicode编码。</p>
+<p><code>&lt;script type=&quot;text/javascript&quot;&gt;alert(&#39;\u0053\u0069\u006d\u0043\u0054\u0046\u007b\u006a\u0073\u005f\u0065\u006e\u0063\u006f\u0064\u0065\u007d&#39;)&lt;/script&gt;</code></p>
+<p>把alert内的东西放到网站解码，得到flag。</p>
+<p>flag：<code>SimCTF{js_encode}</code></p>
+<h3 id="黑客叔叔（雨袭团）内部交流题（第一季1-0-2）"><a href="#黑客叔叔（雨袭团）内部交流题（第一季1-0-2）" class="headerlink" title="黑客叔叔（雨袭团）内部交流题（第一季1.0.2）"></a>黑客叔叔（雨袭团）内部交流题（第一季1.0.2）</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1744" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1744</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">U2FsdGVkX18vmjE0tvWk69T女B神u9inuiNnM3rBhsu6tXzLhu+</span><br><span class="line">iofwuHNHq3YtDKs8ZlYLvSZuUY+</span><br><span class="line">mxLRKO7+</span><br><span class="line">m254R5YTCW8yzzgD+</span><br><span class="line">mGwWfGRgqmPKdD你xA等等</span><br><span class="line">hint:女神你等等？</span><br></pre></td></tr></table></figure>
+<p>很有脑洞qwq，并没看出啥来，偷偷看一眼writeup，等等换成<code>==</code>，其他汉字换成<code>/</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">U2FsdGVkX18vmjE0tvWk69T/B/u9inuiNnM3rBhsu6tXzLhu+</span><br><span class="line">iofwuHNHq3YtDKs8ZlYLvSZuUY+</span><br><span class="line">mxLRKO7+</span><br><span class="line">m254R5YTCW8yzzgD+</span><br><span class="line">mGwWfGRgqmPKdD/xA==</span><br></pre></td></tr></table></figure></p>
+<p>看起来像是之前做的TripleDes，尝试解密。</p>
+<p><code>U2FsdGVkX19RFyuUWyBHLNo8ldVPSkFpTB/lG07bZIL1rSAa/L0jFRGdvPh//8W4uZHe</code></p>
+<p>这个就尝试了很多，最后试出来是Rabbit解密。</p>
+<p>附上在线解密网址<a href="http://tool.oschina.net/encrypt" target="_blank" rel="noopener">http://tool.oschina.net/encrypt</a></p>
+<p>flag：<code>RainRaid_Flag_Rabbit&amp;TripleDes_Nice</code></p>
+<h3 id="simple-algorithm"><a href="#simple-algorithm" class="headerlink" title="simple algorithm"></a>simple algorithm</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/737" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/737</a></p>
+<p>下载zip包，里面有一个python的加密脚本和一个加密后字符串的enc.txt。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"></span><br><span class="line">flag = <span class="string">'[censored]'</span></span><br><span class="line">hflag = flag.encode(<span class="string">'hex'</span>)</span><br><span class="line">iflag = int(hflag[<span class="number">2</span>:], <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">FAN</span><span class="params">(n, m)</span>:</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    z = []</span><br><span class="line">    s = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">      <span class="keyword">if</span> n % <span class="number">2</span> != <span class="number">0</span>:</span><br><span class="line">        z.append(<span class="number">2</span> - (n % <span class="number">4</span>))</span><br><span class="line">      <span class="keyword">else</span>:</span><br><span class="line">        z.append(<span class="number">0</span>)</span><br><span class="line">      n = (n - z[i])/<span class="number">2</span></span><br><span class="line">      i = i + <span class="number">1</span></span><br><span class="line">    z = z[::<span class="number">-1</span>]</span><br><span class="line">    l = len(z)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, l):</span><br><span class="line">        s += z[i] * m ** (l - <span class="number">1</span> - i)</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line"></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line">r = <span class="string">''</span></span><br><span class="line"><span class="keyword">while</span> i &lt; len(str(iflag)):</span><br><span class="line">    d = str(iflag)[i:i+<span class="number">2</span>]</span><br><span class="line">    nf = FAN(int(d), <span class="number">3</span>)</span><br><span class="line">    r += str(nf)</span><br><span class="line">    i += <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> r</span><br></pre></td></tr></table></figure></p>
+<p>加密流程为将明文转换为16进制编码，在转化为10进制数，将每两位数字构成的数进行FAN函数运算，再拼接起来得到密文。 </p>
+<p>所以解密流程是：将0~99利用FAN函数求得加密值，建立加密值到原数的字典，在明文中查字典拼接得到10进制数，转化为16进制数，再求取字符串。</p>
+<p>解密脚本：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">FAN</span><span class="params">(n, m)</span>:</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    z = []</span><br><span class="line">    s = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">      <span class="keyword">if</span> n % <span class="number">2</span> != <span class="number">0</span>:</span><br><span class="line">        z.append(<span class="number">2</span> - (n % <span class="number">4</span>))</span><br><span class="line">      <span class="keyword">else</span>:</span><br><span class="line">        z.append(<span class="number">0</span>)</span><br><span class="line">      n = (n - z[i])/<span class="number">2</span></span><br><span class="line">      i = i + <span class="number">1</span></span><br><span class="line">    z = z[::<span class="number">-1</span>]</span><br><span class="line">    l = len(z)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, l):</span><br><span class="line">        s += z[i] * m ** (l - <span class="number">1</span> - i)</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line"></span><br><span class="line">s=<span class="string">'2712733801194381163880124319146586498182192151917719248224681364019142438188097307292437016388011943193619457377217328473027324319178428'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#构造0~99对应的FAN()的值的字典</span></span><br><span class="line"></span><br><span class="line">dct=&#123;&#125;</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> xrange(<span class="number">0</span>,<span class="number">100</span>):</span><br><span class="line">    <span class="comment">#key为FAN()的结果，value为n(位数补足到2位)</span></span><br><span class="line">    dct[str((FAN(n,m=<span class="number">3</span>)))]=<span class="string">"%02d"</span>%n</span><br><span class="line"></span><br><span class="line">lst=[]</span><br><span class="line">offset=<span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> offset&lt;len(s):</span><br><span class="line">    <span class="comment">#先从4个字符匹配直至1个字符</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">4</span>,<span class="number">0</span>,<span class="number">-1</span>):</span><br><span class="line">        tmp=s[offset:offset+i]</span><br><span class="line">        <span class="keyword">if</span> tmp <span class="keyword">in</span> dct:</span><br><span class="line">            lst.append(dct[tmp])</span><br><span class="line">            offset+=i</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">flag=<span class="string">""</span>.join(lst)</span><br><span class="line"></span><br><span class="line"><span class="comment">#python中s[i:i+2]不一定取到2个字符，</span></span><br><span class="line"><span class="comment">#如s="pcat",s[3:4]和s[3:5],甚至s[3:100]都是"t"</span></span><br><span class="line"><span class="comment">#此题中最后得到"09"，但也可能是"9"，故做下面的判断</span></span><br><span class="line"><span class="keyword">if</span> len(hex(long(flag))[<span class="number">2</span>:<span class="number">-1</span>])%<span class="number">2</span>!=<span class="number">0</span>:</span><br><span class="line">    flag=flag[:<span class="number">-2</span>]+flag[<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">flag=hex(long(flag))[<span class="number">2</span>:<span class="number">-1</span>].decode(<span class="string">'hex'</span>)</span><br><span class="line"><span class="keyword">print</span> flag</span><br></pre></td></tr></table></figure></p>
+<p>flag：<code>SIS{a9ab115c488a311896dac4e8bc20a6d7}</code></p>
+<h3 id="传统知识-古典密码"><a href="#传统知识-古典密码" class="headerlink" title="传统知识+古典密码"></a>传统知识+古典密码</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1991" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1991</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">小明某一天收到一封密信，信中写了几个不同的年份</span><br><span class="line">          辛卯，癸巳，丙戌，辛未，庚辰，癸酉，己卯，癸巳。</span><br><span class="line">          信的背面还写有“+甲子”，请解出这段密文。</span><br></pre></td></tr></table></figure>
+<p>看起来挺新颖的，传统知识+古典密码。既然说了是年份，那就是<a href="https://baike.baidu.com/item/%E5%B9%B2%E6%94%AF%E7%BA%AA%E5%B9%B4/3383226?fr=aladdin&amp;fromid=8187627&amp;fromtitle=%E5%A4%A9%E5%B9%B2%E5%9C%B0%E6%94%AF%E7%BA%AA%E5%B9%B4%E6%B3%95" target="_blank" rel="noopener">天干地支纪年法</a>对应的年份，还要+甲子，也就是加60，所以密文变成<code>88 90 93 68 77 70 76 90</code>，转成ascii码也就是<code>XZSDMFLZ</code>。</p>
+<p>传统知识用完了，就是古典密码了。古典密码很多，这里用的是栅栏密码和凯撒移位密码。</p>
+<p>栅栏密码（两栏）得到<code>XMZFSLDZ</code><br>凯撒移位得到：<code>SHUANGYU</code></p>
+<p>flag：<code>CTF{SHUANGYU}</code></p>
+<h3 id="数码管"><a href="#数码管" class="headerlink" title="数码管"></a>数码管</h3><p>题目:<a href="http://www.shiyanbar.com/ctf/55" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/55</a></p>
+<p>题目是一张图片<br><img src="http://ctf5.shiyanbar.com/DUTCTF/1.png" alt="http://ctf5.shiyanbar.com/DUTCTF/1.png"></p>
+<p>显然flag就是DUTCTF{xxx}，关键是根据图片解出XXX。</p>
+<p>数码管的十六进制表示方式，分别将每个数码管中的字形转化为相应的十六进制，这里还要分共阳极、共阴极。得到flag。</p>
+<p>数码管布局</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.8.17/smg1.png" alt="1"></p>
+<p>常见字形与其十六进制编码</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.8.17/smg2.png" alt="2"></p>
+<p>题目中字形的编码</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.8.17/smg3.png" alt="3"></p>
+<p>尝试后发现，题目中红色的为共阳极数码管，蓝色的为共阴极数码管。</p>
+<p>flag：<code>DUTCTF{8979C738C0}</code></p>
+<h3 id="deeeeeeaaaaaadbeeeeeeeeeef-200"><a href="#deeeeeeaaaaaadbeeeeeeeeeef-200" class="headerlink" title="deeeeeeaaaaaadbeeeeeeeeeef-200"></a>deeeeeeaaaaaadbeeeeeeeeeef-200</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1983" target="_blank" rel="noopener">http://www.shiyanbar.com/ctf/1983</a></p>
+<p>binwalk分析，并没有什么特别的。</p>
+<p>用ue编辑器查看16进制，也没发现什么有用的信息。</p>
+<p>看了大佬的writeup，16进制下可以看到照片的iphone5照的，iphone5照的最高分辨率是3264x2448，而图片是3264x1681，所以想要解题需要修改分辨率。</p>
+<p>分辨率位置：<br><img src="https://github.com/Windylh/image/raw/master/2017.8.17/debef1.png" alt="1"></p>
+<p>将<code>06 91</code>修改为<code>09 91</code>即可得到flag。<br><img src="https://github.com/Windylh/image/raw/master/2017.8.17/debef2.png" alt="2"></p>
+<p>flag:<code>Key{TheISISPasswordIs}</code></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WriteUp/" rel="tag"># WriteUp</a>
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/15/实验吧(Web部分)Writeup/" rel="next" title="实验吧(Web部分)Writeup">
+                <i class="fa fa-chevron-left"></i> 实验吧(Web部分)Writeup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/18/XNUCA-Writeup/" rel="prev" title="XNUCA-Writeup">
+                XNUCA-Writeup <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/Windylh/image/master/logo.jpg" alt="Windylh">
+            
+              <p class="site-author-name" itemprop="name">Windylh</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Windylh" title="GitHub &rarr; https://github.com/Windylh" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:admin@windylh.com" title="E-Mail &rarr; mailto:admin@windylh.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/WindylhPeng" title="Twitter &rarr; https://twitter.com/WindylhPeng" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.izilong.net/" title="http://blog.izilong.net/" rel="noopener" target="_blank">Zilong's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://p0sec.net/" title="https://p0sec.net/" rel="noopener" target="_blank">p0's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://p0desta.com/" title="http://p0desta.com/" rel="noopener" target="_blank">p0desta's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mengsec.com/" title="https://mengsec.com/" rel="noopener" target="_blank">Mengchen's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://keysking.github.io/" title="https://keysking.github.io/" rel="noopener" target="_blank">Keysking's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://lanvnal.com/" title="http://lanvnal.com/" rel="noopener" target="_blank">LANVNAL's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://0sec.com.cn/" title="http://0sec.com.cn/" rel="noopener" target="_blank">Fazx‘s blog</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#这里没有key"><span class="nav-number">1.</span> <span class="nav-text">这里没有key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩的问题"><span class="nav-number">2.</span> <span class="nav-text">压缩的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#so-beautiful-so-white"><span class="nav-number">3.</span> <span class="nav-text">so beautiful so white</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小case"><span class="nav-number">4.</span> <span class="nav-text">小case</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂的QR-code"><span class="nav-number">5.</span> <span class="nav-text">复杂的QR_code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刷新-刷新-快刷新"><span class="nav-number">6.</span> <span class="nav-text">刷新 刷新 快刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#雌黄出其唇吻"><span class="nav-number">7.</span> <span class="nav-text">雌黄出其唇吻</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows"><span class="nav-number">8.</span> <span class="nav-text">Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#base"><span class="nav-number">9.</span> <span class="nav-text">base??</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#黑客叔叔（雨袭团）内部交流题（第一季1-0-1）"><span class="nav-number">10.</span> <span class="nav-text">黑客叔叔（雨袭团）内部交流题（第一季1.0.1）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#疑惑的汉字"><span class="nav-number">11.</span> <span class="nav-text">疑惑的汉字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fair-Play"><span class="nav-number">12.</span> <span class="nav-text">Fair-Play</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js"><span class="nav-number">13.</span> <span class="nav-text">js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#黑客叔叔（雨袭团）内部交流题（第一季1-0-2）"><span class="nav-number">14.</span> <span class="nav-text">黑客叔叔（雨袭团）内部交流题（第一季1.0.2）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#simple-algorithm"><span class="nav-number">15.</span> <span class="nav-text">simple algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传统知识-古典密码"><span class="nav-number">16.</span> <span class="nav-text">传统知识+古典密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数码管"><span class="nav-number">17.</span> <span class="nav-text">数码管</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deeeeeeaaaaaadbeeeeeeeeeef-200"><span class="nav-number">18.</span> <span class="nav-text">deeeeeeaaaaaadbeeeeeeeeeef-200</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017.3 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Windylh</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .done(function() {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.time + 1);
+              })
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! More info at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + 'G38Wjo4XURoegldByMbpMI2C-gzGzoHsz')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': 'G38Wjo4XURoegldByMbpMI2C-gzGzoHsz',
+                'X-LC-Key': 'PAvMrVY87vPwX9PBcMLfYmw4',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
