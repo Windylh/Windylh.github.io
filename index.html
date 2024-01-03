@@ -197,7 +197,6 @@
       
           <h3 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h3><h4 id="CVE-2020-28948"><a href="#CVE-2020-28948" class="headerlink" title="CVE-2020-28948"></a>CVE-2020-28948</h4><p>Archive_Tar through 1.4.10 allows an unserialization attack because phar: is blocked but PHAR: is not blocked.</p>
 <h4 id="CVE-2020-28949"><a href="#CVE-2020-28949" class="headerlink" title="CVE-2020-28949"></a>CVE-2020-28949</h4><p>Archive_Tar through 1.4.10 has :&#x2F;&#x2F; filename sanitization only to address phar attacks, and thus any other stream-wrapper attack (such as file:&#x2F;&#x2F; to overwrite files) can still succeed.</p>
-<h3 id="漏洞分析-复现"><a href="#漏洞分析-复现" class="headerlink" title="漏洞分析&amp;复现"></a>漏洞分析&amp;复现</h3><h4 id="漏洞代码"><a href="#漏洞代码" class="headerlink" title="漏洞代码"></a>漏洞代码</h4><p>以下代码没有对PHAR和其他php伪协议进行过滤，导致了漏洞存在。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/12/15/CVE-2020-28948&28949PEAR_Archive_Tar%E5%BA%93%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/#more" rel="contents">
@@ -271,8 +270,6 @@
       
           <h3 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h3><h5 id="CVE-2020-16846-命令注入漏洞"><a href="#CVE-2020-16846-命令注入漏洞" class="headerlink" title="CVE-2020-16846: 命令注入漏洞"></a>CVE-2020-16846: 命令注入漏洞</h5><p>未经过身份验证的攻击者通过发送特制请求包，可通过<code>Salt API</code>注入<code>ssh</code>连接命令。导致命令执行。</p>
 <h5 id="CVE-2020-25592-验证绕过漏洞"><a href="#CVE-2020-25592-验证绕过漏洞" class="headerlink" title="CVE-2020-25592: 验证绕过漏洞"></a>CVE-2020-25592: 验证绕过漏洞</h5><p>Salt 在验证<code>eauth</code>凭据和访问控制列表<code>ACL</code>时存在一处验证绕过漏洞。</p>
-<p>未经过身份验证的远程攻击者通过发送特制的请求包，可以通过<code>salt-api</code>绕过身份验证，并使用<code>salt ssh</code>连接目标服务器。结合<code>CVE-2020-16846</code>能造成命令执行。</p>
-<h3 id="漏洞环境"><a href="#漏洞环境" class="headerlink" title="漏洞环境"></a>漏洞环境</h3><p><a href="https://github.com/vulhub/vulhub/tree/master/saltstack/CVE-2020-16846">vulhub&#x2F;saltstack&#x2F;CVE-2020-16846 at master · vulhub&#x2F;vulhub</a></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/11/18/SaltStack%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E(CVE-2020-16846)%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E5%88%86%E6%9E%90/#more" rel="contents">
@@ -347,9 +344,6 @@
           <h2 id="漏洞详情"><a href="#漏洞详情" class="headerlink" title="漏洞详情"></a>漏洞详情</h2><p>禅道项目管理软件12.4.2版本存在后台任意文件上传漏洞</p>
 <p>禅道已在12.4.3版本中修复该漏洞。</p>
 <h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2><p>对比<code>12.4.2</code>与<code>12.4.3</code>的源代码发现<code>/module/client/ext/model/xuanxuan.php</code>路径增加了文件上传后缀的限制。</p>
-<p><img src="https://raw.githubusercontent.com/Windylh/image/master/2020.10.28/20201028114747.png"></p>
-<p>找到12.4.2版本中的对应文件，通过base64解码<code>link</code>，之后正则匹配是否有<code>http(s)://</code>（因为没有匹配大小写，利用可使用HTTP绕过），如果存在就返回<code>false</code>，检查无误会调用父类中的<code>downloadZipPackage</code>函数。</p>
-<p><img src="https://raw.githubusercontent.com/Windylh/image/master/2020.10.28/20201028115314.png"></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/10/28/CNVD-C-2020-121325%EF%BC%9A%E7%A6%85%E9%81%93%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%8D%E7%8E%B0/#more" rel="contents">
@@ -399,10 +393,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-07-15 00:00:00 / Modified: 18:26:22" itemprop="dateCreated datePublished" datetime="2019-07-15T00:00:00+08:00">2019-07-15</time>
+              <time title="Created: 2019-07-15 00:00:00" itemprop="dateCreated datePublished" datetime="2019-07-15T00:00:00+08:00">2019-07-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-01-03 15:55:25" itemprop="dateModified" datetime="2024-01-03T15:55:25+08:00">2024-01-03</time>
+              </span>
 
           
 
@@ -416,9 +416,6 @@
 
       
           <h2 id="zico2靶机渗透测试"><a href="#zico2靶机渗透测试" class="headerlink" title="zico2靶机渗透测试"></a>zico2靶机渗透测试</h2><h3 id="主机发现及端口扫描"><a href="#主机发现及端口扫描" class="headerlink" title="主机发现及端口扫描"></a>主机发现及端口扫描</h3><p>利用nmap进行主机发现，扫描vm网卡的端口。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715171454.png"><br><code>172.16.158.1</code>为本机ip，对<code>172.16.158.129</code>进行扫描<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715171336.png"></p>
-<h3 id="对80端口进行渗透"><a href="#对80端口进行渗透" class="headerlink" title="对80端口进行渗透"></a>对80端口进行渗透</h3><p>首先对目录进行扫描<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715173156.png"><br>访问网站，发现可以访问的连接<code>view.php</code>。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715172841.png"><br>猜测有文件包含，尝试读取<code>/etc/passwd</code>，可以进行文件包含。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715174956.png"><br>访问扫描到的<code>dbadmin</code>文件夹，发现一个数据库管理页面。弱口令admin登陆。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175423.png"><br>发现存在文件路径，用刚才的文件包含尝试发现可以包含到。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175522.png"></p>
-<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>文件存储了表结构，构造数据库文件进行getshell。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175822.png"><br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175908.png"><br>命令可以执行，可以getshell。<br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715175936.png"><br><img src="https://raw.githubusercontent.com/Windylh/image/master/2019.7.15/20190715180535.png"></p>
-<h3 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h3>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/15/zico2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/#more" rel="contents">
@@ -488,9 +485,6 @@
 <h3 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h3><p>到Dlink官方ftp服务器下载固件<br><a href="ftp://ftp2.dlink.com/PRODUCTS/DIR-850L/REVB/DIR-850L_REVB_FIRMWARE_2.07.B05_WW.ZIP">DIR-850L_REVB_FIRMWARE_2.07.B05_WW.ZIP</a></p>
 <p>用binwalk分析，发现没有结果，应该是固件进行了加密，利用文章<a href="https://pierrekim.github.io/blog/2017-09-08-dlink-850l-mydlink-cloud-0days-vulnerabilities.html">Pwning the Dlink 850L routers and abusing the MyDlink Cloud protocol
 </a>里的脚本进行解密。</p>
-<p>解密后，binwalk成功分析出内容。</p>
-<p><img src="https://github.com/Windylh/image/raw/master/2019.4.25/decrypt.png"></p>
-<p>这里使用了<a href="https://github.com/attify/firmware-analysis-toolkit">firmware-analysis-toolkit</a>进行对固件的模拟。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/04/25/CVE-2017-3193%E5%A4%8D%E7%8E%B0/#more" rel="contents">
